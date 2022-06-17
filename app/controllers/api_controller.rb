@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
   # equivalent of devise's authenticate_user!
-  before_action :doorkeeper_autherize!
+  before_action :doorkeeper_authorize!
 
   # skip checking of CSRF token authenticity
   skip_before_action :verify_authenticity_token

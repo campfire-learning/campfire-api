@@ -3,6 +3,9 @@
 namespace :api do
   namespace :v1 do
     resources :posts
+    scope :users, module: :users do
+      post '/', to: "registrations/create", as: :user_registration
+    end
   end
 end
 
