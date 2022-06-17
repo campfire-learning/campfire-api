@@ -1,4 +1,4 @@
-<h1><%= "Hello #{current_user.email}" %></h1>
+<h1><%= "Hello #{current_user&.email}" %></h1>
 <p>Find me in app/views/users/home.html.erb</p>
 
 <% if user_signed_in? %>
@@ -9,6 +9,7 @@
 <% end %>
 
 <div class="container">
+  <%= @application.as_json %>
   <ul>
     <li><%= link_to "Posts", posts_path %></li>
     <li>paper books</li>
