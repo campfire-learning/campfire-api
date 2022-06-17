@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
   def home
-    appl = Doorkeeper::Application.find_by(name: 'Web client')
+    app = Doorkeeper::Application.find_by(name: 'Web client')
 
     @application = {
-      name: appl.name,
-      client_id: appl.uid,
-      client_secret: appl.secret
+      name: app.name,
+      client_id: app.uid,
+      client_secret: app.secret
     }
   end
 end
