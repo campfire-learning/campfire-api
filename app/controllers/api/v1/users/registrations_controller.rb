@@ -11,9 +11,7 @@ module Api
         def create
           client_app = Doorkeeper::Application.find_by(uid: user_params[:client_id])
           unless client_app
-            return render
-              json: { error: I18n.t('doorkeeper.errors.messages.invalid_client') },
-              status: :unauthorized
+            return render json: { error: I18n.t('doorkeeper.errors.messages.invalid_client') }, status: :unauthorized
           end
 
           create_params = user_params.except(:client_id)
