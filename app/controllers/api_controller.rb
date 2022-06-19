@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Controller for API endpoints
 class ApiController < ApplicationController
   # equivalent of devise's authenticate_user!
   before_action :doorkeeper_authorize!
