@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  creator_id: 1
+  creator: one
   post_text: MyText
   context_type: 1
   pinned: false
 
 two:
-  creator_id: 1
+  creator: one
   post_text: MyText
   context_type: 1
   pinned: false

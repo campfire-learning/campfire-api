@@ -152,6 +152,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_20_003047) do
   add_foreign_key "groups_users", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "posts", "users", column: "creator_id"
   add_foreign_key "users", "organizations"
 end

@@ -8,6 +8,8 @@ class User < ApplicationRecord
   validates :email, format: URI::MailTo::EMAIL_REGEXP
   enum role: %i[user admin]
 
+  belongs_to :organization
+
   def self.authenticate(email, password)
     user = User.find_for_authentication(email: email)
     user&.validate_password?(password) ? user : nil
