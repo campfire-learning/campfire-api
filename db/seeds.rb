@@ -15,7 +15,7 @@ end
 User.first_or_create(
   email: 'foo@bar.com',
   password: 'password',
-  password_confirmation: 'password',
+  password_confirmation: 'password'
 )
 
 User.create!(

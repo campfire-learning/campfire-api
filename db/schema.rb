@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_24_023404) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_24_072833) do
+  create_table "assignments", force: :cascade do |t|
+    t.integer "course_offering_id", null: false
+    t.text "description"
+    t.integer "assignment_type"
+    t.float "percent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_offering_id"], name: "index_assignments_on_course_offering_id"
+  end
+
   create_table "calendar_events", force: :cascade do |t|
     t.string "title", default: "Event", null: false
     t.integer "owner_type", null: false
@@ -129,7 +139,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_24_023404) do
 
   create_table "organizations", force: :cascade do |t|
     t.string "name"
-    t.integer "type"
+    t.integer "organization_type"
     t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -147,19 +157,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_24_023404) do
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "user_type"
+    t.integer "organization_id"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
-    t.integer "type"
-    t.integer "organization_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "assignments", "course_offerings"
   add_foreign_key "calendar_events", "users", column: "owner_id"
   add_foreign_key "course_offerings", "courses"
   add_foreign_key "course_offerings", "users", column: "creator_id"

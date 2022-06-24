@@ -3,11 +3,11 @@
 one:
   email: "My@Email"
   role: 0
-  type: 1
+  user_type: 1
   organization: one
 
 two:
   email: "My@Email2"
   role: 1
-  type: 1
+  user_type: 1
   organization: one

@@ -2,10 +2,10 @@
 
 one:
   name: MyString
-  type: 1
+  organization_type: 1
   address: MyString
 
 two:
   name: MyString
-  type: 1
+  organization_type: 1
   address: MyString
