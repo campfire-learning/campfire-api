@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_20_003047) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_24_023404) do
+  create_table "calendar_events", force: :cascade do |t|
+    t.string "title", default: "Event", null: false
+    t.integer "owner_type", null: false
+    t.integer "owner_id", null: false
+    t.integer "duration"
+    t.datetime "start_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_calendar_events_on_owner_id"
+  end
+
   create_table "course_offerings", force: :cascade do |t|
     t.integer "course_id", null: false
     t.integer "creator_id", null: false
@@ -21,6 +32,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_20_003047) do
     t.index ["course_id"], name: "index_course_offerings_on_course_id"
     t.index ["creator_id"], name: "index_course_offerings_on_creator_id"
     t.index ["owner_id"], name: "index_course_offerings_on_owner_id"
+  end
+
+  create_table "course_offerings_users", force: :cascade do |t|
+    t.integer "course_offering_id", null: false
+    t.integer "user_id", null: false
+    t.integer "role", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_offering_id"], name: "index_course_offerings_users_on_course_offering_id"
+    t.index ["user_id"], name: "index_course_offerings_users_on_user_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -139,6 +160,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_20_003047) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "calendar_events", "users", column: "owner_id"
   add_foreign_key "course_offerings", "courses"
   add_foreign_key "course_offerings", "users", column: "creator_id"
   add_foreign_key "course_offerings", "users", column: "owner_id"
