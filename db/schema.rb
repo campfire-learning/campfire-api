@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_24_072833) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_24_190927) do
   create_table "assignments", force: :cascade do |t|
     t.integer "course_offering_id", null: false
     t.text "description"
@@ -72,6 +72,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_24_072833) do
     t.datetime "updated_at", null: false
     t.index ["followee_id"], name: "index_followings_on_followee_id"
     t.index ["follower_id"], name: "index_followings_on_follower_id"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.integer "assignment_id", null: false
+    t.integer "user_id", null: false
+    t.float "grade"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_grades_on_assignment_id"
+    t.index ["user_id"], name: "index_grades_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -179,6 +189,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_24_072833) do
   add_foreign_key "courses", "users", column: "owner_id"
   add_foreign_key "followings", "users", column: "followee_id"
   add_foreign_key "followings", "users", column: "follower_id"
+  add_foreign_key "grades", "assignments"
+  add_foreign_key "grades", "users"
   add_foreign_key "groups", "users", column: "creator_id"
   add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "groups_users", "groups"
