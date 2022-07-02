@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  course_offering: one
+  course_event: one
+  start_time: 2022-07-02 16:45:43
+  duration: 1
+
+two:
+  course_offering: two
+  course_event: two
+  start_time: 2022-07-02 16:45:43
+  duration: 1

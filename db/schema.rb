@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_24_190927) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
   create_table "assignments", force: :cascade do |t|
     t.integer "course_offering_id", null: false
     t.text "description"
@@ -21,15 +21,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_24_190927) do
     t.index ["course_offering_id"], name: "index_assignments_on_course_offering_id"
   end
 
-  create_table "calendar_events", force: :cascade do |t|
-    t.string "title", default: "Event", null: false
-    t.integer "owner_type", null: false
-    t.integer "owner_id", null: false
-    t.integer "duration"
-    t.datetime "start_time"
+  create_table "course_events", force: :cascade do |t|
+    t.integer "course_id", null: false
+    t.string "title"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["owner_id"], name: "index_calendar_events_on_owner_id"
+    t.index ["course_id"], name: "index_course_events_on_course_id"
+  end
+
+  create_table "course_offering_events", force: :cascade do |t|
+    t.integer "course_offering_id", null: false
+    t.integer "course_event_id", null: false
+    t.datetime "start_time", precision: nil
+    t.integer "duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_event_id"], name: "index_course_offering_events_on_course_event_id"
+    t.index ["course_offering_id"], name: "index_course_offering_events_on_course_offering_id"
   end
 
   create_table "course_offerings", force: :cascade do |t|
@@ -181,7 +190,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_24_190927) do
   end
 
   add_foreign_key "assignments", "course_offerings"
-  add_foreign_key "calendar_events", "users", column: "owner_id"
+  add_foreign_key "course_events", "courses"
+  add_foreign_key "course_offering_events", "course_events"
+  add_foreign_key "course_offering_events", "course_offerings"
   add_foreign_key "course_offerings", "courses"
   add_foreign_key "course_offerings", "users", column: "creator_id"
   add_foreign_key "course_offerings", "users", column: "owner_id"
