@@ -22,7 +22,9 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+    # we have to convert string to int - can't say I'm not a little disappointed
+    # that the Rails magic is not happening in this case
+    @post = Post.new(post_params.merge({ 'context_type' => post_params['context_type'].to_i }))
 
     respond_to do |format|
       if @post.save

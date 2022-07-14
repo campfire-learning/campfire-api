@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :email, format: URI::MailTo::EMAIL_REGEXP
-  enum role: %i[user admin]
+  enum role: { admin: 1, user: 2 }
 
   belongs_to :organization, optional: true
 
