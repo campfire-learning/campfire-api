@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
-  before_action :authenticate_user!
+
+  # uncomment before deploying to production
+  # before_action :authenticate_user!
 
   # GET /posts or /posts.json
   def index
