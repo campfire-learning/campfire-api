@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
   end
 
   create_table "courses", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
     t.text "description"

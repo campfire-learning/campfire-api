@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
+  skip_before_action :verify_authenticity_token
 
   # uncomment before deploying to production
   # before_action :authenticate_user!
@@ -26,6 +27,7 @@ class PostsController < ApplicationController
   def create
     # we have to convert string to int - can't say I'm not a little disappointed
     # that the Rails magic is not happening in this case
+    # @post = Post.new(post_params)
     @post = Post.new(post_params.merge({ 'context_type' => post_params['context_type'].to_i }))
 
     respond_to do |format|
