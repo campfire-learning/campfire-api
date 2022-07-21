@@ -61,6 +61,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
     t.index ["user_id"], name: "index_grades_on_user_id"
   end
 
+  create_table "group_memberships", id: false, force: :cascade do |t|
+    t.integer "group_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_memberships_on_group_id"
+    t.index ["user_id"], name: "index_group_memberships_on_user_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string "name", null: false
     t.integer "creator_id", null: false
@@ -104,15 +113,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
     t.index ["course_id"], name: "index_klasses_on_course_id"
     t.index ["creator_id"], name: "index_klasses_on_creator_id"
     t.index ["owner_id"], name: "index_klasses_on_owner_id"
-  end
-
-  create_table "memberships", id: false, force: :cascade do |t|
-    t.integer "group_id", null: false
-    t.integer "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_memberships_on_group_id"
-    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -198,6 +198,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
   add_foreign_key "followings", "users", column: "follower_id"
   add_foreign_key "grades", "assignments"
   add_foreign_key "grades", "users"
+  add_foreign_key "group_memberships", "groups"
+  add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users", column: "creator_id"
   add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "klass_events", "course_events"
@@ -205,8 +207,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
   add_foreign_key "klasses", "courses"
   add_foreign_key "klasses", "users", column: "creator_id"
   add_foreign_key "klasses", "users", column: "owner_id"
-  add_foreign_key "memberships", "groups"
-  add_foreign_key "memberships", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "users", "organizations"
