@@ -7,7 +7,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
-      ## "type" is a Rails reserved word, so using "user_type" here
+      ## "type" is a Rails reserved word, so using "user_type" here;
+      ## { instructor: 1, teaching_assistant: 2, student: 3 }
       t.integer :user_type
 
       ## this is university, company, etc

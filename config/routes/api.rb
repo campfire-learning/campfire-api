@@ -4,6 +4,7 @@ namespace :api do
   namespace :v1 do
     resources :posts
     resources :courses
+    resources :klasses
     resources :groups
 
     scope :users, module: :users do

@@ -15,12 +15,13 @@ end
 User.first_or_create(
   email: 'foo@bar.com',
   password: 'password',
-  password_confirmation: 'password'
+  password_confirmation: 'password',
+  user_type: User.user_types[:student]
 )
 
 User.create!(
   email: 'bar@bar.com',
   password: 'password',
   password_confirmation: 'password',
-  role: User.roles[:admin]
+  user_type: User.user_types[:instructor]
 )

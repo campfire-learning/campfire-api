@@ -8,9 +8,11 @@ curl "http://127.0.0.1:3000/api/v1/courses/2"
 
 curl -X POST -H "Content-Type: application/json" -d '{"creator_id": 1, "owner_id": 1, "title": "Rationality 202", "description": "How to be reasonable and profitable"}' http://127.0.0.1:3000/api/v1/courses
 
-curl -X PATCH -H "Content-Type: application/json" -d '{"creator_id": 1, "owner_id": 1, "title": "Rationality 303", "description": "How to be reasonable lovable and profitable"}' http://127.0.0.1:3000/api/v1/courses/3
+curl -X PATCH -H "Content-Type: application/json" -d '{"creator_id": 1, "owner_id": 1, "title": "Rationality 303", "description": "How to be reasonable, lovable, and profitable"}' http://127.0.0.1:3000/api/v1/courses/3
 
 curl -X DELETE http://127.0.0.1:3000/api/v1/courses/3
+
+curl -X POST -H "Content-Type: application/json" -d '{"course_id": 1, "creator_id": 1, "owner_id": 1, "start_date": "2022-08-19"}' http://127.0.0.1:3000/api/v1/klasses
 
 curl -X POST -H "Content-Type: application/json" -d '{"creator_id": 1, "post_text": "wat", "context_type": 1, "pinned": 1}' http://127.0.0.1:3000/posts
 ```
