@@ -1,5 +1,5 @@
 class Api::V1::CoursesController < ApiController
-  before_action :set_course, only: %i[show edit update destroy]
+  before_action :set_course, only: %i[show update destroy]
 
   # GET /courses or /courses.json
   def index
@@ -10,16 +10,6 @@ class Api::V1::CoursesController < ApiController
   # GET /courses/1 or /courses/1.json
   def show
     render json: @course
-  end
-
-  # GET /courses/new
-  def new
-    @course = Course.new
-  end
-
-  # GET /courses/1/edit
-  def edit
-    # foo bar
   end
 
   # POST /courses or /courses.json
