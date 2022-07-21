@@ -12,4 +12,4 @@ two:
   creator: two
   owner: two
   description: MyText
-  public: false
+  public: true

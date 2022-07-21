@@ -4,9 +4,10 @@ namespace :api do
   namespace :v1 do
     resources :posts
     resources :courses
+    resources :groups
 
     scope :users, module: :users do
-      post '/', to: "registrations#create", as: :user_registration
+      post '/', to: 'registrations#create', as: :user_registration
     end
   end
 end
