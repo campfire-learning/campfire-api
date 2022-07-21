@@ -14,6 +14,8 @@ curl -X DELETE http://127.0.0.1:3000/api/v1/courses/3
 
 curl -X POST -H "Content-Type: application/json" -d '{"course_id": 1, "creator_id": 1, "owner_id": 1, "start_date": "2022-08-19"}' http://127.0.0.1:3000/api/v1/klasses
 
+curl -X POST -H "Content-Type: application/json" -d '{"name": "The Cabal", "creator_id": 1, "owner_id": 1, "description": "People who sit around campfire", "public": 1}' http://127.0.0.1:3000/api/v1/groups
+
 curl -X POST -H "Content-Type: application/json" -d '{"creator_id": 1, "post_text": "wat", "context_type": 1, "pinned": 1}' http://127.0.0.1:3000/posts
 ```
 
