@@ -1,6 +1,6 @@
 require "test_helper"
 
-class CourseOfferingEventTest < ActiveSupport::TestCase
+class KlassTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
