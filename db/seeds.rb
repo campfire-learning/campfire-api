@@ -12,6 +12,8 @@ User.first_or_create(
   email: 'foo@bar.com',
   password: 'password',
   password_confirmation: 'password',
+  first_name: 'Mars',
+  last_name: 'Jiangster',
   user_type: User.user_types[:student]
 )
 
@@ -19,6 +21,8 @@ User.create!(
   email: 'bar@bar.com',
   password: 'password',
   password_confirmation: 'password',
+  first_name: 'John',
+  last_name: 'Smith',
   user_type: User.user_types[:instructor]
 )
 

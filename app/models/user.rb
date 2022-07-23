@@ -1,9 +1,9 @@
 # The most important class in the whole application
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  # :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable, :recoverable,
+         :rememberable, :validatable, :trackable, :confirmable, :lockable
 
   validates :email, format: URI::MailTo::EMAIL_REGEXP
   enum user_type: { instructor: 1, teaching_assistant: 2, student: 3 }
