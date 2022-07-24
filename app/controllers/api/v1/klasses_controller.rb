@@ -3,8 +3,8 @@ class Api::V1::KlassesController < ApiController
 
   # GET /klasses or /klasses.json
   def index
-    @klasses = Klass.where(owner_id: params['user_id'])
-    render json: @klasses
+    user = User.find(params['user_id'])
+    render json: user.klasses
   end
 
   # GET /klasses/1 or /klasses/1.json

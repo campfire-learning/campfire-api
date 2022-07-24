@@ -8,17 +8,17 @@ if Doorkeeper::Application.count.zero?
   Doorkeeper::Application.create!(name: 'React client', redirect_uri: '', scopes: '')
 end
 
-User.first_or_create(
-  email: 'foo@bar.com',
+u1 = User.first_or_create(
+  email: 'foo@foobar.edu',
   password: 'password',
   password_confirmation: 'password',
   first_name: 'Mars',
   last_name: 'Jiangster',
-  user_type: User.user_types[:student]
+  user_type: User.user_types[:teaching_assistant]
 )
 
-User.create!(
-  email: 'bar@bar.com',
+u2 = User.create!(
+  email: 'bar2@foobar.edu',
   password: 'password',
   password_confirmation: 'password',
   first_name: 'John',
@@ -26,81 +26,133 @@ User.create!(
   user_type: User.user_types[:instructor]
 )
 
-Course.first_or_create(
+u3 = User.create!(
+  email: 'bar3@foobar.edu',
+  password: 'password',
+  password_confirmation: 'password',
+  first_name: 'Al',
+  last_name: 'Einstein',
+  user_type: User.user_types[:student]
+)
+
+c1 = Course.first_or_create(
   creator_id: 1,
   owner_id: 1,
   title: 'Rationality 101',
   description: 'How to be reasonable'
 )
 
-Course.create!(
+c2 = Course.create!(
   creator_id: 1,
   owner_id: 1,
   title: 'Rationality 202',
   description: 'How to be reasonable and profitable'
 )
 
-Course.create!(
+c3 = Course.create!(
   creator_id: 1,
   owner_id: 1,
   title: 'Rationality 303',
   description: 'How to be reasonable, lovable, and profitable'
 )
 
-Klass.first_or_create(
-  course_id: 1,
+k1 = Klass.first_or_create(
+  course_id: c1.id,
   creator_id: 1,
   owner_id: 1,
   start_date: '2022-08-19'
 )
 
+k2 = Klass.create!(
+  course_id: c2.id,
+  creator_id: u2.id,
+  owner_id: u2.id,
+  start_date: '2022-08-19'
+)
+
+k3 = Klass.create!(
+  course_id: c3.id,
+  creator_id: u2.id,
+  owner_id: u1.id,
+  start_date: '2022-08-19'
+)
+
 Klass.create!(
-  course_id: 1,
-  creator_id: 1,
-  owner_id: 1,
+  course_id: c3.id,
+  creator_id: u2.id,
+  owner_id: u2.id,
   start_date: '2030-08-19'
 )
 
-KlassMembership.first_or_create(
-  klass_id: 1,
-  user_id: 1,
-  role: 1
+KlassMembership.create!(
+  klass_id: k2.id,
+  user_id: u1.id,
+  role: 2
 )
 
 KlassMembership.create!(
-  klass_id: 1,
-  user_id: 2,
+  klass_id: k3.id,
+  user_id: u1.id,
+  role: 2
+)
+
+KlassMembership.create!(
+  klass_id: k1.id,
+  user_id: u1.id,
+  role: 2
+)
+
+KlassMembership.first_or_create(
+  klass_id: k1.id,
+  user_id: u1.id,
   role: 3
 )
 
-Group.first_or_create(
+KlassMembership.first_or_create(
+  klass_id: k1.id,
+  user_id: u3.id,
+  role: 3
+)
+
+KlassMembership.create!(
+  klass_id: k2.id,
+  user_id: u3.id,
+  role: 3
+)
+
+g1 = Group.first_or_create(
   name: 'The Cabal',
-  creator_id: 1,
-  owner_id: 1,
+  creator_id: u1.id,
+  owner_id: u1.id,
   description: 'People who sit around campfire',
   public: 1
 )
 
-Group.create(
+g2 = Group.create!(
   name: 'The Murder',
-  creator_id: 1,
-  owner_id: 1,
+  creator_id: u1.id,
+  owner_id: u2.id,
   description: 'A group of crows is called a murder',
   public: 1
 )
 
-GroupMembership.first_or_create(
-  group_id: 1,
-  user_id: 1
+GroupMembership.create!(
+  group_id: g1.id,
+  user_id: u1.id
 )
 
 GroupMembership.create!(
-  group_id: 1,
-  user_id: 2
+  group_id: g2.id,
+  user_id: u1.id
 )
 
-Post.first_or_create(
-  creator_id: 1,
+GroupMembership.create!(
+  group_id: g1.id,
+  user_id: u3.id
+)
+
+Post.first_or_create!(
+  creator_id: u1.id,
   post_text: 'Success is intentional',
   context_type: 1,
   context_id: 1,
@@ -108,7 +160,7 @@ Post.first_or_create(
 )
 
 Post.create!(
-  creator_id: 1,
+  creator_id: u1.id,
   post_text: 'Failure is simply the lack of intention',
   context_type: 2,
   context_id: 1
