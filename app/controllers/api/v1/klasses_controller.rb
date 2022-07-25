@@ -4,7 +4,11 @@ class Api::V1::KlassesController < ApiController
   # GET /klasses or /klasses.json
   def index
     user = User.find(params['user_id'])
-    render json: user.klasses
+    klasses = user.klasses.map do |klass|
+      klass.course.as_json.merge({ start_date: klass.start_date })
+    end
+
+    render json: { klasses: klasses }
   end
 
   # GET /klasses/1 or /klasses/1.json

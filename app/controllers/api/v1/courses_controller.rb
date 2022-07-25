@@ -3,8 +3,8 @@ class Api::V1::CoursesController < ApiController
 
   # GET /courses or /courses.json
   def index
-    @courses = Course.where(owner_id: params['user_id'])
-    render json: @courses
+    user = User.find(params['user_id'])
+    render json: user.courses
   end
 
   # GET /courses/1 or /courses/1.json

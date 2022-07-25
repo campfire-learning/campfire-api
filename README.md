@@ -3,7 +3,8 @@
 ## Testing endpoints
 
 ```
-curl "http://127.0.0.1:3000/api/v1/courses.json?user_id=1"
+curl "http://127.0.0.1:3000/api/v1/courses?user_id=1"
+curl "http://127.0.0.1:3000/api/v1/klasses?user_id=1"
 curl "http://127.0.0.1:3000/api/v1/courses/2"
 
 curl -X POST -H "Content-Type: application/json" -d '{"creator_id": 1, "owner_id": 1, "title": "Rationality 202", "description": "How to be reasonable and profitable"}' http://127.0.0.1:3000/api/v1/courses
