@@ -107,6 +107,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
     t.integer "course_id", null: false
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
+    t.integer "year", null: false
+    t.integer "term", null: false
     t.date "start_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

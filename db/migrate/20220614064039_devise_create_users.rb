@@ -11,7 +11,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :last_name, null: false
 
       ## "type" is a Rails reserved word, so using "user_type" here;
-      ## { instructor: 1, teaching_assistant: 2, student: 3 }
       t.integer :user_type
 
       ## this is university, company, etc
