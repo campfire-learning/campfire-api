@@ -1,11 +1,11 @@
 one:
-  klass: one
+  course: one
   description: MyText
   assignment_type: 1
   percent: 1.5
 
 two:
-  klass: two
+  course: two
   description: MyText
   assignment_type: 1
   percent: 1.5

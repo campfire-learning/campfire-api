@@ -12,13 +12,13 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_07_02_233602) do
   create_table "assignments", force: :cascade do |t|
-    t.integer "klass_id", null: false
+    t.integer "course_id", null: false
     t.text "description"
     t.integer "assignment_type"
     t.float "percent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["klass_id"], name: "index_assignments_on_klass_id"
+    t.index ["course_id"], name: "index_assignments_on_course_id"
   end
 
   create_table "course_events", force: :cascade do |t|
@@ -186,7 +186,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_233602) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  add_foreign_key "assignments", "klasses"
+  add_foreign_key "assignments", "courses"
   add_foreign_key "courses", "users", column: "creator_id"
   add_foreign_key "courses", "users", column: "owner_id"
   add_foreign_key "followings", "users", column: "followee_id"
