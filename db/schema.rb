@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_02_233602) do
   create_table "assignments", force: :cascade do |t|
     t.integer "klass_id", null: false
     t.text "description"
@@ -23,18 +23,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
 
   create_table "course_events", force: :cascade do |t|
     t.integer "course_id", null: false
-    t.string "title"
-    t.integer "event_type"
+    t.string "title", null: false
     t.string "description"
+    t.integer "event_type", null: false
+    t.datetime "event_time", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_course_events_on_course_id"
+  end
+
+  create_table "course_memberships", force: :cascade do |t|
+    t.integer "course_id", null: false
+    t.integer "user_id", null: false
+    t.integer "role", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_course_memberships_on_course_id"
+    t.index ["user_id"], name: "index_course_memberships_on_user_id"
   end
 
   create_table "courses", force: :cascade do |t|
     t.string "title", null: false
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
+    t.integer "year", null: false
+    t.integer "term", null: false
+    t.date "start_date", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -80,41 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_groups_on_creator_id"
     t.index ["owner_id"], name: "index_groups_on_owner_id"
-  end
-
-  create_table "klass_events", force: :cascade do |t|
-    t.integer "klass_id", null: false
-    t.integer "course_event_id", null: false
-    t.datetime "start_time", precision: nil
-    t.integer "duration"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["course_event_id"], name: "index_klass_events_on_course_event_id"
-    t.index ["klass_id"], name: "index_klass_events_on_klass_id"
-  end
-
-  create_table "klass_memberships", force: :cascade do |t|
-    t.integer "klass_id", null: false
-    t.integer "user_id", null: false
-    t.integer "role", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["klass_id"], name: "index_klass_memberships_on_klass_id"
-    t.index ["user_id"], name: "index_klass_memberships_on_user_id"
-  end
-
-  create_table "klasses", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.integer "creator_id", null: false
-    t.integer "owner_id", null: false
-    t.integer "year", null: false
-    t.integer "term", null: false
-    t.date "start_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_klasses_on_course_id"
-    t.index ["creator_id"], name: "index_klasses_on_creator_id"
-    t.index ["owner_id"], name: "index_klasses_on_owner_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -209,7 +187,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
   end
 
   add_foreign_key "assignments", "klasses"
-  add_foreign_key "course_events", "courses"
   add_foreign_key "courses", "users", column: "creator_id"
   add_foreign_key "courses", "users", column: "owner_id"
   add_foreign_key "followings", "users", column: "followee_id"
@@ -220,11 +197,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_234543) do
   add_foreign_key "group_memberships", "users"
   add_foreign_key "groups", "users", column: "creator_id"
   add_foreign_key "groups", "users", column: "owner_id"
-  add_foreign_key "klass_events", "course_events"
-  add_foreign_key "klass_events", "klasses"
-  add_foreign_key "klasses", "courses"
-  add_foreign_key "klasses", "users", column: "creator_id"
-  add_foreign_key "klasses", "users", column: "owner_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "users", "organizations"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The most important class in the whole application
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -6,13 +8,12 @@ class User < ApplicationRecord
          :rememberable, :validatable, :trackable, :confirmable, :lockable
 
   validates :email, format: URI::MailTo::EMAIL_REGEXP
-  enum user_type: { instructor_type: 1, student_type: 2, assistant_type: 3 }
+  enum user_type: { instructor_type: 1, assistant_type: 2, student_type: 3 }
 
   belongs_to :organization, optional: true
-  has_many :courses, foreign_key: :owner_id
-
-  has_many :klass_memberships
-  has_many :klasses, through: :klass_memberships
+  has_many :owned_courses, foreign_key: :owner_id, class_name: :Course
+  has_many :course_memberships
+  has_many :courses, through: :course_memberships
   has_many :group_memberships
   has_many :groups, through: :group_memberships
 
