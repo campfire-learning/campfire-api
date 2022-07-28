@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :owned_courses, foreign_key: :owner_id, class_name: :Course
   has_many :course_memberships
   has_many :courses, through: :course_memberships
+  has_many :owned_groups, foreign_key: :owner_id, class_name: :Group
   has_many :group_memberships
   has_many :groups, through: :group_memberships
 

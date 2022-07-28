@@ -3,8 +3,8 @@ class Api::V1::GroupsController < ApiController
 
   # GET /groups or /groups.json
   def index
-    @groups = Group.where(owner_id: params['user_id'])
-    render json: @groups
+    user = User.find(params['user_id'])
+    render json: user.groups
   end
 
   # GET /groups/1 or /groups/1.json
