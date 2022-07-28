@@ -4,7 +4,7 @@ class Api::V1::CoursesController < ApiController
   # GET /courses or /courses.json
   def index
     user = User.find(params['user_id'])
-    render json: user.courses
+    render json: user.courses.order(created_at: :desc).uniq
   end
 
   # GET /courses/1 or /courses/1.json
