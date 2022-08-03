@@ -14,11 +14,19 @@ class Api::V1::CoursesController < ApiController
 
   # POST /courses or /courses.json
   def create
-    @course = Course.new(course_params)
+    @course = Course.new(
+      course_params.merge(creator_id: params[:user_id], owner_id: params[:user_id])
+    )
 
     if @course.save
+      CourseMembership.create(
+        course_id: @course.id,
+        user_id: params[:user_id],
+        role: CourseMembership.roles[:instructor],
+      )
       render json: @course, status: :created
     else
+      @course.errors.each { |err| puts err.full_message }
       render json: @course.errors, status: :unprocessable_entity
     end
   end
@@ -47,6 +55,6 @@ class Api::V1::CoursesController < ApiController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:creator_id, :owner_id, :title, :description)
+    params.require(:course).permit(:creator_id, :owner_id, :title, :description, :year, :term, :start_date)
   end
 end

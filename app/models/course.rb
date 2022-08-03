@@ -7,5 +7,5 @@ class Course < ApplicationRecord
   has_many :course_memberships
   has_many :members, through: :course_memberships, source: :user
 
-  enum term: { spring: 1, summer: 2, fall: 3, winter: 4 }
+  enum term: { Spring: 1, Summer: 2, Fall: 3, Winter: 4 }
 end

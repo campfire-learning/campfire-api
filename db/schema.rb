@@ -49,6 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_233602) do
     t.integer "term", null: false
     t.date "start_date", null: false
     t.text "description"
+    t.text "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_courses_on_creator_id"

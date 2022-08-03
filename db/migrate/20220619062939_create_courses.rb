@@ -8,6 +8,7 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.integer :term, null: false
       t.date :start_date, null: false
       t.text :description
+      t.text :location
 
       t.timestamps
     end
