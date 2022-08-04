@@ -5,7 +5,7 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.references :creator, null: false, foreign_key: { to_table: :users }
       t.references :owner, null: false, foreign_key: { to_table: :users }
       t.integer :year, null: false
-      t.integer :term, null: false
+      t.integer :term
       t.date :start_date, null: false
       t.text :description
       t.text :location
