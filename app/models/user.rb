@@ -11,6 +11,7 @@ class User < ApplicationRecord
   enum user_type: { instructor_type: 1, assistant_type: 2, student_type: 3 }
 
   belongs_to :organization, optional: true
+  has_one :time_zone
   has_many :owned_courses, foreign_key: :owner_id, class_name: :Course
   has_many :course_memberships
   has_many :courses, through: :course_memberships

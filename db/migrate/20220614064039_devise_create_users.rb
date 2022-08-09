@@ -14,7 +14,11 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.integer :user_type
 
       ## this is university, company, etc
-      t.references :organization, null: true, foreign_key: true
+      t.references :organization, foreign_key: true
+
+      ## user's time zone, used in showing time in the UI;
+      ## for example timestamps in posts and comments
+      t.references :time_zone
 
       ## Recoverable
       t.string   :reset_password_token

@@ -154,3 +154,11 @@ Post.create(
   context_type: 2,
   context_id: 1
 )
+
+ActiveSupport::TimeZone.all.each do |tz|
+  TimeZone.create(
+    name: tz.name,
+    tz_identifier: tz.tzinfo.name,
+    utc_offset: tz.utc_offset
+  )
+end

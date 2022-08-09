@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_02_233602) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_08_061206) do
   create_table "assignments", force: :cascade do |t|
     t.integer "course_id", null: false
     t.text "description"
@@ -156,6 +156,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_233602) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "time_zones", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "tz_identifier", null: false
+    t.integer "utc_offset", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "encrypted_password", null: false
@@ -163,6 +171,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_233602) do
     t.string "last_name", null: false
     t.integer "user_type"
     t.integer "organization_id"
+    t.integer "time_zone_id"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -184,6 +193,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_02_233602) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["time_zone_id"], name: "index_users_on_time_zone_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
