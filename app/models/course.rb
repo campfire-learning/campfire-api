@@ -6,6 +6,7 @@ class Course < ApplicationRecord
   has_many :events, class_name: :CourseEvent
   has_many :course_memberships
   has_many :members, through: :course_memberships, source: :user
+  belongs_to :time_zone
 
   enum term: { Spring: 1, Summer: 2, Fall: 3, Winter: 4 }
 end

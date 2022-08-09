@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_061206) do
     t.string "title", null: false
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
+    t.integer "time_zone_id"
     t.integer "year", null: false
     t.integer "term"
     t.date "start_date", null: false
@@ -54,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_061206) do
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_courses_on_creator_id"
     t.index ["owner_id"], name: "index_courses_on_owner_id"
+    t.index ["time_zone_id"], name: "index_courses_on_time_zone_id"
   end
 
   create_table "followings", id: false, force: :cascade do |t|
