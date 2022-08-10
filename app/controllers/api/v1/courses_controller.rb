@@ -22,7 +22,7 @@ class Api::V1::CoursesController < ApiController
       CourseMembership.create(
         course_id: @course.id,
         user_id: params[:user_id],
-        role: CourseMembership.roles[:instructor],
+        role: CourseMembership.roles[:instructor]
       )
       render json: @course, status: :created
     else
@@ -34,7 +34,13 @@ class Api::V1::CoursesController < ApiController
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
     if @course.update(course_params)
-      CourseEvent.upsert_all(params[:events]) if params[:events].size.positive?
+      if params[:events].size.positive?
+        events = params[:events].map do |event|
+          event['course_id'] = @course.id
+          event
+        end
+        CourseEvent.upsert_all(events)
+      end
       render json: @course, status: :ok
     else
       render json: @course.errors, status: :unprocessable_entity

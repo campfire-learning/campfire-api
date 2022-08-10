@@ -100,7 +100,15 @@ CourseEvent.create(
   title: 'See the society through statistics',
   description: 'The only way to understand the society is through statistics',
   event_type: CourseEvent.event_types[:lecture],
-  event_time: DateTime.now
+  event_time: DateTime.current
+)
+
+CourseEvent.create(
+  course_id: c2.id,
+  title: 'See the society through statistics 2',
+  description: 'The only way to understand the society is through statistics 2',
+  event_type: CourseEvent.event_types[:discussion],
+  event_time: DateTime.new(2022, 8, 29, 10, 15).change({ offset: '-0700' })
 )
 
 g1 = Group.first_or_create(
