@@ -34,6 +34,7 @@ class Api::V1::CoursesController < ApiController
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
     if @course.update(course_params)
+      CourseEvent.upsert_all(params[:events]) if params[:events].size.positive?
       render json: @course, status: :ok
     else
       render json: @course.errors, status: :unprocessable_entity
@@ -55,6 +56,6 @@ class Api::V1::CoursesController < ApiController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:creator_id, :owner_id, :title, :description, :year, :term, :start_date)
+    params.require(:course).permit(:creator_id, :owner_id, :title, :description, :year, :term, :location, :start_date)
   end
 end
