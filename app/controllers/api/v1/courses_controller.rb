@@ -35,10 +35,7 @@ class Api::V1::CoursesController < ApiController
   def update
     if @course.update(course_params)
       if params[:events].size.positive?
-        events = params[:events].map do |event|
-          event['course_id'] = @course.id
-          event
-        end
+        events = params[:events].map { |event| event.merge(course_id: @course.id) }
         CourseEvent.upsert_all(events)
       end
       render json: @course, status: :ok

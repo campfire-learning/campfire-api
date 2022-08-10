@@ -8,5 +8,5 @@ class Course < ApplicationRecord
   has_many :members, through: :course_memberships, source: :user
   belongs_to :time_zone, optional: true
 
-  enum term: { Spring: 1, Summer: 2, Fall: 3, Winter: 4 }
+  enum term: { spring: 1, summer: 2, fall: 3, winter: 4 }
 end
