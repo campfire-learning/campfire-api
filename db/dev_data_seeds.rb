@@ -145,14 +145,13 @@ GroupMembership.create(
 Post.first_or_create(
   creator_id: u1.id,
   post_text: 'Success is intentional',
-  context_type: 1,
-  context_id: 1,
+  context: g1,
   pinned: 1
 )
 
 Post.create(
   creator_id: u1.id,
-  post_text: 'Failure is simply the lack of intention',
-  context_type: 2,
-  context_id: 1
+  post_text: 'Failure is simply the result of lack of intention',
+  context: c2,
+  pinned: 0
 )
