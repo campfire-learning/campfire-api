@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_08_061206) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_12_005446) do
   create_table "assignments", force: :cascade do |t|
     t.integer "course_id", null: false
     t.text "description"
@@ -19,6 +19,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_061206) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_assignments_on_course_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "comment_text", null: false
+    t.integer "creator_id", null: false
+    t.string "context_type", null: false
+    t.integer "context_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "course_events", force: :cascade do |t|
@@ -98,6 +107,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_061206) do
     t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "likable_id", null: false
+    t.string "likable_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likable_type", "likable_id"], name: "index_likes_on_likable_type_and_likable_id"
+    t.index ["user_id", "likable_type", "likable_id"], name: "index_likes_on_user_id_and_likable_type_and_likable_id", unique: true
+  end
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer "resource_owner_id", null: false
     t.integer "application_id", null: false
@@ -150,10 +169,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_061206) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "creator_id"
-    t.text "post_text"
-    t.string "context_type"
-    t.integer "context_id"
-    t.boolean "pinned"
+    t.text "post_text", null: false
+    t.string "context_type", null: false
+    t.integer "context_id", null: false
+    t.boolean "pinned", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

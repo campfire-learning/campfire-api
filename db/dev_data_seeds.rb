@@ -16,6 +16,7 @@ u2 = User.create(
   password_confirmation: 'password',
   first_name: 'John',
   last_name: 'Smith',
+  time_zone_id: 12,
   user_type: User.user_types[:instructor]
 )
 
@@ -25,6 +26,7 @@ u3 = User.create(
   password_confirmation: 'password',
   first_name: 'Al',
   last_name: 'Einstein',
+  time_zone_id: 2,
   user_type: User.user_types[:student]
 )
 
@@ -142,16 +144,44 @@ GroupMembership.create(
   user_id: u3.id
 )
 
-Post.first_or_create(
+p1 = Post.create(
   creator_id: u1.id,
   post_text: 'Success is intentional',
   context: g1,
   pinned: 1
 )
 
-Post.create(
+p2 = Post.create(
   creator_id: u1.id,
   post_text: 'Failure is simply the result of lack of intention',
   context: c2,
   pinned: 0
+)
+
+cm1 = Comment.create(
+  creator_id: u1.id,
+  comment_text: 'Success is intentional',
+  context: g1
+)
+
+cm2 = Comment.create(
+  creator: u1,
+  comment_text: 'Failure is simply the result of lack of intention',
+  context: c2
+)
+
+Like.create(
+  user_id: 1,
+  likable_id: 1,
+  likable_type: 'Post'
+)
+
+Like.create(
+  user: u2,
+  likable: cm2
+)
+
+Like.create(
+  user: u2,
+  likable: cm1
 )

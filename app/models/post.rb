@@ -9,4 +9,6 @@ class Post < ApplicationRecord
   # we need polymorphic association to support this flexibility (instead
   # of creating 3 different types of posts).
   belongs_to :context, polymorphic: true
+
+  has_many :likes, as: :likable
 end

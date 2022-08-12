@@ -2,10 +2,10 @@ class CreatePosts < ActiveRecord::Migration[7.0]
   def change
     create_table :posts do |t|
       t.integer :creator_id, foreign_key: { to_table: :users }
-      t.text :post_text
-      t.string :context_type
-      t.integer :context_id
-      t.boolean :pinned
+      t.text :post_text, null: false
+      t.string :context_type, null: false
+      t.integer :context_id, null: false
+      t.boolean :pinned, default: false
 
       t.timestamps
     end
