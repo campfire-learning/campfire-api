@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   # before_action :authenticate_user!
 
   def home
-    render json: 'Hello World!'
+    render json: {message: 'Hello World!'}
   end
 
   def myposts

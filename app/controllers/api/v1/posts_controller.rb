@@ -3,8 +3,8 @@ class Api::V1::PostsController < ApiController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
-    render json: @posts
+    @posts = Post.includes(:author, :comments).all
+    render json: @posts, include: %i[author comments]
   end
 
   # GET /posts/1 or /posts/1.json

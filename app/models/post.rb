@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  belongs_to :creator, class_name: :User
+  belongs_to :author, class_name: :User
 
   # "context" refers to the location where the post is published:
   # 1. "course" - a post is published to a course
@@ -10,5 +10,6 @@ class Post < ApplicationRecord
   # of creating 3 different types of posts).
   belongs_to :context, polymorphic: true
 
+  has_many :comments, as: :context
   has_many :likes, as: :likable
 end

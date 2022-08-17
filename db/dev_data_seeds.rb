@@ -145,27 +145,27 @@ GroupMembership.create(
 )
 
 p1 = Post.create(
-  creator_id: u1.id,
+  author_id: u1.id,
   post_text: 'Success is intentional',
   context: g1,
   pinned: 1
 )
 
 p2 = Post.create(
-  creator_id: u1.id,
+  author_id: u1.id,
   post_text: 'Failure is simply the result of lack of intention',
   context: c2,
   pinned: 0
 )
 
 cm1 = Comment.create(
-  creator_id: u1.id,
+  author_id: u1.id,
   comment_text: 'Success is intentional',
   context: g1
 )
 
 cm2 = Comment.create(
-  creator: u1,
+  author: u1,
   comment_text: 'Failure is simply the result of lack of intention',
   context: c2
 )

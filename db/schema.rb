@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_005446) do
 
   create_table "comments", force: :cascade do |t|
     t.string "comment_text", null: false
-    t.integer "creator_id", null: false
+    t.integer "author_id", null: false
     t.string "context_type", null: false
     t.integer "context_id", null: false
     t.datetime "created_at", null: false
@@ -168,7 +168,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_005446) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "creator_id"
+    t.integer "author_id"
     t.text "post_text", null: false
     t.string "context_type", null: false
     t.integer "context_id", null: false

@@ -8,7 +8,7 @@ class User < ApplicationRecord
          :rememberable, :validatable, :trackable, :confirmable, :lockable
 
   validates :email, format: URI::MailTo::EMAIL_REGEXP
-  enum user_type: { instructor_type: 1, assistant_type: 2, student_type: 3 }
+  enum user_type: { instructor: 1, assistant: 2, student: 3 }
 
   belongs_to :organization, optional: true
   belongs_to :time_zone
@@ -18,6 +18,10 @@ class User < ApplicationRecord
   has_many :owned_groups, foreign_key: :owner_id, class_name: :Group
   has_many :group_memberships
   has_many :groups, through: :group_memberships
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 
   def self.authenticate(email, password)
     user = User.find_for_authentication(email: email)
