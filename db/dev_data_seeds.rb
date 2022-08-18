@@ -170,6 +170,24 @@ cm2 = Comment.create(
   context: c2
 )
 
+cm3 = Comment.create(
+  author_id: u1.id,
+  comment_text: 'Of course intention does not always lead to success',
+  context: p1
+)
+
+cm4 = Comment.create(
+  author_id: u2.id,
+  comment_text: 'But you have to have it to begin with',
+  context: p1
+)
+
+cm5 = Comment.create(
+  author_id: u1.id,
+  comment_text: 'Indeed intention is the first',
+  context: p2
+)
+
 Like.create(
   user_id: 1,
   likable_id: 1,
