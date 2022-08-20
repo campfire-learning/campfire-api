@@ -5,6 +5,8 @@ namespace :api do
     resources :posts
     resources :courses
     resources :groups
+    resources :users
+    resources :comments
 
     scope :users, module: :users do
       post '/', to: 'registrations#create', as: :user_registration

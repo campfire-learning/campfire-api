@@ -3,8 +3,14 @@ class Api::V1::PostsController < ApiController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.includes(:author, comments: [:author]).all
-    render json: @posts, include: [:author, { comments: { include: :author } }]
+    query = Post.includes(:author, comments: [:author])
+    if params[:group_id]
+      posts = query.where(context_type: 'Group', context_id: params[:group_id])
+    elsif params[:course_id]
+      posts = query.where(context_type: 'Course', context_id: params[:course_id])
+    end
+
+    render json: posts, include: [:author, { comments: { include: :author } }]
   end
 
   # GET /posts/1 or /posts/1.json
