@@ -147,44 +147,42 @@ GroupMembership.create(
 p1 = Post.create(
   author_id: u1.id,
   post_text: 'Success is intentional',
-  context: g1,
-  pinned: 1
+  context: g1
 )
 
 p2 = Post.create(
   author_id: u1.id,
   post_text: 'Failure is simply the result of lack of intention',
-  context: c2,
-  pinned: 0
-)
-
-cm1 = Comment.create(
-  author_id: u1.id,
-  comment_text: 'Success is intentional',
-  context: g1
-)
-
-cm2 = Comment.create(
-  author: u1,
-  comment_text: 'Failure is simply the result of lack of intention',
   context: c2
 )
 
-cm3 = Comment.create(
-  author_id: u1.id,
-  comment_text: 'Of course intention does not always lead to success',
-  context: p1
-)
-
-cm4 = Comment.create(
+p3 = Post.create(
   author_id: u2.id,
-  comment_text: 'But you have to have it to begin with',
+  post_text: 'Success is intentional and it is highly actional',
+  context: g1
+)
+
+p4 = Post.create(
+  author: u1,
+  post_text: 'Failure is simply the result of lack of intention',
+  context: c2
+)
+
+cm1 = Post.create(
+  author_id: u1.id,
+  post_text: 'Of course intention does not always lead to success',
   context: p1
 )
 
-cm5 = Comment.create(
+cm2 = Post.create(
+  author_id: u2.id,
+  post_text: 'But you have to have it to begin with',
+  context: p1
+)
+
+cm3 = Post.create(
   author_id: u1.id,
-  comment_text: 'Indeed intention is the first',
+  post_text: 'Indeed intention is the first',
   context: p2
 )
 

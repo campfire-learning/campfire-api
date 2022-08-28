@@ -7,6 +7,7 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.references :time_zone
       t.integer :year, null: false
       t.integer :term
+      t.integer :pinned_post_id
       t.date :start_date, null: false
       t.text :description
       t.text :location

@@ -5,7 +5,6 @@ class CreatePosts < ActiveRecord::Migration[7.0]
       t.text :post_text, null: false
       t.string :context_type, null: false
       t.integer :context_id, null: false
-      t.boolean :pinned, default: false
 
       t.timestamps
     end

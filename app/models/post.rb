@@ -10,6 +10,7 @@ class Post < ApplicationRecord
   # of creating 3 different types of posts).
   belongs_to :context, polymorphic: true
 
-  has_many :comments, as: :context
+  # comments are just posts attached to another post
+  has_many :comments, class_name: :Post, as: :context
   has_many :likes, as: :likable
 end

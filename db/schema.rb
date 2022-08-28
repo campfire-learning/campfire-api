@@ -21,15 +21,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_005446) do
     t.index ["course_id"], name: "index_assignments_on_course_id"
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.string "comment_text", null: false
-    t.integer "author_id", null: false
-    t.string "context_type", null: false
-    t.integer "context_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "course_events", force: :cascade do |t|
     t.integer "course_id", null: false
     t.string "title", null: false
@@ -57,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_005446) do
     t.integer "time_zone_id"
     t.integer "year", null: false
     t.integer "term"
+    t.integer "pinned_post_id"
     t.date "start_date", null: false
     t.text "description"
     t.text "location"
@@ -99,6 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_005446) do
     t.string "name", null: false
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
+    t.integer "pinned_post_id"
     t.text "description"
     t.boolean "public"
     t.datetime "created_at", null: false
@@ -172,7 +165,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_005446) do
     t.text "post_text", null: false
     t.string "context_type", null: false
     t.integer "context_id", null: false
-    t.boolean "pinned", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -9,7 +9,8 @@ class Api::V1::CoursesController < ApiController
 
   # GET /courses/1 or /courses/1.json
   def show
-    render json: @course
+    @course = Course.includes(:events).find(params[:id])
+    render json: @course, include: [:events]
   end
 
   # POST /courses or /courses.json
@@ -26,7 +27,6 @@ class Api::V1::CoursesController < ApiController
       )
       render json: @course, status: :created
     else
-      @course.errors.each { |err| puts err.full_message }
       render json: @course.errors, status: :unprocessable_entity
     end
   end
@@ -36,8 +36,15 @@ class Api::V1::CoursesController < ApiController
     if @course.update(course_params)
       if params[:events].size.positive?
         events = params[:events].map { |event| event.merge(course_id: @course.id) }
-        CourseEvent.upsert_all(events)
+        existing_events = events.select { |e| e.key? 'id' }
+        new_events = events.to_a.reject { |e| e.key? 'id' }
+        CourseEvent.upsert_all(existing_events) unless existing_events.empty?
+        CourseEvent.insert_all(new_events) unless new_events.empty?
       end
+      if params[:deleted_events].size.positive?
+        CourseEvent.where(id: params[:deleted_events]).delete_all
+      end
+
       render json: @course, status: :ok
     else
       render json: @course.errors, status: :unprocessable_entity
