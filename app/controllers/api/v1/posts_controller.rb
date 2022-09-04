@@ -5,10 +5,10 @@ class Api::V1::PostsController < ApiController
   # GET /posts or /posts.json
   def index
     posts = Post
-            .includes(:author, comments: [:author])
+            .includes(:author, comments: [:author], likes: [:user])
             .where(context_type: params[:context_type], context_id: params[:context_id])
             .order(created_at: :desc)
-    render json: posts, include: [:author, { comments: { include: :author } }]
+    render json: posts, include: [:author, { comments: { include: :author } }, { likes: { include: :user } }]
   end
 
   # GET /posts/1 or /posts/1.json
