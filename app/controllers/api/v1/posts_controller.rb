@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApiController
   before_action :set_post, only: %i[show edit update destroy]
-  before_action :validate_context_type, except: %i[destroy update]
+  # before_action :validate_context_type, except: %i[destroy update]
 
   # GET /posts or /posts.json
   def index
@@ -8,7 +8,19 @@ class Api::V1::PostsController < ApiController
             .includes(:author, comments: [:author], likes: [:user])
             .where(context_type: params[:context_type], context_id: params[:context_id])
             .order(created_at: :desc)
-    render json: posts, include: [:author, { comments: { include: :author } }, { likes: { include: :user } }]
+
+    results = []
+    posts.map do |post|
+      post_hash = post.serializable_hash(
+        include: [:author, { comments: { include: :author } }, { likes: { include: :user } }]
+      )
+      if post.images.attached?
+        post_hash['image_urls'] = post.images.map { |img| Rails.application.routes.url_helpers.url_for(img) }
+      end
+      results.push(post_hash)
+    end
+
+    render json: results
   end
 
   # GET /posts/1 or /posts/1.json
@@ -24,11 +36,15 @@ class Api::V1::PostsController < ApiController
 
   # POST /posts or /posts.json
   def create
+    puts "original params: #{params}"
+    puts "post params: #{post_params}"
     post = Post.new(post_params
-      .merge({ author_id: params['user_id'] })
+      .merge({ author_id: params['post']['user_id'] })
       .except(:user_id))
     if post.save
-      render json: post, status: :created
+      post_hash = post.serializable_hash
+      post_hash['image_urls'] = post.images.map { |img| Rails.application.routes.url_helpers.url_for(img) }
+      render json: post_hash, status: :created
     else
       post.errors.each { |err| puts err.full_message }
       render json: post.errors, status: :unprocessable_entity
@@ -66,6 +82,7 @@ class Api::V1::PostsController < ApiController
   end
 
   def validate_context_type
+    puts "Validating original params: #{params}"
     return if %w[Group Course Post].include? params[:context_type]
 
     render json: { message: "Wrong context type for post: #{params[:context_type]}" },
@@ -74,6 +91,6 @@ class Api::V1::PostsController < ApiController
 
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:user_id, :post_text, :context_type, :context_id)
+    params.require(:post).permit(:user_id, :post_text, :context_type, :context_id, images: [])
   end
 end

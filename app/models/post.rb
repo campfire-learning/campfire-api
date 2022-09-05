@@ -13,4 +13,10 @@ class Post < ApplicationRecord
   # comments are just posts attached to another post
   has_many :comments, class_name: :Post, as: :context
   has_many :likes, as: :likable
+
+  has_many_attached :images
+
+  def image_urls
+    images.map { |image| Rails.application.routes.url_helpers.url_for(image) }
+  end
 end
