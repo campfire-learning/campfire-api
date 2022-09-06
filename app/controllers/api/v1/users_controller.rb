@@ -1,24 +1,19 @@
 class Api::V1::UsersController < ApiController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users or /users.json
   def index
     if params[:group_id]
-      group = Group.find(params[:group_id])
-      users = group.members
+      memberships = Group.find(params[:group_id]).group_memberships
     elsif params[:course_id]
-      course = Course.find(params[:course_id])
-      users = course.members
-    else
-      users = User.all
+      memberships = Course.find(params[:course_id]).course_memberships
     end
 
-    render json: users
+    render json: memberships, include: :user
   end
 
   # GET /users/1 or /users/1.json
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -26,8 +21,7 @@ class Api::V1::UsersController < ApiController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users or /users.json
   def create
@@ -35,7 +29,7 @@ class Api::V1::UsersController < ApiController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
+        format.html { redirect_to user_url(@user), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -48,7 +42,7 @@ class Api::V1::UsersController < ApiController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+        format.html { redirect_to user_url(@user), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -62,7 +56,7 @@ class Api::V1::UsersController < ApiController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
