@@ -34,17 +34,6 @@ class Api::V1::CoursesController < ApiController
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
     if @course.update(course_params)
-      if params[:events].size.positive?
-        events = params[:events].map { |event| event.merge(course_id: @course.id) }
-        existing_events = events.select { |e| e.key? 'id' }
-        new_events = events.to_a.reject { |e| e.key? 'id' }
-        CourseEvent.upsert_all(existing_events) unless existing_events.empty?
-        CourseEvent.insert_all(new_events) unless new_events.empty?
-      end
-      if params[:deleted_events].size.positive?
-        CourseEvent.where(id: params[:deleted_events]).delete_all
-      end
-
       render json: @course, status: :ok
     else
       render json: @course.errors, status: :unprocessable_entity
@@ -66,6 +55,16 @@ class Api::V1::CoursesController < ApiController
 
   # Only allow a list of trusted parameters through.
   def course_params
-    params.require(:course).permit(:creator_id, :owner_id, :title, :description, :year, :term, :location, :start_date)
+    params.require(:course).permit(
+      :creator_id,
+      :owner_id,
+      :title,
+      :description,
+      :year,
+      :term,
+      :location,
+      :start_date,
+      :syllabus
+    )
   end
 end

@@ -4,13 +4,14 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.string :title, null: false
       t.references :creator, null: false, foreign_key: { to_table: :users }
       t.references :owner, null: false, foreign_key: { to_table: :users }
-      t.references :time_zone
       t.integer :year, null: false
       t.integer :term
       t.integer :pinned_post_id
-      t.date :start_date, null: false
+      t.date :start_date
+      t.references :time_zone
+      t.string :location
       t.text :description
-      t.text :location
+      t.text :syllabus
 
       t.timestamps
     end

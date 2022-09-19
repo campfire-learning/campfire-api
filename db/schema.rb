@@ -73,13 +73,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_04_191956) do
     t.string "title", null: false
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
-    t.integer "time_zone_id"
     t.integer "year", null: false
     t.integer "term"
     t.integer "pinned_post_id"
-    t.date "start_date", null: false
+    t.date "start_date"
+    t.integer "time_zone_id"
+    t.string "location"
     t.text "description"
-    t.text "location"
+    t.text "syllabus"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_courses_on_creator_id"
