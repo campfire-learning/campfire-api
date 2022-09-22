@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApiController
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit feed update destroy]
 
   # GET /users or /users.json
   def index
@@ -49,6 +49,32 @@ class Api::V1::UsersController < ApiController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /users/1/feed
+  def feed
+    course_ids = @user.courses.limit(25).map(&:id)
+    group_ids = @user.groups.limit(25).map(&:id)
+    posts = Post
+            .includes(:author, comments: [:author], likes: [:user])
+            .where('context_type = "Course" and context_id in (?)', course_ids)
+            .or(Post.where('context_type = "Group" and context_id in (?)', group_ids))
+            .where('created_at > ?', 7.days.ago)
+            .order(created_at: :desc)
+            .limit(100)
+
+    results = []
+    posts.find_each do |post|
+      post_hash = post.serializable_hash(
+        include: [:author, { comments: { include: :author } }, { likes: { include: :user } }]
+      )
+      if post.images.attached?
+        post_hash['image_urls'] = post.images.map { |img| Rails.application.routes.url_helpers.url_for(img) }
+      end
+      results.push(post_hash)
+    end
+
+    render json: results
   end
 
   # DELETE /users/1 or /users/1.json

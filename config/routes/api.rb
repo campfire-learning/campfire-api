@@ -9,6 +9,7 @@ namespace :api do
     resources :courses
     resources :groups
     resources :users
+    get 'users/:id/feed', to: 'users#feed'
 
     scope :users, module: :users do
       post '/', to: 'registrations#create', as: :user_registration

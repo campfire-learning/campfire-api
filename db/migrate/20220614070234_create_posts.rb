@@ -7,6 +7,8 @@ class CreatePosts < ActiveRecord::Migration[7.0]
       t.integer :context_id, null: false
 
       t.timestamps
+
+      t.index %i[context_type context_id], name: :index_posts_on_context, unique: true
     end
   end
 end
