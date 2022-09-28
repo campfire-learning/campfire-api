@@ -196,6 +196,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_04_191956) do
     t.integer "context_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["context_type", "context_id"], name: "index_posts_on_context"
   end
 
   create_table "time_zones", force: :cascade do |t|

@@ -6,4 +6,8 @@ class Group < ApplicationRecord
   has_many :group_memberships
   has_many :members, through: :group_membership, source: :user
   has_many :posts, as: :context
+
+  def self.campfire_general
+    Group.find(1)
+  end
 end

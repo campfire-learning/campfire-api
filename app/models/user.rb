@@ -8,7 +8,7 @@ class User < ApplicationRecord
          :rememberable, :validatable, :trackable, :confirmable, :lockable
 
   validates :email, format: URI::MailTo::EMAIL_REGEXP
-  enum user_type: { instructor: 1, assistant: 2, student: 3 }
+  enum user_type: { admin: 1, bot: 2, professor: 3, instructor: 4, assistant: 5, student: 6 }
 
   belongs_to :organization, optional: true
   belongs_to :time_zone

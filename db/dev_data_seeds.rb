@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-u1 = User.first_or_create(
+u1 = User.create(
   email: 'foo@foobar.edu',
   password: 'password',
   password_confirmation: 'password',
   first_name: 'Mars',
   last_name: 'Jiangster',
   time_zone_id: 6,
-  user_type: User.user_types[:teaching_assistant]
+  user_type: User.user_types[:assistant]
 )
 
 u2 = User.create(
@@ -30,7 +30,7 @@ u3 = User.create(
   user_type: User.user_types[:student]
 )
 
-c1 = Course.first_or_create(
+c1 = Course.create(
   creator_id: 1,
   owner_id: 1,
   time_zone_id: 8,
@@ -113,7 +113,7 @@ CourseEvent.create(
   event_time: DateTime.new(2022, 8, 29, 10, 15).change({ offset: '-0700' })
 )
 
-g1 = Group.first_or_create(
+g1 = Group.create(
   name: 'The Cabal',
   creator_id: u1.id,
   owner_id: u1.id,

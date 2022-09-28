@@ -27,14 +27,17 @@ class Api::V1::UsersController < ApiController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_url(@user), notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      # add all users to the general group so they can be engaged from the very beginning
+      GroupMembership.create(
+        group_id: Group.campfire_general.id,
+        user_id: @user.id,
+        role: GroupMembership.roles[:memeber]
+      )
+
+      render json: @user, status: :created
+    else
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
@@ -74,7 +77,8 @@ class Api::V1::UsersController < ApiController
       results.push(post_hash)
     end
 
-    render json: results
+    # render json: results
+    render json: []
   end
 
   # DELETE /users/1 or /users/1.json

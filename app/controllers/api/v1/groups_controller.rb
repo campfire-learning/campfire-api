@@ -20,7 +20,7 @@ class Api::V1::GroupsController < ApiController
       GroupMembership.create(
         group_id: @group.id,
         user_id: params[:user_id],
-        role: 1
+        role: GroupMembership.roles[:admin]
       )
 
       render json: @group, status: :created

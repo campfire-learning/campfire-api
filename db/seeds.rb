@@ -14,3 +14,34 @@ ActiveSupport::TimeZone.all.each do |tz|
     utc_offset: tz.utc_offset
   )
 end
+
+# The OG
+u1 = User.first_or_create(
+  email: 'yujiang99@gmail.com',
+  password: 'to_be_determined_at_runtime',
+  password_confirmation: 'to_be_determined_at_runtime',
+  first_name: 'Mars',
+  last_name: 'Jiangster',
+  time_zone_id: 6,
+  user_type: User.user_types[:admin]
+)
+
+# Marsh Mallow is a chat bot who is always friendly, occassionally funny,
+# sometimes, and inspirational from time to time
+User.create(
+  email: 'yujiang99@gmail.com',
+  password: 'to_be_determined_at_runtime',
+  password_confirmation: 'to_be_determined_at_runtime',
+  first_name: 'Marsh',
+  last_name: 'Mallow',
+  time_zone_id: 6,
+  user_type: User.user_types[:bot]
+)
+
+Group.first_or_create(
+  name: 'Campfire General Group',
+  creator_id: u1.id,
+  owner_id: u1.id,
+  description: 'The general group that includes all users',
+  public: 1
+)
