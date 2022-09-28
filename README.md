@@ -1,5 +1,10 @@
 # Campfire
 
+## Set up development environment
+Run `db/db_refresh.sh` to seed some data into your local database.
+
+Run `bundle` to install packages then `rails s` to start the API server.
+
 ## Testing endpoints
 
 ```
@@ -14,7 +19,7 @@ curl -X DELETE http://127.0.0.1:3000/api/v1/courses/3
 
 curl -X POST -H "Content-Type: application/json" -d '{"name": "The Cabal", "creator_id": 1, "owner_id": 1, "description": "People who sit around campfire", "public": 1}' http://127.0.0.1:3000/api/v1/groups
 
-curl -X POST -H "Content-Type: application/json" -d '{"creator_id": 1, "post_text": "wat", "context_type": 1, "pinned": 1}' http://127.0.0.1:3000/posts
+curl -X POST -H "Content-Type: application/json" -d '{"creator_id": 1, "post_text": "wat", "context_type": 1}' http://127.0.0.1:3000/posts
 ```
 
 ## Set it up
