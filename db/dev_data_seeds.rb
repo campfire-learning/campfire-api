@@ -64,37 +64,38 @@ c3 = Course.create(
 CourseMembership.create(
   course_id: c2.id,
   user_id: u1.id,
-  role: 2
+  academic_role: CourseMembership.academic_roles[:assistant],
+  user_role: CourseMembership.user_roles[:admin]
 )
 
 CourseMembership.create(
   course_id: c3.id,
   user_id: u1.id,
-  role: 2
+  user_role: CourseMembership.user_roles[:member]
 )
 
 CourseMembership.create(
   course_id: c1.id,
   user_id: u1.id,
-  role: 2
+  user_role: CourseMembership.user_roles[:member]
 )
 
 CourseMembership.create(
   course_id: c1.id,
   user_id: u1.id,
-  role: 3
+  user_role: CourseMembership.user_roles[:member]
 )
 
 CourseMembership.create(
   course_id: c1.id,
   user_id: u3.id,
-  role: 3
+  user_role: CourseMembership.user_roles[:member]
 )
 
 CourseMembership.create(
   course_id: c2.id,
   user_id: u3.id,
-  role: 3
+  user_role: CourseMembership.user_roles[:member]
 )
 
 CourseEvent.create(

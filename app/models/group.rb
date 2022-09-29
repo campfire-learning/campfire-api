@@ -10,4 +10,12 @@ class Group < ApplicationRecord
   def self.campfire_general
     Group.find(1)
   end
+
+  after_create do |group|
+    GroupMembership.create(
+      group_id: group.id,
+      user_id: group.creator_id,
+      role: GroupMembership.roles[:admin]
+    )
+  end
 end

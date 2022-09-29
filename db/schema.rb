@@ -62,7 +62,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_04_191956) do
   create_table "course_memberships", force: :cascade do |t|
     t.integer "course_id", null: false
     t.integer "user_id", null: false
-    t.integer "role", null: false
+    t.integer "academic_role"
+    t.integer "user_role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_course_memberships_on_course_id"

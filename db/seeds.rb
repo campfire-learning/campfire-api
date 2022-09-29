@@ -42,6 +42,6 @@ Group.first_or_create(
   name: 'Campfire General Group',
   creator_id: u1.id,
   owner_id: u1.id,
-  description: 'The general group that includes all users',
+  description: 'The group that includes all users',
   public: 1
 )
