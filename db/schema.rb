@@ -211,11 +211,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_04_191956) do
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "encrypted_password", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.integer "user_type"
     t.integer "organization_id"
-    t.integer "time_zone_id"
+    t.integer "time_zone_id", default: 6
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
