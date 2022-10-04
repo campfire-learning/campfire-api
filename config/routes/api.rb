@@ -8,12 +8,14 @@ namespace :api do
 
     resources :courses
     resources :groups
-    resources :users
     get 'users/:id/feed', to: 'users#feed'
 
+    # this should be placed before "resources :users"
     scope :users, module: :users do
       post '/', to: 'registrations#create', as: :user_registration
     end
+
+    resources :users
   end
 end
 

@@ -1,13 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  devise_for :users
-
   # Defines the root path route ("/")
-  # root 'users#home'
-  root 'users#myposts'
+  root 'users#home'
 
-  use_doorkeeper
-  get 'users/home'
-  resources :posts
+  devise_for :users
 
   draw :api
 end

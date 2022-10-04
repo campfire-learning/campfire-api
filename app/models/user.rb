@@ -26,6 +26,6 @@ class User < ApplicationRecord
 
   def self.authenticate(email, password)
     user = User.find_for_authentication(email:)
-    user&.validate_password?(password) ? user : nil
+    user&.valid_password?(password) ? user : nil
   end
 end

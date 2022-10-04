@@ -1,1 +1,17 @@
+<h1><%= "Hello #{current_user&.email}" %></h1>
+
+<% if user_signed_in? %>
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+  <%= @application.as_json %>
+<% else %>
+  <%= link_to "Sign in", new_user_session_path %>
+  <%= link_to "Sign up", new_user_registration_path %>
+<% end %>
+
+<div class="container">
+  <ul>
+    <li><%= link_to "API/V1 Posts", api_v1_posts_path(context_type: 'Course', context_id: 2) %></li>
+  </ul>
+</div>
+
 <div id="root"></div>
