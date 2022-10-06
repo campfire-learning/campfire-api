@@ -12,4 +12,12 @@ class Course < ApplicationRecord
   has_many :members, through: :course_memberships, source: :user
 
   enum term: { spring: 1, summer: 2, fall: 3, winter: 4 }
+
+  after_create do |course|
+    CourseMembership.create(
+      course_id: course.id,
+      user_id: course.creator_id,
+      user_role: CourseMembership.user_roles[:admin]
+    )
+  end
 end

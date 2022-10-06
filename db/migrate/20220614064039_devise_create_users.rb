@@ -7,8 +7,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :email, null: false
       t.string :encrypted_password, null: false
 
-      t.string :first_name, null: false
-      t.string :last_name, null: false
+      t.string :first_name
+      t.string :last_name
 
       ## "type" is a Rails reserved word, so using "user_type" here;
       t.integer :user_type
@@ -18,7 +18,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
 
       ## user's time zone, used in showing time in the UI;
       ## for example timestamps in posts and comments
-      t.references :time_zone
+      t.references :time_zone, default: 6
 
       ## Recoverable
       t.string   :reset_password_token

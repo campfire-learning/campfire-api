@@ -1,9 +1,26 @@
 # Campfire
 
 ## Set up development environment
-Run `db/db_refresh.sh` to seed some data into your local database.
+To get the code:
+```
+git clone https://<username>:<person access token>@github.com/campfire-learning/campfire-web.git
+git clone https://<username>:<person access token>@github.com/campfire-learning/campfire-api.git
+```
 
-Run `bundle` to install packages then `rails s` to start the API server.
+One the token expires, you need to set the remote url with the following command:
+```
+git remote set-url origin https://<username>:<person access token>@github.com/campfire-learning/campfire-web.git
+git remote set-url origin https://<username>:<person access token>@github.com/campfire-learning/campfire-api.git
+```
+
+We use Ruby 3.1.2 and Rails 7.0.4. Do not upgrade versions if not necessary.
+
+In side the root folder, run following commands:
+
+1. `brew install ruby` or `brew install rbenv` then `rbenv install 3.1.2` (rbenv is recommended).
+2. `bundle install` to install packages.
+3. `db/db_refresh.sh` to seed some data into your local database (sqlite by default).
+4. `rails s` to start the API server.
 
 ## Testing endpoints
 
@@ -28,16 +45,6 @@ This README would normally document whatever steps are necessary to get the
 application up and running.
 
 Things you may want to cover:
-
-* Ruby version - `ruby 3.0.3p157`
-
-* Rails version - `Rails 7.0.3`
-
-* System dependencies
-
-* Configuration
-
-* Database creation
 
 * Database initialization
 

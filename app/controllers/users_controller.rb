@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # uncomment before deploying to production
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
 
   def home
     render json: { message: 'Hello World!' }

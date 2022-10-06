@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users
+
   # Defines the root path route ("/")
   # root 'users#home'
   root 'users#myposts'
@@ -6,7 +8,6 @@ Rails.application.routes.draw do
   use_doorkeeper
   get 'users/home'
   resources :posts
-  devise_for :users
 
   draw :api
 end
