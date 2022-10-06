@@ -38,10 +38,10 @@ User.create(
   user_type: User.user_types[:bot]
 )
 
-Group.first_or_create(
-  name: 'Campfire General Group',
+Channel.first_or_create(
+  name: 'Campfire General Channel',
   creator_id: u1.id,
   owner_id: u1.id,
-  description: 'The general group that includes all users',
+  description: 'The general channel that includes all users',
   public: 1
 )

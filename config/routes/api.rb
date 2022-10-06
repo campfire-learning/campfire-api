@@ -7,7 +7,7 @@ namespace :api do
     end
 
     resources :courses
-    resources :groups
+    resources :channels
     resources :users
     get 'users/:id/feed', to: 'users#feed'
 

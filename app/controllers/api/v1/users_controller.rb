@@ -3,8 +3,8 @@ class Api::V1::UsersController < ApiController
 
   # GET /users or /users.json
   def index
-    if params[:group_id]
-      memberships = Group.find(params[:group_id]).group_memberships
+    if params[:channel_id]
+      memberships = Channel.find(params[:channel_id]).channel_memberships
     elsif params[:course_id]
       memberships = Course.find(params[:course_id]).course_memberships
     end
@@ -28,11 +28,11 @@ class Api::V1::UsersController < ApiController
     @user = User.new(user_params)
 
     if @user.save
-      # add all users to the general group so they can be engaged from the very beginning
-      GroupMembership.create(
-        group_id: Group.campfire_general.id,
+      # add all users to the general channel so they can be engaged from the very beginning
+      ChannelMembership.create(
+        channel_id: Channel.campfire_general.id,
         user_id: @user.id,
-        role: GroupMembership.roles[:memeber]
+        role: ChannelMembership.roles[:memeber]
       )
 
       render json: @user, status: :created
@@ -57,11 +57,11 @@ class Api::V1::UsersController < ApiController
   # GET /users/1/feed
   def feed
     course_ids = @user.courses.limit(25).map(&:id)
-    group_ids = @user.groups.limit(25).map(&:id)
+    channel_ids = @user.channels.limit(25).map(&:id)
     posts = Post
             .includes(:author, comments: [:author], likes: [:user])
             .where('context_type = "Course" and context_id in (?)', course_ids)
-            .or(Post.where('context_type = "Group" and context_id in (?)', group_ids))
+            .or(Post.where('context_type = "Channel" and context_id in (?)', channel_ids))
             .where('created_at > ?', 7.days.ago)
             .order(created_at: :desc)
             .limit(100)

@@ -3,7 +3,7 @@ class Post < ApplicationRecord
 
   # "context" refers to the location where the post is published:
   # 1. "course" - a post is published to a course
-  # 2. "group" - a post is published to a group
+  # 2. "channel" - a post is published to a channel
   # 3. "user" - a post is published in a user's home, either by the user
   # themself or by a friend
   # we need polymorphic association to support this flexibility (instead
