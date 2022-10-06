@@ -8,6 +8,7 @@ namespace :api do
 
     resources :courses
     resources :channels
+    resources :clubs
     resources :users
     get 'users/:id/feed', to: 'users#feed'
 

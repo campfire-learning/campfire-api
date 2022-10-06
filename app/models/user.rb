@@ -15,6 +15,9 @@ class User < ApplicationRecord
   has_many :owned_courses, foreign_key: :owner_id, class_name: :Course
   has_many :course_memberships
   has_many :courses, through: :course_memberships
+  has_many :owned_clubs, foreign_key: :owner_id, class_name: :Channel
+  has_many :club_memberships
+  has_many :clubs, through: :club_memberships
   has_many :owned_channels, foreign_key: :owner_id, class_name: :Channel
   has_many :channel_memberships
   has_many :channels, through: :channel_memberships

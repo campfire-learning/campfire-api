@@ -7,4 +7,3 @@ class Club < ApplicationRecord
   has_many :members, through: :club_membership, source: :user
   has_many :posts, as: :context
 end
-W
