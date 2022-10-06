@@ -10,4 +10,11 @@ class Channel < ApplicationRecord
   def self.campfire_general
     Channel.find(1)
   end
+
+  after_create do |group|
+    ChannelMembership.create(
+      group_id: group.id,
+      user_id: group.creator_id,
+      role: ChannelMembership.roles[:admin]
+    )
 end
