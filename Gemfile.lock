@@ -271,12 +271,8 @@ GEM
     zeitwerk (2.6.1)
 
 PLATFORMS
-<<<<<<< HEAD
   x86_64-darwin-20
   x86_64-linux
-=======
-  x86_64-darwin-21
->>>>>>> master
 
 DEPENDENCIES
   bootsnap
@@ -308,8 +304,4 @@ RUBY VERSION
    ruby 3.1.2p20
 
 BUNDLED WITH
-<<<<<<< HEAD
    2.3.15
-=======
-   2.3.7
->>>>>>> master

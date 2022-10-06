@@ -42,10 +42,6 @@ Channel.first_or_create(
   name: 'Campfire General Channel',
   creator_id: u1.id,
   owner_id: u1.id,
-<<<<<<< HEAD
   description: 'The channel that includes all users',
-=======
-  description: 'The group that includes all users',
->>>>>>> master
   public: 1
 )
