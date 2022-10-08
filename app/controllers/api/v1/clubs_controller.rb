@@ -17,12 +17,6 @@ class Api::V1::ClubsController < ApiController
     @club = Club.new(club_params.merge(creator_id: params[:user_id], owner_id: params[:user_id]))
 
     if @club.save
-      ClubMembership.create(
-        club_id: @club.id,
-        user_id: params[:user_id],
-        role: ClubMembership.roles[:admin]
-      )
-
       render json: @club, status: :created
     else
       render json: @club.errors, status: :unprocessable_entity

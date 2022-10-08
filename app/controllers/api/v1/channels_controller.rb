@@ -17,12 +17,6 @@ class Api::V1::ChannelsController < ApiController
     @channel = Channel.new(channel_params.merge(creator_id: params[:user_id], owner_id: params[:user_id]))
 
     if @channel.save
-      ChannelMembership.create(
-        channel_id: @channel.id,
-        user_id: params[:user_id],
-        role: ChannelMembership.roles[:admin]
-      )
-
       render json: @channel, status: :created
     else
       render json: @channel.errors, status: :unprocessable_entity
