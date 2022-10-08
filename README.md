@@ -51,6 +51,8 @@ Doorkeeper::Application.create(name: 'Web client', redirect_uri: '', scopes: '')
 2. User registration (a new user is created and an access token returned)
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"email": "test3@registration.com", "password": "watpassword", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY"}' http://127.0.0.1:3000/api/v1/users
+
+curl -X POST -H "Content-Type: application/json" -d '{"first_name": "foo", "last_name": "bar", "user_type": 3, "email": "test4@registration.com", "password": "watpassword", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY"}' http://127.0.0.1:3000/api/v1/users
 ```
 
 3. Get an access token (the equivalent of user login)

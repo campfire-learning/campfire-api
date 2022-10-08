@@ -25,8 +25,8 @@ class Api::V1::UsersController < ApiController
 
   # POST /users or /users.json
   def create
-    puts 'The action of creating a user is called registration!'
-    puts 'That is why it is executed in registration#create.'
+    # The action of creating a user is called registration!
+    # That is why it is executed in registration#create, not here.
     @user = User.new(user_params)
 
     if @user.save
