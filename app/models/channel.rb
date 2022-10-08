@@ -11,10 +11,11 @@ class Channel < ApplicationRecord
     Channel.find(1)
   end
 
-  after_create do |group|
+  after_create do |channel|
     ChannelMembership.create(
-      group_id: group.id,
-      user_id: group.creator_id,
+      channel_id: channel.id,
+      user_id: channel.creator_id,
       role: ChannelMembership.roles[:admin]
     )
+  end
 end

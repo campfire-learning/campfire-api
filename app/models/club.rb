@@ -7,10 +7,11 @@ class Club < ApplicationRecord
   has_many :members, through: :club_membership, source: :user
   has_many :posts, as: :context
 
-  after_create do |group|
+  after_create do |club|
     ClubMembership.create(
-      group_id: group.id,
-      user_id: group.creator_id,
+      club_id: club.id,
+      user_id: club.creator_id,
       role: ClubMembership.roles[:admin]
     )
+  end 
 end
