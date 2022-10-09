@@ -13,6 +13,9 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       ## "type" is a Rails reserved word, so using "user_type" here;
       t.integer :user_type
 
+      ## url pointing to a file in storage such as S3;
+      t.string :profile_picture_url
+
       ## this is university, company, etc
       t.references :organization, foreign_key: true
 

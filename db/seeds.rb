@@ -28,7 +28,7 @@ u1 = User.first_or_create(
 # Marsh Mallow is a chat bot who is always friendly, occassionally funny,
 # sometimes, and inspirational from time to time
 User.create(
-  email: 'yujiang99@gmail.com',
+  email: 'marsh.mallow@campfire.com',
   password: 'to_be_determined_at_runtime',
   password_confirmation: 'to_be_determined_at_runtime',
   first_name: 'Marsh',

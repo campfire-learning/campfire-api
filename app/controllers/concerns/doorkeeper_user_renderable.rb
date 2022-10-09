@@ -16,7 +16,7 @@ module DoorkeeperUserRenderable
       resource_owner_id: user.id,
       application_id: client_app.id,
       refresh_token: generate_refresh_token,
-      expires_in: Doorkeeper.configuration.access_token_expires_in.to_i,
+      expires_in: Doorkeeper.configuration.access_token_expires_in,
       scopes: ''
     )
 

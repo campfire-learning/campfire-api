@@ -57,14 +57,22 @@ curl -X POST -H "Content-Type: application/json" -d '{"first_name": "foo", "last
 
 3. Get an access token (the equivalent of user login)
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"grant_type": "password", "email": "yujiang99@gmailfoo.com", "password": "zxcvbnm123", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M", "client_secret": "FTN34-NPK0WUgQhBAcrjklyCo2x9Yx1R0-Jziu8jMWY"}' http://127.0.0.1:3000/api/v1/oauth/token
+curl -X POST -H "Content-Type: application/json" -d '{"email": "yujiang99@gmailfoo.com", "password": "zxcvbnm123", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M"}' http://127.0.0.1:3000/api/v1/users/login
 
-curl -X POST -H "Content-Type: application/json" -d '{"grant_type": "password", "email": "yujiang99@gmailfoo.com", "password": "zxcvbnm123", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M", "client_secret": "FTN34-NPK0WUgQhBAcrjklyCo2x9Yx1R0-Jziu8jMWY"}' http://127.0.0.1:3000/api/v1/users/login
+curl -X POST -H "Content-Type: application/json" -d '{"grant_type": "password", "email": "yujiang99@gmailfoo.com", "password": "zxcvbnm123", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M", "client_secret": "FTN34-NPK0WUgQhBAcrjklyCo2x9Yx1R0-Jziu8jMWY"}' http://127.0.0.1:3000/api/v1/oauth/token
 ```
 
 4. Make a request using the access token returned by the above command
 ```
-curl -H "Authorization: Bearer sZhWT-nxRa9dCm-eo0sZNDBWsCwD_mRL5Tlm8RNBu2I" http://127.0.0.1:3000/api/v1/posts?context_type=Course&context_id=2
+curl -H "Authorization: Bearer f2TRTQl5zU2faveSLImA2Z_CDZsO3e65FGBZ4aNKl34" http://127.0.0.1:3000/api/v1/posts?context_type=Course&context_id=2
+
+curl -H "Authorization: Bearer QW7p8HqQeMXgbMpZwxRjv58SI0bQf0QEmmgykYCTvLg" http://127.0.0.1:3000/api/v1/posts?context_type=Course&context_id=2
+
+curl -H "Authorization: Bearer Z8rOAoRwNqtiNoga2M0R1WiAUDvSzl7p9W1JE5bcHeo" http://localhost:3000/api/v1/posts?context_type=Group&context_id=1
+
+
+curl -H "Authorization: Bearer QW7p8HqQeMXgbMpZwxRjv58SI0bQf0QEmmgykYCTvLg" http://127.0.0.1:3000/api/v1/courses?user_id=1
+curl -H "Authorization: Bearer V4TrSahAjqX5xRuz3LkCLNJlTyCVLLxTi7k4lmuatCQ" http://127.0.0.1:3000/api/v1/courses?user_id=1
 ```
 
 5. Revoke an access token
