@@ -6,7 +6,7 @@ module Api
       class RegistrationsController < ApiController
         skip_before_action :doorkeeper_authorize!
 
-        include DoorkeeperRegisterable
+        include DoorkeeperUserRenderable
 
         def create
           client_app = Doorkeeper::Application.find_by(uid: user_params[:client_id])

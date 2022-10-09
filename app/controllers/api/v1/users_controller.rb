@@ -1,5 +1,8 @@
 class Api::V1::UsersController < ApiController
   before_action :set_user, only: %i[show edit feed update destroy]
+  skip_before_action :doorkeeper_authorize!, only: %i[login]
+
+  include DoorkeeperUserRenderable
 
   # GET /users or /users.json
   def index
@@ -26,21 +29,7 @@ class Api::V1::UsersController < ApiController
   # POST /users or /users.json
   def create
     # The action of creating a user is called registration!
-    # That is why it is executed in registration#create, not here.
-    @user = User.new(user_params)
-
-    if @user.save
-      # add all users to the general group so they can be engaged from the very beginning
-      GroupMembership.create(
-        group_id: Group.campfire_general.id,
-        user_id: @user.id,
-        role: GroupMembership.roles[:memeber]
-      )
-
-      render json: @user, status: :created
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
+    # That is why it is executed in registrations#create, not here.
   end
 
   # PATCH/PUT /users/1 or /users/1.json
@@ -53,6 +42,21 @@ class Api::V1::UsersController < ApiController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # POST /users/login
+  def login
+    client_app = Doorkeeper::Application.find_by(uid: params[:client_id])
+    unless client_app
+      return render json: { error: I18n.t('doorkeeper.errors.messages.invalid_client') }, status: :unauthorized
+    end
+
+    user = User.authenticate(params[:email], params[:password])
+    if user
+      render json: render_user(user, client_app), status: :ok
+    else
+      render json: { errors: user.errors }, status: :unprocessable_entity
     end
   end
 
@@ -100,8 +104,9 @@ class Api::V1::UsersController < ApiController
     @user = User.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def user_params
-    params.fetch(:user, {})
+    params.require(:user).permit(
+      :email, :password, :first_name, :last_name, :user_type, :organization_id, :client_id
+    )
   end
 end

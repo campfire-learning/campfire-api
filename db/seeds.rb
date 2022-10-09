@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 if Doorkeeper::Application.count.zero?
-  Doorkeeper::Application.create(name: 'Web client', redirect_uri: '', scopes: '')
-  Doorkeeper::Application.create(name: 'iOS client', redirect_uri: '', scopes: '')
-  Doorkeeper::Application.create(name: 'Android client', redirect_uri: '', scopes: '')
-  Doorkeeper::Application.create(name: 'React client', redirect_uri: '', scopes: '')
+  Doorkeeper::Application.create(name: 'Web', redirect_uri: '', scopes: '')
+  Doorkeeper::Application.create(name: 'iOS', redirect_uri: '', scopes: '')
+  Doorkeeper::Application.create(name: 'Android', redirect_uri: '', scopes: '')
 end
 
 ActiveSupport::TimeZone.all.each do |tz|

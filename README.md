@@ -45,19 +45,21 @@ curl -X POST -H "Content-Type: application/json" -d '{"post": {"user_id": 1, "po
 1. Get a client ID
 This Ruby code creates a new application with a client ID:
 ```
-Doorkeeper::Application.create(name: 'Web client', redirect_uri: '', scopes: '')
+Doorkeeper::Application.create(name: 'My Oauth Client', redirect_uri: '', scopes: '')
 ```
 
 2. User registration (a new user is created and an access token returned)
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"email": "test3@registration.com", "password": "watpassword", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY"}' http://127.0.0.1:3000/api/v1/users
+curl -X POST -H "Content-Type: application/json" -d '{"email": "test3@registration.com", "password": "watpassword", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M"}' http://127.0.0.1:3000/api/v1/users
 
 curl -X POST -H "Content-Type: application/json" -d '{"first_name": "foo", "last_name": "bar", "user_type": 3, "email": "test4@registration.com", "password": "watpassword", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY"}' http://127.0.0.1:3000/api/v1/users
 ```
 
 3. Get an access token (the equivalent of user login)
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"grant_type": "password", "email": "test3@registration.com", "password": "watpassword", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY", "client_secret": "PEHN53a7IpbyXay__RlieQVOuhFq5tkvzFOokTwh1EI"}' http://127.0.0.1:3000/api/v1/oauth/token
+curl -X POST -H "Content-Type: application/json" -d '{"grant_type": "password", "email": "yujiang99@gmailfoo.com", "password": "zxcvbnm123", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M", "client_secret": "FTN34-NPK0WUgQhBAcrjklyCo2x9Yx1R0-Jziu8jMWY"}' http://127.0.0.1:3000/api/v1/oauth/token
+
+curl -X POST -H "Content-Type: application/json" -d '{"grant_type": "password", "email": "yujiang99@gmailfoo.com", "password": "zxcvbnm123", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M", "client_secret": "FTN34-NPK0WUgQhBAcrjklyCo2x9Yx1R0-Jziu8jMWY"}' http://127.0.0.1:3000/api/v1/users/login
 ```
 
 4. Make a request using the access token returned by the above command

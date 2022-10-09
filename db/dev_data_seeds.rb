@@ -202,3 +202,9 @@ Like.create(
   user: u2,
   likable: cm1
 )
+
+Organization.create(
+  name: 'Mars University',
+  organization_type: 1,
+  address: 'Mars'
+)

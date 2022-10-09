@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DoorkeeperRegisterable
+module DoorkeeperUserRenderable
   extend ActiveSupport::Concern
   def generate_refresh_token
     loop do
@@ -23,6 +23,8 @@ module DoorkeeperRegisterable
     {
       id: user.id,
       email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
       user_type: user.user_type,
       access_token: access_token.token,
       token_type:,

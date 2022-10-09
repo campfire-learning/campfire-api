@@ -8,7 +8,6 @@ namespace :api do
 
     resources :courses
     resources :groups
-    get 'users/:id/feed', to: 'users#feed'
 
     # this should be placed before "resources :users"
     scope :users, module: :users do
@@ -16,6 +15,8 @@ namespace :api do
     end
 
     resources :users
+    get 'users/:id/feed', to: 'users#feed'
+    post 'users/login', to: 'users#login'
   end
 end
 
