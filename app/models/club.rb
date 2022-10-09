@@ -4,7 +4,7 @@ class Club < ApplicationRecord
 
   has_one :pinned_post, class_name: :Post
   has_many :club_memberships
-  has_many :members, through: :club_membership, source: :user
+  has_many :members, through: :club_memberships, source: :user
   has_many :posts, as: :context
 
   after_create do |club|
