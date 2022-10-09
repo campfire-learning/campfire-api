@@ -114,7 +114,7 @@ CourseEvent.create(
   event_time: DateTime.new(2022, 8, 29, 10, 15).change({ offset: '-0700' })
 )
 
-g1 = Channel.create(
+g1 = Group.create(
   name: 'The Cabal',
   creator_id: u1.id,
   owner_id: u1.id,
@@ -122,7 +122,7 @@ g1 = Channel.create(
   public: 1
 )
 
-g2 = Channel.create(
+g2 = Group.create(
   name: 'The Murder',
   creator_id: u1.id,
   owner_id: u2.id,
@@ -130,18 +130,18 @@ g2 = Channel.create(
   public: 1
 )
 
-ChannelMembership.create(
-  channel_id: g1.id,
+GroupMembership.create(
+  group_id: g1.id,
   user_id: u1.id
 )
 
-ChannelMembership.create(
-  channel_id: g2.id,
+GroupMembership.create(
+  group_id: g2.id,
   user_id: u1.id
 )
 
-ChannelMembership.create(
-  channel_id: g1.id,
+GroupMembership.create(
+  group_id: g1.id,
   user_id: u3.id
 )
 
@@ -201,4 +201,10 @@ Like.create(
 Like.create(
   user: u2,
   likable: cm1
+)
+
+Organization.create(
+  name: 'Mars University',
+  organization_type: 1,
+  address: 'Mars'
 )

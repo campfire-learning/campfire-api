@@ -1,10 +1,13 @@
 class Api::V1::UsersController < ApiController
   before_action :set_user, only: %i[show edit feed update destroy]
+  skip_before_action :doorkeeper_authorize!, only: %i[login]
+
+  include DoorkeeperUserRenderable
 
   # GET /users or /users.json
   def index
-    if params[:channel_id]
-      memberships = Channel.find(params[:channel_id]).channel_memberships
+    if params[:group_id]
+      memberships = Group.find(params[:group_id]).group_memberships
     elsif params[:course_id]
       memberships = Course.find(params[:course_id]).course_memberships
     elsif params[:club_id]
@@ -27,20 +30,8 @@ class Api::V1::UsersController < ApiController
 
   # POST /users or /users.json
   def create
-    @user = User.new(user_params)
-
-    if @user.save
-      # add all users to the general channel so they can be engaged from the very beginning
-      ChannelMembership.create(
-        channel_id: Channel.campfire_general.id,
-        user_id: @user.id,
-        role: ChannelMembership.roles[:memeber]
-      )
-
-      render json: @user, status: :created
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
+    # The action of creating a user is called registration!
+    # That is why it is executed in registrations#create, not here.
   end
 
   # PATCH/PUT /users/1 or /users/1.json
@@ -56,14 +47,29 @@ class Api::V1::UsersController < ApiController
     end
   end
 
+  # POST /users/login
+  def login
+    client_app = Doorkeeper::Application.find_by(uid: params[:client_id])
+    unless client_app
+      return render json: { error: I18n.t('doorkeeper.errors.messages.invalid_client') }, status: :unauthorized
+    end
+
+    user = User.authenticate(params[:email], params[:password])
+    if user
+      render json: render_user(user, client_app), status: :ok
+    else
+      render json: { errors: user.errors }, status: :unprocessable_entity
+    end
+  end
+
   # GET /users/1/feed
   def feed
     course_ids = @user.courses.limit(25).map(&:id)
-    channel_ids = @user.channels.limit(25).map(&:id)
+    group_ids = @user.groups.limit(25).map(&:id)
     posts = Post
             .includes(:author, comments: [:author], likes: [:user])
             .where('context_type = "Course" and context_id in (?)', course_ids)
-            .or(Post.where('context_type = "Channel" and context_id in (?)', channel_ids))
+            .or(Post.where('context_type = "Group" and context_id in (?)', group_ids))
             .where('created_at > ?', 7.days.ago)
             .order(created_at: :desc)
             .limit(100)
@@ -100,8 +106,9 @@ class Api::V1::UsersController < ApiController
     @user = User.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def user_params
-    params.fetch(:user, {})
+    params.require(:user).permit(
+      :email, :password, :first_name, :last_name, :user_type, :organization_id, :client_id
+    )
   end
 end

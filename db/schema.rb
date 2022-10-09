@@ -49,29 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["course_id"], name: "index_assignments_on_course_id"
   end
 
-  create_table "channel_memberships", id: false, force: :cascade do |t|
-    t.integer "channel_id", null: false
-    t.integer "user_id", null: false
-    t.integer "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["channel_id"], name: "index_channel_memberships_on_channel_id"
-    t.index ["user_id"], name: "index_channel_memberships_on_user_id"
-  end
-
-  create_table "channels", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "creator_id", null: false
-    t.integer "owner_id", null: false
-    t.integer "pinned_post_id"
-    t.text "description"
-    t.boolean "public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["creator_id"], name: "index_channels_on_creator_id"
-    t.index ["owner_id"], name: "index_channels_on_owner_id"
-  end
-
   create_table "club_memberships", id: false, force: :cascade do |t|
     t.integer "club_id", null: false
     t.integer "user_id", null: false
@@ -152,6 +129,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.datetime "updated_at", null: false
     t.index ["assignment_id"], name: "index_grades_on_assignment_id"
     t.index ["user_id"], name: "index_grades_on_user_id"
+  end
+
+  create_table "group_memberships", id: false, force: :cascade do |t|
+    t.integer "group_id", null: false
+    t.integer "user_id", null: false
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_memberships_on_group_id"
+    t.index ["user_id"], name: "index_group_memberships_on_user_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "creator_id", null: false
+    t.integer "owner_id", null: false
+    t.integer "pinned_post_id"
+    t.text "description"
+    t.boolean "public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_groups_on_creator_id"
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -237,6 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.string "first_name"
     t.string "last_name"
     t.integer "user_type"
+    t.string "profile_picture_url"
     t.integer "organization_id"
     t.integer "time_zone_id", default: 6
     t.string "reset_password_token"
@@ -267,10 +268,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignments", "courses"
-  add_foreign_key "channel_memberships", "channels"
-  add_foreign_key "channel_memberships", "users"
-  add_foreign_key "channels", "users", column: "creator_id"
-  add_foreign_key "channels", "users", column: "owner_id"
   add_foreign_key "club_memberships", "clubs"
   add_foreign_key "club_memberships", "users"
   add_foreign_key "clubs", "users", column: "creator_id"
@@ -281,6 +278,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
   add_foreign_key "followings", "users", column: "follower_id"
   add_foreign_key "grades", "assignments"
   add_foreign_key "grades", "users"
+  add_foreign_key "group_memberships", "groups"
+  add_foreign_key "group_memberships", "users"
+  add_foreign_key "groups", "users", column: "creator_id"
+  add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "users", "organizations"

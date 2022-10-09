@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 if Doorkeeper::Application.count.zero?
-  Doorkeeper::Application.create(name: 'Web client', redirect_uri: '', scopes: '')
-  Doorkeeper::Application.create(name: 'iOS client', redirect_uri: '', scopes: '')
-  Doorkeeper::Application.create(name: 'Android client', redirect_uri: '', scopes: '')
-  Doorkeeper::Application.create(name: 'React client', redirect_uri: '', scopes: '')
+  Doorkeeper::Application.create(name: 'Web', redirect_uri: '', scopes: '')
+  Doorkeeper::Application.create(name: 'iOS', redirect_uri: '', scopes: '')
+  Doorkeeper::Application.create(name: 'Android', redirect_uri: '', scopes: '')
 end
 
 ActiveSupport::TimeZone.all.each do |tz|
@@ -29,7 +28,7 @@ u1 = User.first_or_create(
 # Marsh Mallow is a chat bot who is always friendly, occassionally funny,
 # sometimes, and inspirational from time to time
 User.create(
-  email: 'yujiang99@gmail.com',
+  email: 'marsh.mallow@campfire.com',
   password: 'to_be_determined_at_runtime',
   password_confirmation: 'to_be_determined_at_runtime',
   first_name: 'Marsh',
@@ -38,10 +37,10 @@ User.create(
   user_type: User.user_types[:bot]
 )
 
-Channel.first_or_create(
-  name: 'Campfire General Channel',
+Group.first_or_create(
+  name: 'Campfire General Group',
   creator_id: u1.id,
   owner_id: u1.id,
-  description: 'The channel that includes all users',
+  description: 'The group that includes all users',
   public: 1
 )

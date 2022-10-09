@@ -3,11 +3,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def home
-    render json: { message: 'Hello World!' }
-  end
-
-  def myposts
-    app = Doorkeeper::Application.find_by(name: 'Web client')
+    app = Doorkeeper::Application.find_by(name: 'Web')
 
     @application = {
       name: app.name,

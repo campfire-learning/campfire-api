@@ -23,7 +23,7 @@ class Api::V1::CoursesController < ApiController
       CourseMembership.create(
         course_id: @course.id,
         user_id: params[:user_id],
-        role: CourseMembership.roles[:instructor]
+        user_role: CourseMembership.user_roles[:admin]
       )
       render json: @course, status: :created
     else

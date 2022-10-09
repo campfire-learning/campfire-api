@@ -4,9 +4,9 @@ module Api
   module V1
     module Users
       class RegistrationsController < ApiController
-        skip_before_action :doorkeeper_authorize!, only: %i[create]
+        skip_before_action :doorkeeper_authorize!
 
-        include DoorkeeperRegisterable
+        include DoorkeeperUserRenderable
 
         def create
           client_app = Doorkeeper::Application.find_by(uid: user_params[:client_id])
@@ -18,6 +18,11 @@ module Api
           user = User.new(create_params)
 
           if user.save
+            GroupMembership.create(
+              group_id: Group.campfire_general.id,
+              user_id: user.id,
+              role: GroupMembership.roles[:memeber]
+            )
             render json: render_user(user, client_app), status: :ok
           else
             render json: { errors: user.errors }, status: :unprocessable_entity
@@ -27,7 +32,9 @@ module Api
         private
 
         def user_params
-          params.permit(:email, :password, :client_id)
+          params.require(:registration).permit(
+            :email, :password, :first_name, :last_name, :user_type, :organization_id, :client_id
+          )
         end
       end
     end

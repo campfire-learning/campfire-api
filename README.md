@@ -26,32 +26,60 @@ In side the root folder, run following commands:
 
 ```
 curl "http://127.0.0.1:3000/api/v1/courses?user_id=1"
+
 curl "http://127.0.0.1:3000/api/v1/courses/2"
 
-curl -X POST -H "Content-Type: application/json" -d '{"creator_id": 1, "owner_id": 1, "title": "Rationality 202", "description": "How to be reasonable and profitable"}' http://127.0.0.1:3000/api/v1/courses
+curl -X POST -H "Content-Type: application/json" -d '{"user_id": 1, "title": "Rationality 101", "year": 2022, "start_date": "2022-10-10", "description": "How to be profitable"}' http://127.0.0.1:3000/api/v1/courses
 
-curl -X PATCH -H "Content-Type: application/json" -d '{"creator_id": 1, "owner_id": 1, "title": "Rationality 303", "description": "How to be reasonable, lovable, and profitable"}' http://127.0.0.1:3000/api/v1/courses/3
+curl -X PATCH -H "Content-Type: application/json" -d '{"description": "How to be reasonable, lovable, and profitable - yay"}' http://127.0.0.1:3000/api/v1/courses/3
 
 curl -X DELETE http://127.0.0.1:3000/api/v1/courses/3
 
-curl -X POST -H "Content-Type: application/json" -d '{"name": "The Cabal", "creator_id": 1, "owner_id": 1, "description": "People who sit around campfire", "public": 1}' http://127.0.0.1:3000/api/v1/channels
+curl -X POST -H "Content-Type: application/json" -d '{"name": "The Cabal", "creator_id": 1, "user_id": 1, "description": "People \"who\" sit around campfire", "public": 1}' http://127.0.0.1:3000/api/v1/groups
 
-curl -X POST -H "Content-Type: application/json" -d '{"creator_id": 1, "post_text": "wat", "context_type": 1}' http://127.0.0.1:3000/posts
+curl -X POST -H "Content-Type: application/json" -d '{"post": {"user_id": 1, "post_text": "wat", "context_type": "Group", "context_id": 1}}' http://127.0.0.1:3000/api/v1/posts
 ```
 
-## Set it up
+### User management via Doorkeeper
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. Get a client ID
+This Ruby code creates a new application with a client ID:
+```
+Doorkeeper::Application.create(name: 'My Oauth Client', redirect_uri: '', scopes: '')
+```
 
-Things you may want to cover:
+2. User registration (a new user is created and an access token returned)
+```
+curl -X POST -H "Content-Type: application/json" -d '{"email": "test3@registration.com", "password": "watpassword", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M"}' http://127.0.0.1:3000/api/v1/users
 
-* Database initialization
+curl -X POST -H "Content-Type: application/json" -d '{"first_name": "foo", "last_name": "bar", "user_type": 3, "email": "test4@registration.com", "password": "watpassword", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY"}' http://127.0.0.1:3000/api/v1/users
+```
 
-* How to run the test suite
+3. Get an access token (the equivalent of user login)
+```
+curl -X POST -H "Content-Type: application/json" -d '{"email": "yujiang99@gmailfoo.com", "password": "zxcvbnm123", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M"}' http://127.0.0.1:3000/api/v1/users/login
 
-* Services (job queues, cache servers, search engines, etc.)
+curl -X POST -H "Content-Type: application/json" -d '{"grant_type": "password", "email": "yujiang99@gmailfoo.com", "password": "zxcvbnm123", "client_id": "GuBL7rw78bK2nadWKmiLoeXfuxeZeENpgAhaOMKiB5M", "client_secret": "FTN34-NPK0WUgQhBAcrjklyCo2x9Yx1R0-Jziu8jMWY"}' http://127.0.0.1:3000/api/v1/oauth/token
+```
 
-* Deployment instructions
+4. Make a request using the access token returned by the above command
+```
+curl -H "Authorization: Bearer f2TRTQl5zU2faveSLImA2Z_CDZsO3e65FGBZ4aNKl34" http://127.0.0.1:3000/api/v1/posts?context_type=Course&context_id=2
 
-* ...
+curl -H "Authorization: Bearer QW7p8HqQeMXgbMpZwxRjv58SI0bQf0QEmmgykYCTvLg" http://127.0.0.1:3000/api/v1/posts?context_type=Course&context_id=2
+
+curl -H "Authorization: Bearer Z8rOAoRwNqtiNoga2M0R1WiAUDvSzl7p9W1JE5bcHeo" http://localhost:3000/api/v1/posts?context_type=Group&context_id=1
+
+
+curl -H "Authorization: Bearer QW7p8HqQeMXgbMpZwxRjv58SI0bQf0QEmmgykYCTvLg" http://127.0.0.1:3000/api/v1/courses?user_id=1
+curl -H "Authorization: Bearer V4TrSahAjqX5xRuz3LkCLNJlTyCVLLxTi7k4lmuatCQ" http://127.0.0.1:3000/api/v1/courses?user_id=1
+```
+
+5. Revoke an access token
+```
+curl -X POST -H "Content-Type: application/json" -d '{"token": "sZhWT-nxRa9dCm-eo0sZNDBWsCwD_mRL5Tlm8RNBu2I", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY", "client_secret": "PEHN53a7IpbyXay__RlieQVOuhFq5tkvzFOokTwh1EI"}' http://127.0.0.1:3000/api/v1/oauth/revoke
+```
+
+## Unit tests
+
+## Deployment
