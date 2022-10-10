@@ -89,12 +89,9 @@ class Api::V1::UsersController < ApiController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    @user.destroy
+    @user.discard
 
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private

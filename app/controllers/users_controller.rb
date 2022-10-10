@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # uncomment before deploying to production
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 
   def home
     app = Doorkeeper::Application.find_by(name: 'Web')

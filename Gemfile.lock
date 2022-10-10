@@ -96,6 +96,8 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.0)
+    discard (1.2.1)
+      activerecord (>= 4.2, < 8)
     doorkeeper (5.6.0)
       railties (>= 5)
     erubi (1.11.0)
@@ -276,6 +278,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.8)
+  discard (~> 1.2)
   doorkeeper (~> 5.5)
   factory_bot_rails
   jbuilder

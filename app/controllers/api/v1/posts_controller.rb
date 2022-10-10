@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApiController
   before_action :set_post, only: %i[show edit update destroy]
-  # before_action :validate_context_type, except: %i[destroy update]
+  before_action :validate_context_type, except: %i[destroy update]
 
   # GET /posts or /posts.json
   def index
@@ -66,12 +66,8 @@ class Api::V1::PostsController < ApiController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-    @post.destroy
-
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @post.discard # soft delete
+    head :no_content
   end
 
   private

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Course < ApplicationRecord
+  include Discard::Model
+
   belongs_to :creator, class_name: :User
   belongs_to :owner, class_name: :User
   belongs_to :time_zone, optional: true
@@ -19,5 +21,9 @@ class Course < ApplicationRecord
       user_id: course.creator_id,
       user_role: CourseMembership.user_roles[:admin]
     )
+  end
+
+  def display_title
+    discarded? ? "#{title} (inactive)" : title
   end
 end

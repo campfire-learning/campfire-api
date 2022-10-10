@@ -2,9 +2,10 @@
 
 # The most important class in the whole application
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :timeoutable, and :omniauthable
-  # Add them if needed.
+  include Discard::Model
+
+  # Include devise modules. Others available are (add if needed):
+  #   :confirmable, :timeoutable, and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable,
          :rememberable, :validatable, :trackable, :lockable
 
@@ -21,7 +22,8 @@ class User < ApplicationRecord
   has_many :groups, through: :group_memberships
 
   def name
-    "#{first_name} #{last_name}"
+    discarded_status = discarded? ? ' (inactive)' : ''
+    "#{first_name} #{last_name}#{discarded_status}"
   end
 
   def self.authenticate(email, password)
