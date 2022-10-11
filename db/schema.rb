@@ -105,9 +105,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.string "location"
     t.text "description"
     t.text "syllabus"
+    t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_courses_on_creator_id"
+    t.index ["discarded_at"], name: "index_courses_on_discarded_at"
     t.index ["owner_id"], name: "index_courses_on_owner_id"
     t.index ["time_zone_id"], name: "index_courses_on_time_zone_id"
   end
@@ -148,9 +150,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.integer "pinned_post_id"
     t.text "description"
     t.boolean "public"
+    t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_groups_on_creator_id"
+    t.index ["discarded_at"], name: "index_groups_on_discarded_at"
     t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
@@ -218,9 +222,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.text "post_text", null: false
     t.string "context_type", null: false
     t.integer "context_id", null: false
+    t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["context_type", "context_id"], name: "index_posts_on_context"
+    t.index ["discarded_at"], name: "index_posts_on_discarded_at"
   end
 
   create_table "time_zones", force: :cascade do |t|
@@ -240,6 +246,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.string "profile_picture_url"
     t.integer "organization_id"
     t.integer "time_zone_id", default: 6
+    t.datetime "discarded_at"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -258,6 +265,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

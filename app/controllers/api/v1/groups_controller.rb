@@ -34,7 +34,7 @@ class Api::V1::GroupsController < ApiController
 
   # DELETE /groups/1 or /groups/1.json
   def destroy
-    @group.destroy
+    @group.discard
     head :no_content
   end
 

@@ -7,8 +7,11 @@ class CreateGroups < ActiveRecord::Migration[7.0]
       t.integer :pinned_post_id
       t.text :description
       t.boolean :public
+      t.datetime :discarded_at
 
       t.timestamps
+
+      t.index %i[discarded_at]
     end
   end
 end

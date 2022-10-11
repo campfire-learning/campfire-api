@@ -42,7 +42,7 @@ class Api::V1::CoursesController < ApiController
 
   # DELETE /courses/1 or /courses/1.json
   def destroy
-    @course.destroy
+    @course.discard
     head :no_content
   end
 

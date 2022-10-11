@@ -1,4 +1,6 @@
 class Group < ApplicationRecord
+  include Discard::Model
+
   belongs_to :creator, class_name: :User
   belongs_to :owner, class_name: :User
 
@@ -17,5 +19,9 @@ class Group < ApplicationRecord
       user_id: group.creator_id,
       role: GroupMembership.roles[:admin]
     )
+  end
+
+  def display_name
+    discarded? ? "#{name} (inactive)" : name
   end
 end

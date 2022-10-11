@@ -12,8 +12,10 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.string :location
       t.text :description
       t.text :syllabus
+      t.datetime :discarded_at
 
       t.timestamps
+      t.index %i[discarded_at]
     end
   end
 end
