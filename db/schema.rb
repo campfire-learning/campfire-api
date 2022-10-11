@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_04_191956) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -47,6 +47,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_04_191956) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_assignments_on_course_id"
+  end
+
+  create_table "club_memberships", id: false, force: :cascade do |t|
+    t.integer "club_id", null: false
+    t.integer "user_id", null: false
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["club_id"], name: "index_club_memberships_on_club_id"
+    t.index ["user_id"], name: "index_club_memberships_on_user_id"
+  end
+
+  create_table "clubs", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "creator_id", null: false
+    t.integer "owner_id", null: false
+    t.integer "pinned_post_id"
+    t.text "description"
+    t.boolean "public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_clubs_on_creator_id"
+    t.index ["owner_id"], name: "index_clubs_on_owner_id"
   end
 
   create_table "course_events", force: :cascade do |t|
@@ -253,6 +276,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_04_191956) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignments", "courses"
+  add_foreign_key "club_memberships", "clubs"
+  add_foreign_key "club_memberships", "users"
+  add_foreign_key "clubs", "users", column: "creator_id"
+  add_foreign_key "clubs", "users", column: "owner_id"
   add_foreign_key "courses", "users", column: "creator_id"
   add_foreign_key "courses", "users", column: "owner_id"
   add_foreign_key "followings", "users", column: "followee_id"

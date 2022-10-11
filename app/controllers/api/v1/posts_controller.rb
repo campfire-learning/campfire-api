@@ -79,7 +79,7 @@ class Api::V1::PostsController < ApiController
 
   def validate_context_type
     puts "Validating original params: #{params}"
-    return if %w[Group Course Post].include? params[:context_type]
+    return if %w[Channel Course Post].include? params[:context_type]
 
     render json: { message: "Wrong context type for post: #{params[:context_type]}" },
            status: :unprocessable_entity
