@@ -17,7 +17,8 @@ class Group < ApplicationRecord
     GroupMembership.create(
       group_id: group.id,
       user_id: group.creator_id,
-      role: GroupMembership.roles[:admin]
+      role: GroupMembership.roles[:admin],
+      order: GroupMembership.where(:user_id => group.creator_id).count
     )
   end
 

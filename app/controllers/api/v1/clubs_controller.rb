@@ -4,7 +4,7 @@ class Api::V1::ClubsController < ApiController
   # GET /clubs or /clubs.json
   def index
     user = User.find(params['user_id'])
-    render json: user.clubs
+    render json: user.clubs.select(('*')).order(order: :asc).uniq
   end
 
   # GET /clubs/1 or /clubs/1.json
