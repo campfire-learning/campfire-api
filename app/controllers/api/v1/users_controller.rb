@@ -10,6 +10,8 @@ class Api::V1::UsersController < ApiController
       memberships = Group.find(params[:group_id]).group_memberships
     elsif params[:course_id]
       memberships = Course.find(params[:course_id]).course_memberships
+    elsif params[:club_id]
+      memberships = Club.find(params[:club_id]).club_memberships
     end
 
     render json: memberships, include: :user

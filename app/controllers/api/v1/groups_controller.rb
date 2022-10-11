@@ -17,12 +17,6 @@ class Api::V1::GroupsController < ApiController
     @group = Group.new(group_params.merge(creator_id: params[:user_id], owner_id: params[:user_id]))
 
     if @group.save
-      GroupMembership.create(
-        group_id: @group.id,
-        user_id: params[:user_id],
-        role: GroupMembership.roles[:admin]
-      )
-
       render json: @group, status: :created
     else
       render json: @group.errors, status: :unprocessable_entity
