@@ -13,7 +13,7 @@ class User < ApplicationRecord
   enum user_type: { admin: 1, bot: 2, instructor: 3, assistant: 4, student: 5 }
 
   belongs_to :organization, optional: true
-  belongs_to :time_zone
+  belongs_to :time_zone, optional: true
   has_many :owned_courses, foreign_key: :owner_id, class_name: :Course
   has_many :course_memberships
   has_many :courses, through: :course_memberships
