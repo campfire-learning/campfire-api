@@ -8,6 +8,7 @@ namespace :api do
 
     resources :courses
     resources :groups
+    resources :clubs
 
     # this should be placed before "resources :users"
     scope :users, module: :users do
