@@ -1,10 +1,10 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  test 'should get home' do
-    Doorkeeper::Application.create(name: 'Web', redirect_uri: '', scopes: '')
+  test 'should not allow access to home without login' do
+    Doorkeeper::Application.first_or_create(name: 'Web', redirect_uri: '', scopes: '')
 
     get root_url
-    assert_response :success
+    assert_response :redirect
   end
 end
