@@ -3,6 +3,7 @@ class CreateClubMemberships < ActiveRecord::Migration[7.0]
     create_table :club_memberships, id: false do |t|
       t.references :club, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
+      t.integer :order, require: true
       t.integer :role
       t.timestamps
     end

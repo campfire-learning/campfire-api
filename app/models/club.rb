@@ -11,7 +11,8 @@ class Club < ApplicationRecord
     ClubMembership.create(
       club_id: club.id,
       user_id: club.creator_id,
-      role: ClubMembership.roles[:admin]
+      role: ClubMembership.roles[:admin],
+      order: ClubMembership.where(:user_id => club.creator_id).count
     )
   end 
 end
