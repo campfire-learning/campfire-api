@@ -26,17 +26,14 @@ class Api::V1::CourseMembershipsController < ApiController
       if source > destination
         user = User.find(params[:user_id])
         user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination + 1).update_all("'order' = 'order' + 1")
-        logger.debug("add 1 to order from destination to source - 1")
       elsif source < destination
         user = User.find(params[:user_id])
         user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("'order' = 'order' - 1")
-        logger.debug("subtract from order from source to destination - 1")
       end
     end
 
     if @course_membership.update(course_membership_params)
       render json: @course_membership, status: :ok
-      logger.debug("uppppppdate")
     else
       render json: @course_membership.errors, status: :unprocessable_entity
     end
