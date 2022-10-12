@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @course_membership %>
+
+<div>
+  <%= link_to "Edit this course membership", edit_api_v1_course_membership_path(@course_membership) %> |
+  <%= link_to "Back to course memberships", api_v1_course_memberships_path %>
+
+  <%= button_to "Destroy this course membership", [:api, :v1, @course_membership], method: :delete %>
+</div>

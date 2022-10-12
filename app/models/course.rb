@@ -19,8 +19,7 @@ class Course < ApplicationRecord
     CourseMembership.create(
       course_id: course.id,
       user_id: course.creator_id,
-      user_role: CourseMembership.user_roles[:admin],
-      order: CourseMembership.where(:user_id => course.creator_id).count
+      user_role: CourseMembership.user_roles[:admin]
     )
   end
 
