@@ -52,6 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
   create_table "club_memberships", id: false, force: :cascade do |t|
     t.integer "club_id", null: false
     t.integer "user_id", null: false
+    t.integer "order"
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,6 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
   create_table "course_memberships", force: :cascade do |t|
     t.integer "course_id", null: false
     t.integer "user_id", null: false
+    t.integer "order"
     t.integer "academic_role"
     t.integer "user_role"
     t.datetime "created_at", null: false
@@ -137,6 +139,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
   create_table "group_memberships", id: false, force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "user_id", null: false
+    t.integer "order"
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

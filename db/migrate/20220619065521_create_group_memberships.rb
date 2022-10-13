@@ -3,6 +3,7 @@ class CreateGroupMemberships < ActiveRecord::Migration[7.0]
     create_table :group_memberships, id: false do |t|
       t.references :group, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
+      t.integer :order, require: true
       t.integer :role
       t.timestamps
     end

@@ -7,6 +7,7 @@ namespace :api do
     end
 
     resources :courses
+    resources :course_memberships
     resources :groups
     resources :clubs
 

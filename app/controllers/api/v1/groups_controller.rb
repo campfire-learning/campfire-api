@@ -4,7 +4,7 @@ class Api::V1::GroupsController < ApiController
   # GET /groups or /groups.json
   def index
     user = User.find(params['user_id'])
-    render json: user.groups
+    render json: user.groups.select(('*')).order(order: :asc).uniq
   end
 
   # GET /groups/1 or /groups/1.json
