@@ -25,10 +25,10 @@ class Api::V1::CourseMembershipsController < ApiController
     if source && destination
       if source > destination
         user = User.find(params[:user_id])
-        user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination + 1).update_all("'order' = 'order' + 1")
+        user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination).update_all("\"order\" = \"order\" + 1")
       elsif source < destination
         user = User.find(params[:user_id])
-        user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("'order' = 'order' - 1")
+        user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("\"order\" = \"order\" - 1")
       end
     end
 

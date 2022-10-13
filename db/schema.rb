@@ -49,7 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["course_id"], name: "index_assignments_on_course_id"
   end
 
-  create_table "club_memberships", id: false, force: :cascade do |t|
+  create_table "club_memberships", force: :cascade do |t|
     t.integer "club_id", null: false
     t.integer "user_id", null: false
     t.integer "order"
@@ -135,7 +135,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["user_id"], name: "index_grades_on_user_id"
   end
 
-  create_table "group_memberships", id: false, force: :cascade do |t|
+  create_table "group_memberships", force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "user_id", null: false
     t.integer "order"
