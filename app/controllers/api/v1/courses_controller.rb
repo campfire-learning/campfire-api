@@ -20,11 +20,6 @@ class Api::V1::CoursesController < ApiController
     )
 
     if @course.save
-      CourseMembership.create(
-        course_id: @course.id,
-        user_id: params[:user_id],
-        user_role: CourseMembership.user_roles[:admin]
-      )
       render json: @course, status: :created
     else
       render json: @course.errors, status: :unprocessable_entity
