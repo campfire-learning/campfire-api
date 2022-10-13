@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.boolean "public"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
     t.index ["creator_id"], name: "index_clubs_on_creator_id"
     t.index ["owner_id"], name: "index_clubs_on_owner_id"
   end

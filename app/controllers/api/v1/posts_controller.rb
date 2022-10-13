@@ -66,7 +66,12 @@ class Api::V1::PostsController < ApiController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-    @post.discard # soft delete
+    if @post.comments.empty?
+      @post.destroy
+    else
+      @post.discard # soft delete
+    end
+
     head :no_content
   end
 
@@ -79,7 +84,7 @@ class Api::V1::PostsController < ApiController
 
   def validate_context_type
     puts "Validating original params: #{params}"
-    return if %w[Channel Course Post].include? params[:context_type]
+    return if %w[Group Course Club Post].include? params[:context_type]
 
     render json: { message: "Wrong context type for post: #{params[:context_type]}" },
            status: :unprocessable_entity

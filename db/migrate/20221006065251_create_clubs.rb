@@ -9,6 +9,7 @@ class CreateClubs < ActiveRecord::Migration[7.0]
       t.boolean :public
 
       t.timestamps
+      t.datetime :discarded_at
     end
   end
 end

@@ -24,6 +24,18 @@ class User < ApplicationRecord
   has_many :group_memberships
   has_many :groups, through: :group_memberships
 
+  after_discard do
+    groups.discard_all
+    clubs.discard_all
+    courses.discard_all
+  end
+
+  after_undiscard do
+    groups.undiscard_all
+    clubs.undiscard_all
+    courses.undiscard_all
+  end
+
   def name
     discarded_status = discarded? ? ' (inactive)' : ''
     "#{first_name} #{last_name}#{discarded_status}"
