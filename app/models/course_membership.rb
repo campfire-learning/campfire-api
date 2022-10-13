@@ -7,4 +7,10 @@ class CourseMembership < ApplicationRecord
 
   # this is the role from access control perspective
   enum user_role: { admin: 1, member: 2 }
+
+  before_create :set_order
+
+  def set_order
+    self.order = CourseMembership.where(:user_id => user_id).count
+  end
 end
