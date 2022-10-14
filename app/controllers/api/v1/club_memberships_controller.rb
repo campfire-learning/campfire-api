@@ -20,22 +20,24 @@ class Api::V1::ClubMembershipsController < ApiController
 
   # PATCH/PUT /api/v1/club_memberships/1 or /api/v1/club_memberships/1.json
   def update
-    source = params[:source]
-    destination = params[:destination]
-    if source && destination
-      if source > destination
-        user = User.find(params[:user_id])
-        user.club_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination).update_all("\"order\" = \"order\" + 1")
-      elsif source < destination
-        user = User.find(params[:user_id])
-        user.club_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("\"order\" = \"order\" - 1")
+    User.transaction do
+      source = params[:source]
+      destination = params[:destination]
+      if source && destination
+        if source > destination
+          user = User.find(params[:user_id])
+          user.club_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination).update_all("\"order\" = \"order\" + 1")
+        elsif source < destination
+          user = User.find(params[:user_id])
+          user.club_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("\"order\" = \"order\" - 1")
+        end
       end
-    end
 
-    if @club_membership.update(club_membership_params)
-      render json: @club_membership, status: :ok
-    else
-      render json: @club_membership.errors, status: :unprocessable_entity
+      if @club_membership.update(club_membership_params)
+        render json: @club_membership, status: :ok
+      else
+        render json: @club_membership.errors, status: :unprocessable_entity
+      end
     end
   end
 
