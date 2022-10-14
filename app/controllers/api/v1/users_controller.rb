@@ -67,7 +67,7 @@ class Api::V1::UsersController < ApiController
     course_ids = @user.courses.limit(25).map(&:id)
     group_ids = @user.groups.limit(25).map(&:id)
     posts = Post
-            .includes(:author, comments: [:author], likes: [:user])
+            .includes(:user, comments: [:user], likes: [:user])
             .where('context_type = "Course" and context_id in (?)', course_ids)
             .or(Post.where('context_type = "Group" and context_id in (?)', group_ids))
             .where('created_at > ?', 7.days.ago)
@@ -77,7 +77,7 @@ class Api::V1::UsersController < ApiController
     results = []
     posts.find_each do |post|
       post_hash = post.serializable_hash(
-        include: [:author, { comments: { include: :author } }, { likes: { include: :user } }]
+        include: [:user, { comments: { include: :user } }, { likes: { include: :user } }]
       )
       if post.images.attached?
         post_hash['image_urls'] = post.images.map { |img| Rails.application.routes.url_helpers.url_for(img) }

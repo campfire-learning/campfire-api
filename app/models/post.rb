@@ -1,12 +1,13 @@
 class Post < ApplicationRecord
   include Discard::Model
 
-  belongs_to :author, class_name: :User
+  belongs_to :user
 
   # "context" refers to the location where the post is published:
   # 1. "course" - a post is published to a course
-  # 2. "group" - a post is published to a group
-  # 3. "post" - a post is published as a comment to another post
+  # 2. "club" - a post is published to a group
+  # 3. "group" - a post is published to a group
+  # 4. "post" - a post is published as a comment to another post
   # we need polymorphic association to support this flexibility (instead
   # of creating 3 different types of posts).
   belongs_to :context, polymorphic: true

@@ -222,7 +222,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "author_id"
+    t.integer "user_id", null: false
     t.text "post_text", null: false
     t.string "context_type", null: false
     t.integer "context_id", null: false
@@ -231,6 +231,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.datetime "updated_at", null: false
     t.index ["context_type", "context_id"], name: "index_posts_on_context"
     t.index ["discarded_at"], name: "index_posts_on_discarded_at"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "time_zones", force: :cascade do |t|

@@ -146,43 +146,43 @@ GroupMembership.create(
 )
 
 p1 = Post.create(
-  author_id: u1.id,
+  user_id: u1.id,
   post_text: 'Success is intentional',
   context: g1
 )
 
 p2 = Post.create(
-  author_id: u1.id,
+  user_id: u1.id,
   post_text: 'Failure is simply the result of lack of intention',
   context: c2
 )
 
 p3 = Post.create(
-  author_id: u2.id,
+  user_id: u2.id,
   post_text: 'Success is intentional and it is highly actional',
   context: g1
 )
 
 p4 = Post.create(
-  author: u1,
+  user: u1,
   post_text: 'Failure is simply the result of lack of intention',
   context: c2
 )
 
 cm1 = Post.create(
-  author_id: u1.id,
+  user_id: u1.id,
   post_text: 'Of course intention does not always lead to success',
   context: p1
 )
 
 cm2 = Post.create(
-  author_id: u2.id,
+  user_id: u2.id,
   post_text: 'But you have to have it to begin with',
   context: p1
 )
 
 cm3 = Post.create(
-  author_id: u1.id,
+  user_id: u1.id,
   post_text: 'Indeed intention is the first',
   context: p2
 )
