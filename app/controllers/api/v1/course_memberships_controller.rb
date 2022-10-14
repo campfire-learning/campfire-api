@@ -20,22 +20,24 @@ class Api::V1::CourseMembershipsController < ApiController
 
   # PATCH/PUT /api/v1/course_memberships/1 or /api/v1/course_memberships/1.json
   def update
-    source = params[:source]
-    destination = params[:destination]
-    if source && destination
-      if source > destination
-        user = User.find(params[:user_id])
-        user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination).update_all("\"order\" = \"order\" + 1")
-      elsif source < destination
-        user = User.find(params[:user_id])
-        user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("\"order\" = \"order\" - 1")
+    User.transaction do
+      source = params[:source]
+      destination = params[:destination]
+      if source && destination
+        if source > destination
+          user = User.find(params[:user_id])
+          user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination).update_all("\"order\" = \"order\" + 1")
+        elsif source < destination
+          user = User.find(params[:user_id])
+          user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("\"order\" = \"order\" - 1")
+        end
       end
-    end
 
-    if @course_membership.update(course_membership_params)
-      render json: @course_membership, status: :ok
-    else
-      render json: @course_membership.errors, status: :unprocessable_entity
+      if @course_membership.update(course_membership_params)
+        render json: @course_membership, status: :ok
+      else
+        render json: @course_membership.errors, status: :unprocessable_entity
+      end
     end
   end
 
