@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApiController
   before_action :set_user, only: %i[show edit feed update destroy]
-  skip_before_action :doorkeeper_authorize!, only: %i[login]
+  # skip_before_action :doorkeeper_authorize!, only: %i[login]
 
   include DoorkeeperUserRenderable
 
