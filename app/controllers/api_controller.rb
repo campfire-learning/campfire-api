@@ -3,7 +3,7 @@
 # Controller for API endpoints
 class ApiController < ApplicationController
   # uncomment before deploying to production
-  before_action :doorkeeper_authorize!
+  # before_action :doorkeeper_authorize!
 
   # skip checking of CSRF token authenticity
   skip_before_action :verify_authenticity_token
