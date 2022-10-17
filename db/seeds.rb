@@ -6,7 +6,7 @@ if Doorkeeper::Application.count.zero?
   Doorkeeper::Application.create(name: 'Android', redirect_uri: '', scopes: '')
 end
 
-User.create(
+tony = User.create(
   email: 'tony@campfire.com',
   password: 'to_be_determined_at_runtime',
   password_confirmation: 'to_be_determined_at_runtime',
@@ -15,7 +15,7 @@ User.create(
   user_type: User.user_types[:admin]
 )
 
-User.create(
+joe = User.create(
   email: 'joe@campfire.com',
   password: 'to_be_determined_at_runtime',
   password_confirmation: 'to_be_determined_at_runtime',
@@ -35,10 +35,22 @@ marshmallow = User.create(
   user_type: User.user_types[:bot]
 )
 
-Group.first_or_create(
+group = Group.first_or_create(
   name: 'Campfire General Group',
   creator_id: marshmallow.id,
   owner_id: marshmallow.id,
   description: 'The group that includes all users',
   public: 1
+)
+
+GroupMembership.create(
+  group_id: group.id,
+  user_id: tony.id,
+  role: GroupMembership.roles[:admin]
+)
+
+GroupMembership.create(
+  group_id: group.id,
+  user_id: joe.id,
+  role: GroupMembership.roles[:admin]
 )
