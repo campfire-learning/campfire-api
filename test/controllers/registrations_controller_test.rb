@@ -10,7 +10,6 @@ class Api::V1::RegistrationsControllerTest < ActionDispatch::IntegrationTest
       password_confirmation: 'to_be_determined_at_runtime',
       first_name: 'Marsh',
       last_name: 'Mallow',
-      time_zone_id: 6,
       user_type: User.user_types[:bot]
     )
 

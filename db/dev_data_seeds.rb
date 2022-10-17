@@ -6,7 +6,6 @@ u1 = User.create(
   password_confirmation: 'password',
   first_name: 'Mars',
   last_name: 'Jiangster',
-  time_zone_id: 6,
   user_type: User.user_types[:assistant]
 )
 
@@ -16,7 +15,6 @@ u2 = User.create(
   password_confirmation: 'password',
   first_name: 'John',
   last_name: 'Smith',
-  time_zone_id: 12,
   user_type: User.user_types[:instructor]
 )
 
@@ -26,14 +24,12 @@ u3 = User.create(
   password_confirmation: 'password',
   first_name: 'Al',
   last_name: 'Einstein',
-  time_zone_id: 2,
   user_type: User.user_types[:student]
 )
 
 c1 = Course.create(
   creator_id: 1,
   owner_id: 1,
-  time_zone_id: 8,
   title: 'Rationality 101',
   description: 'How to be reasonable',
   term: Course.terms[:summer],

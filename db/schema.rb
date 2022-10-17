@@ -98,23 +98,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
 
   create_table "courses", force: :cascade do |t|
     t.string "title", null: false
+    t.string "code"
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
     t.integer "year", null: false
     t.integer "term"
     t.integer "pinned_post_id"
     t.date "start_date"
-    t.integer "time_zone_id"
+    t.string "time_zone"
     t.string "location"
     t.text "description"
     t.text "syllabus"
+    t.integer "units"
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_courses_on_creator_id"
     t.index ["discarded_at"], name: "index_courses_on_discarded_at"
     t.index ["owner_id"], name: "index_courses_on_owner_id"
-    t.index ["time_zone_id"], name: "index_courses_on_time_zone_id"
   end
 
   create_table "followings", id: false, force: :cascade do |t|
@@ -234,23 +235,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "time_zones", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "tz_identifier", null: false
-    t.integer "utc_offset", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "encrypted_password", null: false
     t.string "first_name"
     t.string "last_name"
     t.integer "user_type"
+    t.string "profile_url"
     t.string "profile_picture_url"
     t.integer "organization_id"
-    t.integer "time_zone_id", default: 6
+    t.string "time_zone"
     t.datetime "discarded_at"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -274,7 +268,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["time_zone_id"], name: "index_users_on_time_zone_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 

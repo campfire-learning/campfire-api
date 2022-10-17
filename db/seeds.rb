@@ -6,41 +6,51 @@ if Doorkeeper::Application.count.zero?
   Doorkeeper::Application.create(name: 'Android', redirect_uri: '', scopes: '')
 end
 
-ActiveSupport::TimeZone.all.each do |tz|
-  TimeZone.create(
-    name: tz.name,
-    tz_identifier: tz.tzinfo.name,
-    utc_offset: tz.utc_offset
-  )
-end
-
-# The OG
-u1 = User.first_or_create(
-  email: 'yujiang99@gmail.com',
+tony = User.create(
+  email: 'tony@campfire.com',
   password: 'to_be_determined_at_runtime',
   password_confirmation: 'to_be_determined_at_runtime',
-  first_name: 'Mars',
-  last_name: 'Jiangster',
-  time_zone_id: 6,
+  first_name: 'Tony',
+  last_name: 'Jiang',
+  user_type: User.user_types[:admin]
+)
+
+joe = User.create(
+  email: 'joe@campfire.com',
+  password: 'to_be_determined_at_runtime',
+  password_confirmation: 'to_be_determined_at_runtime',
+  first_name: 'Joe',
+  last_name: 'Babbo',
   user_type: User.user_types[:admin]
 )
 
 # Marsh Mallow is a chat bot who is always friendly, occassionally funny,
 # sometimes, and inspirational from time to time
-User.create(
+marshmallow = User.create(
   email: 'marsh.mallow@campfire.com',
   password: 'to_be_determined_at_runtime',
   password_confirmation: 'to_be_determined_at_runtime',
   first_name: 'Marsh',
   last_name: 'Mallow',
-  time_zone_id: 6,
   user_type: User.user_types[:bot]
 )
 
-Group.first_or_create(
+group = Group.first_or_create(
   name: 'Campfire General Group',
-  creator_id: u1.id,
-  owner_id: u1.id,
+  creator_id: marshmallow.id,
+  owner_id: marshmallow.id,
   description: 'The group that includes all users',
   public: 1
+)
+
+GroupMembership.create(
+  group_id: group.id,
+  user_id: tony.id,
+  role: GroupMembership.roles[:admin]
+)
+
+GroupMembership.create(
+  group_id: group.id,
+  user_id: joe.id,
+  role: GroupMembership.roles[:admin]
 )
