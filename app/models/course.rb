@@ -5,8 +5,6 @@ class Course < ApplicationRecord
 
   belongs_to :creator, class_name: :User
   belongs_to :owner, class_name: :User
-  belongs_to :time_zone, optional: true
-
   has_one :pinned_post, class_name: :Post
   has_many :events, class_name: :CourseEvent
   has_many :posts, as: :context
