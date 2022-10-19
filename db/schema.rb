@@ -101,7 +101,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.string "code"
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
-    t.integer "year", null: false
+    t.integer "year"
     t.integer "term"
     t.integer "pinned_post_id"
     t.date "start_date"
@@ -109,7 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.string "location"
     t.text "description"
     t.text "syllabus"
-    t.integer "units"
+    t.string "department"
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

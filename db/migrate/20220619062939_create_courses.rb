@@ -5,7 +5,7 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.string :code  # such as "STATS 101"
       t.references :creator, null: false, foreign_key: { to_table: :users }
       t.references :owner, null: false, foreign_key: { to_table: :users }
-      t.integer :year, null: false
+      t.integer :year
       t.integer :term
       t.integer :pinned_post_id
       t.date :start_date
@@ -13,7 +13,7 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.string :location
       t.text :description
       t.text :syllabus
-      t.integer :units
+      t.string :department
       t.datetime :discarded_at
 
       t.timestamps

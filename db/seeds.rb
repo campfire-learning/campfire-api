@@ -27,11 +27,11 @@ joe = User.create(
 # Marsh Mallow is a chat bot who is always friendly, occassionally funny,
 # sometimes, and inspirational from time to time
 marshmallow = User.create(
-  email: 'marsh.mallow@campfire.com',
+  email: 'marshmallow@campfire.com',
   password: 'to_be_determined_at_runtime',
   password_confirmation: 'to_be_determined_at_runtime',
-  first_name: 'Marsh',
-  last_name: 'Mallow',
+  first_name: 'Marshmallow',
+  last_name: 'Fire',
   user_type: User.user_types[:bot]
 )
 

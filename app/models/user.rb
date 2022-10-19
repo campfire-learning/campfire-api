@@ -44,4 +44,8 @@ class User < ApplicationRecord
     user = User.find_for_authentication(email:)
     user&.valid_password?(password) ? user : nil
   end
+
+  def self.marshmallow
+    User.where(email: 'marshmallow@campfire.com').first
+  end
 end
