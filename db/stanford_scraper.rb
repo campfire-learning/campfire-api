@@ -28,11 +28,12 @@ end
 def scrape_link(link, department)
   return if link.downcase.include? 'javascript'
 
+  stanford_id = Institution.where(name: 'Stanford University').first.id
   dom_doc = get_dom_doc(STARTING_URL + link)
   dom_doc.css('.courseInfo').each do |course|
     Course.create({
       creator_id: User.marshmallow.id,
-      owner_id: User.marshmallow.id,
+      institution_id: stanford_id,
       title: course.css('.courseTitle').first.content.strip,
       code: course.css('.courseNumber').first.content.strip.chomp(':'),
       description: course.css('.courseDescription').first.content.strip,

@@ -27,9 +27,18 @@ u3 = User.create(
   user_type: User.user_types[:student]
 )
 
+Institution.create(
+  name: 'Mars University',
+  url_slug: 'mars_university',
+  home_url: 'university.mars.planet',
+  institution_type: Institution.institution_types[:university],
+  country: 'Mars'
+)
+
 c1 = Course.create(
   creator_id: 1,
   owner_id: 1,
+  institution_id: 1,
   title: 'Rationality 101',
   description: 'How to be reasonable',
   term: Course.terms[:summer],
@@ -40,6 +49,7 @@ c1 = Course.create(
 c2 = Course.create(
   creator_id: 1,
   owner_id: 1,
+  institution_id: 1,
   title: 'Rationality 202',
   description: 'How to be reasonable and profitable',
   term: Course.terms[:winter],
@@ -50,6 +60,7 @@ c2 = Course.create(
 c3 = Course.create(
   creator_id: u1.id,
   owner_id: u1.id,
+  institution_id: 1,
   title: 'Rationality 303',
   description: 'How to be reasonable, lovable, and profitable',
   term: Course.terms[:fall],
@@ -180,10 +191,4 @@ Like.create(
 Like.create(
   user: u2,
   likable: cm1
-)
-
-Institution.create(
-  name: 'Mars University',
-  institution_type: Institution.institution_types[:university],
-  address: 'Mars'
 )
