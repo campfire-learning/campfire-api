@@ -20,7 +20,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :profile_picture_url
 
       ## this is university, company, etc
-      t.references :organization, foreign_key: true
+      t.references :institution, foreign_key: true
 
       ## user's default time zone, potentially used in showing time in the UI, for
       # example time for posts. you can see a complete list by this Rails statement:

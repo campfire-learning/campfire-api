@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_19_010310) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -74,6 +74,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["owner_id"], name: "index_clubs_on_owner_id"
   end
 
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+  end
+
   create_table "course_events", force: :cascade do |t|
     t.integer "course_id", null: false
     t.string "title", null: false
@@ -88,8 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.integer "course_id", null: false
     t.integer "user_id", null: false
     t.integer "order"
-    t.integer "academic_role"
-    t.integer "user_role"
+    t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_course_memberships_on_course_id"
@@ -101,15 +105,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.string "code"
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
-    t.integer "year", null: false
-    t.integer "term"
-    t.integer "pinned_post_id"
+    t.integer "year"
+    t.string "term"
     t.date "start_date"
     t.string "time_zone"
     t.string "location"
     t.text "description"
     t.text "syllabus"
-    t.integer "units"
+    t.string "department"
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -163,6 +166,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
+  create_table "institutions", force: :cascade do |t|
+    t.string "name"
+    t.integer "institution_type"
+    t.string "url"
+    t.string "country"
+    t.text "domains", default: ""
+    t.string "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "likes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "likable_id", null: false
@@ -214,14 +228,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
-  create_table "organizations", force: :cascade do |t|
-    t.string "name"
-    t.integer "organization_type"
-    t.string "address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.text "post_text", null: false
@@ -243,7 +249,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.integer "user_type"
     t.string "profile_url"
     t.string "profile_picture_url"
-    t.integer "organization_id"
+    t.integer "institution_id"
     t.string "time_zone"
     t.datetime "discarded_at"
     t.string "reset_password_token"
@@ -266,7 +272,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["organization_id"], name: "index_users_on_organization_id"
+    t.index ["institution_id"], name: "index_users_on_institution_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
@@ -290,5 +296,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_06_065521) do
   add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "users", "organizations"
+  add_foreign_key "users", "institutions"
 end
