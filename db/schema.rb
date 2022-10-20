@@ -105,6 +105,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
     t.string "code"
     t.integer "creator_id", null: false
     t.integer "owner_id", null: false
+    t.integer "institution_id", null: false
     t.integer "year"
     t.string "term"
     t.date "start_date"
@@ -118,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_courses_on_creator_id"
     t.index ["discarded_at"], name: "index_courses_on_discarded_at"
+    t.index ["institution_id"], name: "index_courses_on_institution_id"
     t.index ["owner_id"], name: "index_courses_on_owner_id"
   end
 

@@ -2,6 +2,9 @@ require "json"
 
 # Universities are from this github repo:
 #   https://github.com/Hipo/university-domains-list
+# To run this script, first download the following json file:
+#   "world_universities_and_domains.json".
+
 schools = JSON.parse(File.read("./world_universities_and_domains.json"))
 
 schools.each do |school|
