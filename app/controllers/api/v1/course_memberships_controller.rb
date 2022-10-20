@@ -61,8 +61,7 @@ class Api::V1::CourseMembershipsController < ApiController
         :order,
         :source,
         :destination,
-        :academic_role,
-        :user_role,
+        :role,
         :user_id
       )
     end

@@ -6,8 +6,7 @@ class CreateCourses < ActiveRecord::Migration[7.0]
       t.references :creator, null: false, foreign_key: { to_table: :users }
       t.references :owner, null: false, foreign_key: { to_table: :users }
       t.integer :year
-      t.integer :term
-      t.integer :pinned_post_id
+      t.string :term
       t.date :start_date
       t.string :time_zone
       t.string :location

@@ -60,54 +60,37 @@ c3 = Course.create(
 CourseMembership.create(
   course_id: c2.id,
   user_id: u1.id,
-  academic_role: CourseMembership.academic_roles[:assistant],
-  user_role: CourseMembership.user_roles[:admin]
+  role: CourseMembership.roles[:admin]
 )
 
 CourseMembership.create(
   course_id: c3.id,
   user_id: u1.id,
-  user_role: CourseMembership.user_roles[:member]
+  role: CourseMembership.roles[:member]
 )
 
 CourseMembership.create(
   course_id: c1.id,
   user_id: u1.id,
-  user_role: CourseMembership.user_roles[:member]
+  role: CourseMembership.roles[:member]
 )
 
 CourseMembership.create(
   course_id: c1.id,
   user_id: u1.id,
-  user_role: CourseMembership.user_roles[:member]
+  role: CourseMembership.roles[:member]
 )
 
 CourseMembership.create(
   course_id: c1.id,
   user_id: u3.id,
-  user_role: CourseMembership.user_roles[:member]
+  role: CourseMembership.roles[:member]
 )
 
 CourseMembership.create(
   course_id: c2.id,
   user_id: u3.id,
-  user_role: CourseMembership.user_roles[:member]
-)
-
-CourseEvent.create(
-  course_id: c2.id,
-  title: 'See the society through statistics',
-  description: 'The only way to understand the society is through statistics',
-  event_type: CourseEvent.event_types[:lecture],
-  event_time: DateTime.current
-)
-
-CourseEvent.create(
-  course_id: c2.id,
-  title: 'See the society through statistics 2',
-  description: 'The only way to understand the society is through statistics 2',
-  event_type: CourseEvent.event_types[:discussion],
-  event_time: DateTime.new(2022, 8, 29, 10, 15).change({ offset: '-0700' })
+  role: CourseMembership.roles[:member]
 )
 
 g1 = Group.create(
@@ -199,8 +182,8 @@ Like.create(
   likable: cm1
 )
 
-Organization.create(
+Institution.create(
   name: 'Mars University',
-  organization_type: 1,
+  institution_type: Institution.institution_types[:university],
   address: 'Mars'
 )

@@ -61,7 +61,7 @@ class Api::V1::ClubMembershipsController < ApiController
         :order,
         :source,
         :destination,
-        :user_role,
+        :role,
         :user_id
       )
     end

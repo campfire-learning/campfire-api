@@ -61,7 +61,7 @@ class Api::V1::GroupMembershipsController < ApiController
         :order,
         :source,
         :destination,
-        :user_role,
+        :role,
         :user_id
       )
     end

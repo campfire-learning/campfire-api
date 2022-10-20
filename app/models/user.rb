@@ -10,9 +10,9 @@ class User < ApplicationRecord
          :rememberable, :validatable, :trackable, :lockable
 
   validates :email, format: URI::MailTo::EMAIL_REGEXP
-  enum user_type: { admin: 1, bot: 2, instructor: 3, assistant: 4, student: 5 }
+  enum user_type: { admin: 'admin', bot: 'bot', instructor: 'instructor', assistant: 'assistant', student: 'student' }
 
-  belongs_to :organization, optional: true
+  belongs_to :institution, optional: true
   has_many :owned_courses, foreign_key: :owner_id, class_name: :Course
   has_many :course_memberships
   has_many :courses, through: :course_memberships

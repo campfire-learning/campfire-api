@@ -4,8 +4,7 @@ class CreateCourseMemberships < ActiveRecord::Migration[7.0]
       t.references :course, null: false
       t.references :user, null: false
       t.integer :order, require: true
-      t.integer :academic_role
-      t.integer :user_role
+      t.string :role
 
       t.timestamps
     end
