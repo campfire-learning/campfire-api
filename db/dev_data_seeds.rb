@@ -184,6 +184,8 @@ Like.create(
 
 Institution.create(
   name: 'Mars University',
+  url_slug: 'mars_university',
+  home_url: 'university.mars.planet',
   institution_type: Institution.institution_types[:university],
-  address: 'Mars'
+  country: 'Mars'
 )

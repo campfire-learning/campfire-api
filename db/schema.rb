@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_19_010310) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -121,6 +121,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_010310) do
     t.index ["owner_id"], name: "index_courses_on_owner_id"
   end
 
+  create_table "domains", force: :cascade do |t|
+    t.string "domain", null: false
+    t.integer "institution_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["institution_id"], name: "index_domains_on_institution_id"
+  end
+
   create_table "followings", id: false, force: :cascade do |t|
     t.integer "follower_id", null: false
     t.integer "followee_id", null: false
@@ -168,11 +176,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_010310) do
 
   create_table "institutions", force: :cascade do |t|
     t.string "name"
-    t.integer "institution_type"
-    t.string "url"
+    t.string "institution_type"
+    t.string "url_slug"
+    t.string "home_url"
     t.string "country"
-    t.text "domains", default: ""
-    t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
