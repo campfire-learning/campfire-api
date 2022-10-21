@@ -16,8 +16,6 @@ class Api::V1::RegistrationsControllerTest < ActionDispatch::IntegrationTest
     g1 = Group.first_or_create(
       name: 'Campfire General Group',
       creator_id: u1.id,
-      owner_id: u1.id,
-      description: 'The group that includes all users',
       public: 1
     )
     puts "Group name is #{g1.name}"

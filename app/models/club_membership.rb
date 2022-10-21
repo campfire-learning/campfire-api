@@ -2,7 +2,7 @@ class ClubMembership < ApplicationRecord
   belongs_to :club
   belongs_to :user
 
-  enum role: { admin: 'admin', memeber: 'memeber' }
+  enum role: { moderator: 'moderator', member: 'member' }
 
   before_create :set_order
 

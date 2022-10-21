@@ -53,7 +53,7 @@ def create_instructors(course)
 
     attributes.css('.instructorLink').each do |instructor|
       url = instructor.attribute('href').value
-      next unless User.where(profile_url: url).empty?
+      next unless User.where(description: url).empty?
 
       full_name = get_full_name(url)
       User.create({
@@ -63,7 +63,7 @@ def create_instructors(course)
         first_name: full_name.split.first || 'Unknown',
         last_name: full_name.split.last || 'Unknown',
         time_zone: "America/Los_Angeles",
-        profile_url: url,
+        description: url,
         user_type: User.user_types[:instructor]
       })
     end

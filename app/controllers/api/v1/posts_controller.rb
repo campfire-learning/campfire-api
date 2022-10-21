@@ -5,14 +5,14 @@ class Api::V1::PostsController < ApiController
   # GET /posts or /posts.json
   def index
     posts = Post
-            .includes(:user, comments: [:user], likes: [:user])
+            .includes(:user, comments: [:user], reactions: [:user])
             .where(context_type: params[:context_type], context_id: params[:context_id])
             .order(created_at: :desc)
 
     results = []
     posts.map do |post|
       post_hash = post.serializable_hash(
-        include: [:user, { comments: { include: :user } }, { likes: { include: :user } }]
+        include: [:user, { comments: { include: :user } }, { reactions: { include: :user } }]
       )
       if post.images.attached?
         post_hash['image_urls'] = post.images.map { |img| Rails.application.routes.url_helpers.url_for(img) }

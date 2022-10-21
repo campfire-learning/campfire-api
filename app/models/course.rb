@@ -1,23 +1,24 @@
-# frozen_string_literal: true
-
 class Course < ApplicationRecord
   include Discard::Model
 
+  belongs_to :institution
   belongs_to :creator, class_name: :User
-  belongs_to :owner, class_name: :User
-  has_one :pinned_post, class_name: :Post
-  has_many :events, class_name: :CourseEvent
-  has_many :posts, as: :context
+
   has_many :course_memberships
   has_many :members, -> { kept }, through: :course_memberships, source: :user
 
+  has_many :channels, as: :context
+
   enum term: { spring: 'spring', summer: 'summer', fall: 'fall', winter: 'winter' }
 
+  # TODO: should be based on user_role if instructor -> instructor, if student -> moderator
   after_create do |course|
+    logger.info course.id
+    logger.info course.creator_id 
     CourseMembership.create(
       course_id: course.id,
       user_id: course.creator_id,
-      role: CourseMembership.roles[:admin]
+      role: CourseMembership.roles[:instructor]
     )
   end
 

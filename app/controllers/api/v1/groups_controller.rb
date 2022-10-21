@@ -14,7 +14,7 @@ class Api::V1::GroupsController < ApiController
 
   # POST /groups or /groups.json
   def create
-    @group = Group.new(group_params.merge(creator_id: params[:user_id], owner_id: params[:user_id]))
+    @group = Group.new(group_params.merge(creator_id: params[:user_id],))
 
     if @group.save
       render json: @group, status: :created
@@ -47,6 +47,6 @@ class Api::V1::GroupsController < ApiController
 
   # Only allow a list of trusted parameters through.
   def group_params
-    params.require(:group).permit(:name, :creator_id, :owner_id, :description, :public)
+    params.require(:group).permit(:name, :creator_id, :public)
   end
 end

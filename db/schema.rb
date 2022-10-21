@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_907000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,141 +39,123 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "assignments", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.text "description"
-    t.integer "assignment_type"
-    t.float "percent"
+  create_table "channel_memberships", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "channel_id", null: false
+    t.integer "mention_count", default: 0, null: false
+    t.integer "new_message_count", default: 0, null: false
+    t.datetime "last_visited"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_assignments_on_course_id"
+    t.index "\"user\", \"channel\"", name: "index_channel_memberships_on_user_and_channel", unique: true
+    t.index ["channel_id"], name: "index_channel_memberships_on_channel_id"
+    t.index ["user_id"], name: "index_channel_memberships_on_user_id"
+  end
+
+  create_table "channels", force: :cascade do |t|
+    t.string "context_type", null: false
+    t.integer "context_id", null: false
+    t.string "name", null: false
+    t.integer "order", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["context_type", "context_id", "name"], name: "index_channels_on_context_type_and_context_id_and_name", unique: true
   end
 
   create_table "club_memberships", force: :cascade do |t|
     t.integer "club_id", null: false
     t.integer "user_id", null: false
-    t.integer "order"
-    t.integer "role"
+    t.integer "order", null: false
+    t.string "role", null: false
+    t.boolean "banned", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "\"context_type\", \"context_id\", \"name\"", name: "index_club_memberships_on_context_type_and_context_id_and_name", unique: true
+    t.index "\"user\", \"club\"", name: "index_club_memberships_on_user_and_club", unique: true
     t.index ["club_id"], name: "index_club_memberships_on_club_id"
     t.index ["user_id"], name: "index_club_memberships_on_user_id"
   end
 
   create_table "clubs", force: :cascade do |t|
-    t.string "name", null: false
+    t.integer "institution_id", null: false
+    t.string "title", null: false
     t.integer "creator_id", null: false
-    t.integer "owner_id", null: false
-    t.integer "pinned_post_id"
-    t.text "description"
-    t.boolean "public"
+    t.boolean "public", default: true, null: false
+    t.string "encrypted_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
+    t.index "\"institution\", \"title\"", name: "index_clubs_on_institution_and_title", unique: true
     t.index ["creator_id"], name: "index_clubs_on_creator_id"
-    t.index ["owner_id"], name: "index_clubs_on_owner_id"
-  end
-
-  create_table "countries", force: :cascade do |t|
-    t.string "name"
-    t.string "code"
-  end
-
-  create_table "course_events", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.string "title", null: false
-    t.string "description"
-    t.integer "event_type", null: false
-    t.datetime "event_time", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["institution_id"], name: "index_clubs_on_institution_id"
   end
 
   create_table "course_memberships", force: :cascade do |t|
     t.integer "course_id", null: false
     t.integer "user_id", null: false
-    t.integer "order"
-    t.string "role"
+    t.integer "order", null: false
+    t.string "role", null: false
+    t.boolean "banned", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "\"user\", \"course\"", name: "index_course_memberships_on_user_and_course", unique: true
     t.index ["course_id"], name: "index_course_memberships_on_course_id"
     t.index ["user_id"], name: "index_course_memberships_on_user_id"
   end
 
   create_table "courses", force: :cascade do |t|
+    t.integer "institution_id", null: false
     t.string "title", null: false
     t.string "code"
+    t.string "department"
     t.integer "creator_id", null: false
-    t.integer "owner_id", null: false
-    t.integer "institution_id", null: false
+    t.boolean "public", default: true, null: false
+    t.string "encrypted_password"
     t.integer "year"
     t.string "term"
-    t.date "start_date"
-    t.string "time_zone"
-    t.string "location"
-    t.text "description"
-    t.text "syllabus"
-    t.string "department"
-    t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index "\"institution\", \"code\", \"year\", \"term\"", name: "index_courses_on_institution_and_code_and_year_and_term", unique: true
+    t.index "\"institution\", \"title\", \"year\", \"term\"", name: "index_courses_on_institution_and_title_and_year_and_term", unique: true
     t.index ["creator_id"], name: "index_courses_on_creator_id"
-    t.index ["discarded_at"], name: "index_courses_on_discarded_at"
     t.index ["institution_id"], name: "index_courses_on_institution_id"
-    t.index ["owner_id"], name: "index_courses_on_owner_id"
   end
 
   create_table "domains", force: :cascade do |t|
-    t.string "domain", null: false
     t.integer "institution_id", null: false
+    t.string "domain", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["institution_id"], name: "index_domains_on_institution_id"
   end
 
-  create_table "followings", id: false, force: :cascade do |t|
-    t.integer "follower_id", null: false
-    t.integer "followee_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["followee_id"], name: "index_followings_on_followee_id"
-    t.index ["follower_id"], name: "index_followings_on_follower_id"
-  end
-
-  create_table "grades", force: :cascade do |t|
-    t.integer "assignment_id", null: false
-    t.integer "user_id", null: false
-    t.float "grade"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assignment_id"], name: "index_grades_on_assignment_id"
-    t.index ["user_id"], name: "index_grades_on_user_id"
-  end
-
   create_table "group_memberships", force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "user_id", null: false
-    t.integer "order"
-    t.integer "role"
+    t.integer "order", null: false
+    t.string "role", null: false
+    t.boolean "banned", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index "\"user\", \"group\"", name: "index_group_memberships_on_user_and_group", unique: true
     t.index ["group_id"], name: "index_group_memberships_on_group_id"
     t.index ["user_id"], name: "index_group_memberships_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string "name", null: false
+    t.integer "institution_id", null: false
+    t.string "title", null: false
     t.integer "creator_id", null: false
-    t.integer "owner_id", null: false
-    t.integer "pinned_post_id"
-    t.text "description"
-    t.boolean "public"
-    t.datetime "discarded_at"
+    t.boolean "public", default: true, null: false
+    t.string "encrypted_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index "\"institution\", \"title\"", name: "index_groups_on_institution_and_title", unique: true
     t.index ["creator_id"], name: "index_groups_on_creator_id"
-    t.index ["discarded_at"], name: "index_groups_on_discarded_at"
-    t.index ["owner_id"], name: "index_groups_on_owner_id"
+    t.index ["institution_id"], name: "index_groups_on_institution_id"
   end
 
   create_table "institutions", force: :cascade do |t|
@@ -181,18 +163,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
     t.string "institution_type"
     t.string "url_slug"
     t.string "home_url"
-    t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "likes", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "likable_id", null: false
-    t.string "likable_type", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["likable_type", "likable_id", "user_id"], name: "index_likes_on_likable_type_and_likable_id_and_user_id", unique: true
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -237,17 +209,52 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.text "post_text", null: false
-    t.string "context_type", null: false
-    t.integer "context_id", null: false
-    t.datetime "discarded_at"
+  create_table "pdf_tabs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["context_type", "context_id"], name: "index_posts_on_context"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "channel_id", null: false
+    t.text "post_text", null: false
+    t.integer "reply_to_id_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["channel_id"], name: "index_posts_on_channel_id"
     t.index ["discarded_at"], name: "index_posts_on_discarded_at"
+    t.index ["reply_to_id_id"], name: "index_posts_on_reply_to_id_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "reactions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.string "reaction", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "\"user\", \"post\", \"reaction\"", name: "index_reactions_on_user_and_post_and_reaction", unique: true
+    t.index ["post_id"], name: "index_reactions_on_post_id"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
+  end
+
+  create_table "rich_text_tabs", force: :cascade do |t|
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tabs", force: :cascade do |t|
+    t.string "context_type", null: false
+    t.integer "context_id", null: false
+    t.string "name", null: false
+    t.integer "order", null: false
+    t.string "tab_context_type", null: false
+    t.integer "tab_context_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -255,12 +262,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
     t.string "encrypted_password", null: false
     t.string "first_name"
     t.string "last_name"
-    t.integer "user_type"
-    t.string "profile_url"
+    t.string "user_type", null: false
+    t.text "description"
     t.string "profile_picture_url"
-    t.integer "institution_id"
-    t.string "time_zone"
-    t.datetime "discarded_at"
+    t.integer "institution_id", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -278,6 +283,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
     t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["discarded_at"], name: "index_users_on_discarded_at"
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -288,22 +294,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "assignments", "courses"
+  add_foreign_key "channel_memberships", "channels"
+  add_foreign_key "channel_memberships", "users"
   add_foreign_key "club_memberships", "clubs"
   add_foreign_key "club_memberships", "users"
+  add_foreign_key "clubs", "institutions"
   add_foreign_key "clubs", "users", column: "creator_id"
-  add_foreign_key "clubs", "users", column: "owner_id"
+  add_foreign_key "course_memberships", "courses"
+  add_foreign_key "course_memberships", "users"
+  add_foreign_key "courses", "institutions"
   add_foreign_key "courses", "users", column: "creator_id"
-  add_foreign_key "courses", "users", column: "owner_id"
-  add_foreign_key "followings", "users", column: "followee_id"
-  add_foreign_key "followings", "users", column: "follower_id"
-  add_foreign_key "grades", "assignments"
-  add_foreign_key "grades", "users"
+  add_foreign_key "domains", "institutions"
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "users"
+  add_foreign_key "groups", "institutions"
   add_foreign_key "groups", "users", column: "creator_id"
-  add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "posts", "channels"
+  add_foreign_key "posts", "posts", column: "reply_to_id_id"
+  add_foreign_key "posts", "users"
+  add_foreign_key "reactions", "posts"
+  add_foreign_key "reactions", "users"
   add_foreign_key "users", "institutions"
 end

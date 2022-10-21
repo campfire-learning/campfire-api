@@ -1,14 +1,15 @@
 class Group < ApplicationRecord
   include Discard::Model
 
+  belongs_to :institution
   belongs_to :creator, class_name: :User
-  belongs_to :owner, class_name: :User
 
-  has_one :pinned_post, class_name: :Post
   has_many :group_memberships
   has_many :members, -> { kept }, through: :group_memberships, source: :user
-  has_many :posts, as: :context
 
+  has_one :channels, as: :context
+
+  # TODO: should be per school (stanford_general, berkely_general)
   def self.campfire_general
     Group.first
   end
@@ -17,7 +18,7 @@ class Group < ApplicationRecord
     GroupMembership.create(
       group_id: group.id,
       user_id: group.creator_id,
-      role: GroupMembership.roles[:admin]
+      role: GroupMembership.roles[:member]
     )
   end
 

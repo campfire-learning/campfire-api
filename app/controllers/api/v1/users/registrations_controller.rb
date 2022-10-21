@@ -21,7 +21,7 @@ module Api
             GroupMembership.create(
               group_id: Group.campfire_general.id,
               user_id: user.id,
-              role: GroupMembership.roles[:memeber]
+              role: GroupMembership.roles[:member]
             )
             render json: render_user(user, client_app), status: :ok
           else

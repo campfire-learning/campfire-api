@@ -26,11 +26,9 @@ def scrape_berkeley_courses()
       desc = paragraphs.size >= 0 ? paragraphs[1] : ''
       Course.create(
         creator_id: User.marshmallow.id,
-        owner_id: User.marshmallow.id,
         institution_id: BERKELEY_ID,
         title: course.css('.title').first.content.strip,
         code: course.css('.code').first.content.strip,
-        description: desc,
         department: dept.content,
         year: 2023,
         term: Course.terms[:spring]
@@ -65,7 +63,7 @@ def scrape_berkeley_instructors
         first_name: full_name.split.first || 'Unknown',
         last_name: full_name.split.last || 'Unknown',
         time_zone: "America/Los_Angeles",
-        profile_url: url,
+        description: url,
         institution_id: BERKELEY_ID,
         user_type: User.user_types[:instructor]
       )

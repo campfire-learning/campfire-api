@@ -14,7 +14,7 @@ class Api::V1::ClubsController < ApiController
 
   # POST /clubs or /clubs.json
   def create
-    @club = Club.new(club_params.merge(creator_id: params[:user_id], owner_id: params[:user_id]))
+    @club = Club.new(club_params.merge(creator_id: params[:user_id]))
 
     if @club.save
       render json: @club, status: :created
@@ -47,6 +47,6 @@ class Api::V1::ClubsController < ApiController
 
   # Only allow a list of trusted parameters through.
   def club_params
-    params.require(:club).permit(:name, :creator_id, :owner_id, :description, :public)
+    params.require(:club).permit(:name, :creator_id, :public)
   end
 end

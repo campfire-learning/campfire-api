@@ -7,8 +7,6 @@ class Api::V1::PostsControllerTest < ActionDispatch::IntegrationTest
     Group.first_or_create(
       name: 'Campfire General Group',
       creator_id: 1,
-      owner_id: 1,
-      description: 'The group that includes all users',
       public: 1
     )
 

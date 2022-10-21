@@ -16,7 +16,7 @@ class Api::V1::CoursesController < ApiController
   # POST /courses or /courses.json
   def create
     @course = Course.new(
-      course_params.merge(creator_id: params[:user_id], owner_id: params[:user_id])
+      course_params.merge(creator_id: params[:user_id])
     )
 
     if @course.save
@@ -52,9 +52,7 @@ class Api::V1::CoursesController < ApiController
   def course_params
     params.require(:course).permit(
       :creator_id,
-      :owner_id,
       :title,
-      :description,
       :year,
       :term,
       :location,
