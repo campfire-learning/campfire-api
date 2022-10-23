@@ -51,7 +51,7 @@ class Api::V1::ClubsController < ApiController
   # Only allow a list of trusted parameters through.
   def club_params
     params.require(:club).permit(
-      :institution_id
+      :institution_id,
       :title,
       :icon,
       :creator_id,
