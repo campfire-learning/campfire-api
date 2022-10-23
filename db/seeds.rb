@@ -10,7 +10,7 @@ stanford = Institution.create(
   name: "Stanford",
   institution_type: "university",
   url_slug: "stanford",
-  home_url: "stanford.com"
+  home_url: "stanford.edu"
 )
 
 tony = User.create(

@@ -11,6 +11,6 @@ class CreateClubMemberships < ActiveRecord::Migration[7.0]
       t.timestamps null: false
     end
 
-    add_index :club_memberships, [:user, :club], unique: true
+    add_index :club_memberships, [:user_id, :club_id], unique: true
   end
 end

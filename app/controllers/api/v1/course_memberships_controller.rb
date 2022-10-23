@@ -26,10 +26,20 @@ class Api::V1::CourseMembershipsController < ApiController
       if source && destination
         if source > destination
           user = User.find(params[:user_id])
-          user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination).update_all("\"order\" = \"order\" + 1")
+          user
+            .course_memberships
+            .order(order: :asc)
+            .limit((source - destination).abs())
+            .offset(destination)
+            .update_all("\"order\" = \"order\" + 1")
         elsif source < destination
           user = User.find(params[:user_id])
-          user.course_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("\"order\" = \"order\" - 1")
+          user
+            .course_memberships
+            .order(order: :asc)
+            .limit((source - destination).abs())
+            .offset(source + 1)
+            .update_all("\"order\" = \"order\" - 1")
         end
       end
 
@@ -56,13 +66,13 @@ class Api::V1::CourseMembershipsController < ApiController
     # Only allow a list of trusted parameters through.
     def course_membership_params
       params.fetch(:course_membership).permit(
-        :course,
-        :user,
+        :course_id,
+        :user_id,
         :order,
         :source,
         :destination,
         :role,
-        :user_id
+        :banned,
       )
     end
 end

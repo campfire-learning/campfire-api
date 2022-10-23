@@ -2,10 +2,9 @@ class Tab < ApplicationRecord
   include Discard::Model
 
   belongs_to :context, polymorphic: true
-  enum context_type: { course: 'course', club: 'club' }
 
-  belongs_to :tab_context, polymorphic: true
-  enum tab_context_type: { rich_text_tab: 'rich_text_tab', pdf_tab: 'pdf_tab'}
+  has_many :pdf_tabs, as: :tab_entity, polymorphic: true
+  has_many :rich_text_tabs, as: :tab_entity, polymorphic: true
 
   before_create :set_order
 

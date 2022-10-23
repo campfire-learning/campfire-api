@@ -4,7 +4,10 @@ class Api::V1::GroupsController < ApiController
   # GET /groups or /groups.json
   def index
     user = User.find(params['user_id'])
-    render json: user.groups.select(('groups.*, group_memberships.id as membership_id, group_memberships.`order`')).order(order: :asc).uniq
+    render json: user.groups
+      .select(('groups.*, group_memberships.id as membership_id, group_memberships.`order`'))
+      .order(order: :asc)
+      .uniq
   end
 
   # GET /groups/1 or /groups/1.json
@@ -47,6 +50,13 @@ class Api::V1::GroupsController < ApiController
 
   # Only allow a list of trusted parameters through.
   def group_params
-    params.require(:group).permit(:name, :creator_id, :public)
+    params.require(:group).permit(
+      :institution_id
+      :title, 
+      :description,
+      :creator_id, 
+      :public,
+      :password,
+    )
   end
 end

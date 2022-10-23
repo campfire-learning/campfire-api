@@ -16,10 +16,10 @@ module Api
 
           create_params = user_params.except(:client_id)
           user = User.new(create_params)
-
+          general_group = Group.select(:id).where(institution_id: user.institution_id)
           if user.save
             GroupMembership.create(
-              group_id: Group.campfire_general.id,
+              group_id: general_group.id,
               user_id: user.id,
               role: GroupMembership.roles[:member]
             )
