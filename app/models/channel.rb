@@ -27,6 +27,5 @@ class Channel < ApplicationRecord
     def set_order
       self.order = Channel.where(context_type: context_type, context_id: context_id).count
     end
-    
   end
   

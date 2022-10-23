@@ -1,4 +1,4 @@
 class RichTextTab < ApplicationRecord  
-    belongs_to :tab
+    has_one :tab
   end
   

@@ -3,9 +3,6 @@ class Tab < ApplicationRecord
 
   belongs_to :context, polymorphic: true
 
-  has_many :pdf_tabs, as: :tab_entity, polymorphic: true
-  has_many :rich_text_tabs, as: :tab_entity, polymorphic: true
-
   before_create :set_order
 
   def set_order

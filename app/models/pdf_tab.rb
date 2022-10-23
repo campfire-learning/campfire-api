@@ -1,5 +1,5 @@
 class PdfTab < ApplicationRecord  
     has_one_attached :pdf
-    belongs_to :tab
+    has_one :tab
   end
   
