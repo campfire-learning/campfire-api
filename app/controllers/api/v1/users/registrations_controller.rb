@@ -16,7 +16,7 @@ module Api
 
           create_params = user_params.except(:client_id)
           user = User.new(create_params)
-          general_interest = Interest.select(:id).where(institution_id: user.institution_id)
+          general_interest = Interest.select(:id).where(institution_id: user.institution_id).first
           if user.save
             InterestMembership.create(
               interest_id: general_interest.id,

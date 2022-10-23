@@ -83,10 +83,10 @@ class Api::V1::PostsController < ApiController
   def post_params
     params.require(:post).permit(
       :user_id,
-      :chanel_id
+      :channel_id,
       :post_text,
       :reply_to_id,
-      images: []
+      images: [],
     )
   end
 end

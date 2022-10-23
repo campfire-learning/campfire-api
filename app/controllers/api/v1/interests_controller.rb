@@ -51,7 +51,7 @@ class Api::V1::InterestsController < ApiController
   # Only allow a list of trusted parameters through.
   def interest_params
     params.require(:interest).permit(
-      :institution_id
+      :institution_id,
       :title, 
       :icon,
       :creator_id, 
