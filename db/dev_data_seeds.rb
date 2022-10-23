@@ -73,30 +73,30 @@ CourseMembership.create(
   role: CourseMembership.roles[:student]
 )
 
-g1 = Group.create(
+g1 = Interest.create(
   title: 'The Cabal',
   institution_id: 1,
   creator_id: u1.id,
   public: 1
 )
 
-g2 = Group.create(
+g2 = Interest.create(
   title: 'The Murder',
   institution_id: 1,
   creator_id: u2.id,
   public: 1
 )
 
-GroupMembership.create(
-  group_id: g2.id,
+InterestMembership.create(
+  interest_id: g2.id,
   user_id: u1.id,
-  role: GroupMembership.roles[:member]
+  role: InterestMembership.roles[:member]
 )
 
-GroupMembership.create(
-  group_id: g1.id,
+InterestMembership.create(
+  interest_id: g1.id,
   user_id: u3.id,
-  role: GroupMembership.roles[:member]
+  role: InterestMembership.roles[:member]
 )
 
 # p1 = Post.create(

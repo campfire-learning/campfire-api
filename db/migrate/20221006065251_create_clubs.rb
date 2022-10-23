@@ -3,6 +3,7 @@ class CreateClubs < ActiveRecord::Migration[7.0]
     create_table :clubs do |t|
       t.references :institution, null: false, foreign_key: true
       t.string :title, null: false
+      t.string :icon
 
       t.references :creator, foreign_key: { to_table: :users }
       

@@ -14,17 +14,17 @@ class User < ApplicationRecord
   has_many :courses, through: :course_memberships
   has_many :club_memberships
   has_many :clubs, through: :club_memberships
-  has_many :group_memberships
-  has_many :groups, through: :group_memberships
+  has_many :interest_memberships
+  has_many :interests, through: :interest_memberships
 
   after_discard do
-    groups.discard_all
+    interests.discard_all
     clubs.discard_all
     courses.discard_all
   end
 
   after_undiscard do
-    groups.undiscard_all
+    interests.undiscard_all
     clubs.undiscard_all
     courses.undiscard_all
   end

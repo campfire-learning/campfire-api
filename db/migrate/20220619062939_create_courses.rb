@@ -3,6 +3,7 @@ class CreateCourses < ActiveRecord::Migration[7.0]
     create_table :courses do |t|
       t.references :institution, null: false, foreign_key: true
       t.string :title, null: false
+      t.string :icon
 
       t.string :code  # ex: "STATS 101"
       t.string :department

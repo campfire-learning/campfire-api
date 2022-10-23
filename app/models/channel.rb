@@ -9,8 +9,8 @@ class Channel < ApplicationRecord
     before_create :set_order
 
     after_create do |channel|
-      if channel.context_type == "Group" 
-        users = GroupMembership.select(:user_id).where(group_id: channel.context_id)
+      if channel.context_type == "Interest" 
+        users = InterestMembership.select(:user_id).where(interest_id: channel.context_id)
       elsif channel.context_type == "Club"
         users = ClubMembership.select(:user_id).where(club_id: channel.context_id)
       elsif channel.context_type == "Course"

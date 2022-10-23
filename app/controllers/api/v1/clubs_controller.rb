@@ -53,6 +53,7 @@ class Api::V1::ClubsController < ApiController
     params.require(:club).permit(
       :institution_id
       :title,
+      :icon,
       :creator_id,
       :public,
       :password,

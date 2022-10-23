@@ -1,9 +1,9 @@
-class CreateGroups < ActiveRecord::Migration[7.0]
+class CreateInterests < ActiveRecord::Migration[7.0]
   def change
-    create_table :groups do |t|
+    create_table :interests do |t|
       t.references :institution, null: false, foreign_key: true
       t.string :title, null: false
-      t.string :description
+      t.string :icon
 
       t.references :creator, foreign_key: { to_table: :users }
 
@@ -14,6 +14,6 @@ class CreateGroups < ActiveRecord::Migration[7.0]
       t.datetime :discarded_at
     end
 
-    add_index :groups, [:institution_id, :title], unique: true
+    add_index :interests, [:institution_id, :title], unique: true
   end
 end

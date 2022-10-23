@@ -56,6 +56,7 @@ class Api::V1::CoursesController < ApiController
     params.require(:course).permit(
       :institution,
       :title,
+      :icon,
       :code,
       :department,
       :creator_id,

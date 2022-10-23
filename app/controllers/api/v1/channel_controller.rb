@@ -76,7 +76,7 @@ class Api::V1::ChannelsController < ApiController
 
       def validate_context_type
         puts "Validating original params: #{params}"
-        return if %w[Group Course Club].include? params[:context_type]
+        return if %w[Interest Course Club].include? params[:context_type]
     
         render json: { message: "Wrong context type for channel: #{params[:context_type]}" },
                status: :unprocessable_entity
@@ -89,6 +89,7 @@ class Api::V1::ChannelsController < ApiController
           :context_type,
           :context_id,
           :title,
+          :description,
           :order,
           :source,
           :destination,

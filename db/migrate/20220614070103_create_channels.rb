@@ -5,6 +5,7 @@ class CreateChannels < ActiveRecord::Migration[7.0]
 
       t.string :title, null:false
       t.integer :order, null:false
+      t.text :description
 
       t.timestamps
       t.datetime :discarded_at

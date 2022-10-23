@@ -8,8 +8,8 @@ namespace :api do
     resources :courses
     resources :course_memberships
 
-    resources :groups
-    resources :group_memberships
+    resources :interests
+    resources :interest_memberships
 
     resources :clubs
     resources :club_memberships
