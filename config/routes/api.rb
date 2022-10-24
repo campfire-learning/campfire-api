@@ -5,15 +5,21 @@ namespace :api do
     resources :posts do
       resources :reactions
     end
-
     resources :courses
     resources :course_memberships
 
-    resources :groups
-    resources :group_memberships
+    resources :interests
+    resources :interest_memberships
 
     resources :clubs
     resources :club_memberships
+
+    resources :channels
+    resources :channel_memberships
+
+    resources :tabs
+    resources :rich_text_tabs
+    resources :pdf_tabs
 
     # this should be placed before "resources :users"
     scope :users, module: :users do

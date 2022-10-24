@@ -6,8 +6,8 @@ class Api::V1::UsersController < ApiController
 
   # GET /users or /users.json
   def index
-    if params[:group_id]
-      memberships = Group.find(params[:group_id]).group_memberships
+    if params[:interest_id]
+      memberships = Interest.find(params[:interest_id]).interest_memberships
     elsif params[:course_id]
       memberships = Course.find(params[:course_id]).course_memberships
     elsif params[:club_id]
@@ -65,11 +65,11 @@ class Api::V1::UsersController < ApiController
   # GET /users/1/feed
   def feed
     course_ids = @user.courses.limit(25).map(&:id)
-    group_ids = @user.groups.limit(25).map(&:id)
+    interest_ids = @user.interests.limit(25).map(&:id)
     posts = Post
             .includes(:user, comments: [:user], reactions: [:user])
             .where('context_type = "Course" and context_id in (?)', course_ids)
-            .or(Post.where('context_type = "Group" and context_id in (?)', group_ids))
+            .or(Post.where('context_type = "Interest" and context_id in (?)', interest_ids))
             .where('created_at > ?', 7.days.ago)
             .order(created_at: :desc)
             .limit(100)
@@ -105,7 +105,13 @@ class Api::V1::UsersController < ApiController
 
   def user_params
     params.require(:user).permit(
-      :email, :password, :first_name, :last_name, :user_type, :institution_id, :client_id
+      :email, 
+      :password, 
+      :first_name, 
+      :last_name, 
+      :user_type, 
+      :institution_id, 
+      :client_id
     )
   end
 end

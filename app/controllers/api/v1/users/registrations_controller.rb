@@ -16,12 +16,12 @@ module Api
 
           create_params = user_params.except(:client_id)
           user = User.new(create_params)
-
+          general_interest = Interest.select(:id).where(institution_id: user.institution_id).first
           if user.save
-            GroupMembership.create(
-              group_id: Group.campfire_general.id,
+            InterestMembership.create(
+              interest_id: general_interest.id,
               user_id: user.id,
-              role: GroupMembership.roles[:member]
+              role: InterestMembership.roles[:member]
             )
             render json: render_user(user, client_app), status: :ok
           else

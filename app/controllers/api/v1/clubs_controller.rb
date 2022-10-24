@@ -4,7 +4,10 @@ class Api::V1::ClubsController < ApiController
   # GET /clubs or /clubs.json
   def index
     user = User.find(params['user_id'])
-    render json: user.clubs.select(('clubs.*, club_memberships.id as membership_id, club_memberships.`order`')).order(order: :asc).uniq
+    render json: user.clubs
+      .select(('clubs.*, club_memberships.id as membership_id, club_memberships.`order`'))
+      .order(order: :asc)
+      .uniq
   end
 
   # GET /clubs/1 or /clubs/1.json
@@ -47,6 +50,13 @@ class Api::V1::ClubsController < ApiController
 
   # Only allow a list of trusted parameters through.
   def club_params
-    params.require(:club).permit(:name, :creator_id, :public)
+    params.require(:club).permit(
+      :institution_id,
+      :title,
+      :icon,
+      :creator_id,
+      :public,
+      :password,
+    )
   end
 end

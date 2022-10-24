@@ -51,6 +51,10 @@ class Api::V1::ReactionsController < ApiController
 
   # Only allow a list of trusted parameters through.
   def reaction_params
-    params.require(:reaction).permit(:user_id, :post_id, :reaction)
+    params.require(:reaction).permit(
+      :user_id,
+      :post_id,
+      :reaction
+      )
   end
 end

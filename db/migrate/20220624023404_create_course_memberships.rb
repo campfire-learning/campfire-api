@@ -11,6 +11,6 @@ class CreateCourseMemberships < ActiveRecord::Migration[7.0]
       t.timestamps null: false
     end
 
-    add_index :course_memberships, [:user, :course], unique: true
+    add_index :course_memberships, [:user_id, :course_id], unique: true
   end
 end

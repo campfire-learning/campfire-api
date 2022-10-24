@@ -11,5 +11,8 @@ class CreateInstitutions < ActiveRecord::Migration[7.0]
 
       t.timestamps null: false
     end
+
+    add_index :institutions, [:name, :institution_type], unique: true
+    add_index :institutions, [:url_slug], unique: true
   end
 end

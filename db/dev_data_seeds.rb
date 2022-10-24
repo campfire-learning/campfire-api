@@ -1,4 +1,6 @@
-Institution.create(
+# frozen_string_literal: true
+
+i1 = Institution.create(
   name: 'Mars University',
   url_slug: 'mars_university',
   home_url: 'university.mars.planet',
@@ -11,7 +13,8 @@ u1 = User.create(
   password_confirmation: 'password',
   first_name: 'Mars',
   last_name: 'Jiangster',
-  user_type: User.user_types[:assistant]
+  user_type: User.user_types[:student],
+  institution: i1
 )
 
 u2 = User.create(
@@ -20,7 +23,8 @@ u2 = User.create(
   password_confirmation: 'password',
   first_name: 'John',
   last_name: 'Smith',
-  user_type: User.user_types[:instructor]
+  user_type: User.user_types[:instructor],
+  institution: i1
 )
 
 u3 = User.create(
@@ -29,7 +33,8 @@ u3 = User.create(
   password_confirmation: 'password',
   first_name: 'Al',
   last_name: 'Einstein',
-  user_type: User.user_types[:student]
+  user_type: User.user_types[:student],
+  institution: i1
 )
 
 c1 = Course.create(
@@ -41,7 +46,7 @@ c1 = Course.create(
 )
 
 c2 = Course.create(
-  creator_id: 1,
+  creator_id: 2,
   institution_id: 1,
   title: 'Rationality 202',
   term: Course.terms[:winter],
@@ -68,38 +73,34 @@ CourseMembership.create(
   role: CourseMembership.roles[:student]
 )
 
-g1 = Group.create(
+g1 = Interest.create(
   title: 'The Cabal',
+  institution_id: 1,
   creator_id: u1.id,
   public: 1
 )
 
-g2 = Group.create(
+g2 = Interest.create(
   title: 'The Murder',
-  creator_id: u1.id,
+  institution_id: 1,
+  creator_id: u2.id,
   public: 1
 )
 
-GroupMembership.create(
-  group_id: g1.id,
+InterestMembership.create(
+  interest_id: g2.id,
   user_id: u1.id,
-  role: GroupMembership.roles[:member]
+  role: InterestMembership.roles[:member]
 )
 
-GroupMembership.create(
-  group_id: g2.id,
-  user_id: u1.id,
-  role: GroupMembership.roles[:member]
-)
-
-GroupMembership.create(
-  group_id: g1.id,
+InterestMembership.create(
+  interest_id: g1.id,
   user_id: u3.id,
-  role: GroupMembership.roles[:member]
+  role: InterestMembership.roles[:member]
 )
 
 # p1 = Post.create(
-#   user_id: u1.id,
+#   user_id: u1.id,s
 #   post_text: 'Success is intentional',
 #   context: g1
 # )

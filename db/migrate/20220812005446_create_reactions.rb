@@ -9,6 +9,6 @@ class CreateReactions < ActiveRecord::Migration[7.0]
       t.timestamps null: false
     end
 
-    add_index :reactions, [:user, :post, :reaction], unique: true
+    add_index :reactions, [:user_id, :post_id, :reaction], unique: true
   end
 end

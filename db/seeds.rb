@@ -10,7 +10,7 @@ stanford = Institution.create(
   name: "Stanford",
   institution_type: "university",
   url_slug: "stanford",
-  home_url: "stanford.com"
+  home_url: "stanford.edu"
 )
 
 tony = User.create(
@@ -44,20 +44,20 @@ marshmallow = User.create(
   user_type: User.user_types[:bot]
 )
 
-group = Group.first_or_create(
-  title: 'Campfire General Group',
+interest = Interest.first_or_create(
+  title: 'Campfire General Interest',
   creator_id: marshmallow.id,
   public: 1
 )
 
-GroupMembership.create(
-  group_id: group.id,
+InterestMembership.create(
+  interest_id: interest.id,
   user_id: tony.id,
-  role: GroupMembership.roles[:member]
+  role: InterestMembership.roles[:member]
 )
 
-GroupMembership.create(
-  group_id: group.id,
+InterestMembership.create(
+  interest_id: interest.id,
   user_id: joe.id,
-  role: GroupMembership.roles[:member]
+  role: InterestMembership.roles[:member]
 )
