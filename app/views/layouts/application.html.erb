@@ -16,11 +16,10 @@
       crossorigin="anonymous"
     ></script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
   <body>
-    <main>
-      <div class="container"><%= yield %></div>
-    </main>
+    <%= yield %>
   </body>
 </html>

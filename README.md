@@ -80,6 +80,14 @@ curl -H "Authorization: Bearer V4TrSahAjqX5xRuz3LkCLNJlTyCVLLxTi7k4lmuatCQ" http
 curl -X POST -H "Content-Type: application/json" -d '{"token": "sZhWT-nxRa9dCm-eo0sZNDBWsCwD_mRL5Tlm8RNBu2I", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY", "client_secret": "PEHN53a7IpbyXay__RlieQVOuhFq5tkvzFOokTwh1EI"}' http://127.0.0.1:3000/api/v1/oauth/revoke
 ```
 
-## Unit tests
+## Testing
+Need more!
 
 ## Deployment
+We deploy the two parts of Campfire together in one Docker image.
+
+1. Run `npm run build` in the `campfire-web` repo's root directory.
+2. Copy the generated file `build/static/js/main-<hash>.js` into `campfire-api` repo as `app/assets/javascripts/application.js`. The following layout file `app/views/layouts/application.html.erb` is involved in rendering the web app because we are running JavaScript code through Rails.
+3. In "campfire-api" repo's root directory, build a Docker image `docker build -t campfire .`.
+4. Publish it `docker push campfire`.
+5. Update Kubernetes cluster with the new Docker image with a `kubectl apply` command.
