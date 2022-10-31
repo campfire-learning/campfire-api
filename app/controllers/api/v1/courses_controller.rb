@@ -9,8 +9,8 @@ class Api::V1::CoursesController < ApiController
 
   # GET /courses/1 or /courses/1.json
   def show
-    @course = Course.includes(:events).find(params[:id])
-    render json: @course, include: [:events]
+    @course = Course.find(params[:id])
+    render json: @course
   end
 
   # POST /courses or /courses.json

@@ -84,9 +84,12 @@ curl -X POST -H "Content-Type: application/json" -d '{"token": "sZhWT-nxRa9dCm-e
 Need more!
 
 ## Run Campfire in Docker Compose locally
-You can build a new Docker image by running `docker build -t campfire-api .` in the repo's root directory.
+You can build a new Docker image by running "`docker build -t campfire-api .`" in the repo's root directory.
 
-You can start a container by running `docker run -p 3000:3000 campfire-api`.
+You can start a container by running this long-winded command:
+```
+docker run -e RAILS_ENV=development -v `pwd`/db/development.sqlite3:/app/campfire-api/db/development.sqlite3 -p 3000:3000 campfire-api
+```
 
 ## Deployment
 We deploy Campfire API in its own Docker image. The React app is in a separate Docker image.

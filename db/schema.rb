@@ -79,16 +79,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_080727) do
     t.string "code"
   end
 
-  create_table "course_events", force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.string "title", null: false
-    t.string "description"
-    t.integer "event_type", null: false
-    t.datetime "event_time", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "course_memberships", force: :cascade do |t|
     t.integer "course_id", null: false
     t.integer "user_id", null: false
