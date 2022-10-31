@@ -80,6 +80,17 @@ curl -H "Authorization: Bearer V4TrSahAjqX5xRuz3LkCLNJlTyCVLLxTi7k4lmuatCQ" http
 curl -X POST -H "Content-Type: application/json" -d '{"token": "sZhWT-nxRa9dCm-eo0sZNDBWsCwD_mRL5Tlm8RNBu2I", "client_id": "vtZABOhi9JdIi4nYl1AH-c7Th4O8tixffyIFwzepZRY", "client_secret": "PEHN53a7IpbyXay__RlieQVOuhFq5tkvzFOokTwh1EI"}' http://127.0.0.1:3000/api/v1/oauth/revoke
 ```
 
-## Unit tests
+## Testing
+Need more!
+
+## Run Campfire in Docker Compose locally
+You can build a new Docker image by running `docker build -t campfire-api .` in the repo's root directory.
+
+You can start a container by running `docker run -p 3000:3000 campfire-api`.
 
 ## Deployment
+We deploy Campfire API in its own Docker image. The React app is in a separate Docker image.
+
+1. In the root directory, build a Docker image `docker build -t campfire-api .`.
+2. Publish it `docker push campfire-api`.
+3. Update Kubernetes cluster with the new Docker image with a `kubectl apply` command.
