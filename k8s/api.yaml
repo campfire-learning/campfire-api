@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campfire-api
+  labels:
+    deployment: campfire-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: campfire-api
+  template:
+    metadata:
+      labels:
+        pod: campfire-api
+    spec:
+      containers:
+        - image: docker.io/library/campfire-api:latest
+          name: campfire-api
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-db-secret
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-db-secret
+                  key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: campfire-api
+spec:
+  selector:
+    matchLabels:
+      deployment: campfire-api
+  ports:
+    - port: 3000
+      targetPort: 3000

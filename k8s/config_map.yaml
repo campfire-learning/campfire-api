@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: campfire-config-map
+data:
+  database_url: <postgres database url>
+  api_url: campfire-api

@@ -4,6 +4,8 @@ services:
   campfire-web:
     image: campfire-web
     container_name: campfire-web
+    volumes:
+      - ../campfire-web/src:/app/campfire-web/src
     ports:
       - 8080:8080
     depends_on:
@@ -13,6 +15,7 @@ services:
     image: campfire-api
     container_name: campfire-api
     volumes:
+      - ./app:/app/campfire-api/app
       - ./db/development.sqlite3:/app/campfire-api/db/development.sqlite3
     ports:
       - 3000:3000
