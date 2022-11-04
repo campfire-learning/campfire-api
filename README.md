@@ -91,9 +91,13 @@ You can start a container by running this long-winded command:
 docker run -e RAILS_ENV=development -v `pwd`/db/development.sqlite3:/app/campfire-api/db/development.sqlite3 -p 3000:3000 campfire-api
 ```
 
-## Deployment
-We deploy Campfire API in its own Docker image. The React app is in a separate Docker image.
+If you want a nice UI to manage your Docker resources on your computer, you can use portainer to do so:
+```
+docker container run -d \
+  -p 9000:9000 \
+  -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
+```
+then go to `http://localhost:9000`.
 
-1. In the root directory, build a Docker image `docker build -t campfire-api .`.
-2. Publish it `docker push campfire-api`.
-3. Update Kubernetes cluster with the new Docker image with a `kubectl apply` command.
+## Deployment
+See the `k8s` directory.
