@@ -7,7 +7,7 @@ class Club < ApplicationRecord
   has_many :club_memberships
   has_many :members, -> { kept }, through: :club_memberships, source: :user
 
-  has_many :channels, as: :context
+  has_many :channels, -> { order order: :desc }, as: :context
   has_many :tabs, as: :context
 
   

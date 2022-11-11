@@ -3,11 +3,13 @@ class Api::V1::InterestsController < ApiController
 
   # GET /interests or /interests.json
   def index
-    user = User.find(params['user_id'])
-    render json: user.interests
-      .select(('interests.*, interest_memberships.id as membership_id, interest_memberships.`order`'))
-      .order(order: :asc)
-      .uniq
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      interests = user.interests
+        .select(('interests.*, interest_memberships.id as membership_id, interest_memberships.`order`'))
+        .order(order: :asc)
+      render json: interests, include: %i[channel]
+    end
   end
 
   # GET /interests/1 or /interests/1.json

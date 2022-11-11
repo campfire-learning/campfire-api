@@ -26,6 +26,7 @@ module DoorkeeperUserRenderable
       first_name: user.first_name,
       last_name: user.last_name,
       user_type: user.user_type,
+      institution_slug: Institution.find(user.institution_id).url_slug,
       access_token: access_token.token,
       token_type:,
       expires_in: access_token.expires_in,

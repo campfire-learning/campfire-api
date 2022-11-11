@@ -4,7 +4,7 @@ class Api::V1::ChannelsController < ApiController
   
     # GET /channels or /channels.json
     def index
-        render json: channels
+        render json: Channel
             .where(context_type: params[:context_type], context_id: params[:context_id])
             .order(order: :asc)
 
@@ -31,36 +31,6 @@ class Api::V1::ChannelsController < ApiController
           render json: @channel.errors, status: :unprocessable_entity
         end
       end
-
-    # PATCH/PUT /channels/1 or /channels/1.json
-    def update
-        User.transaction do
-            source = params[:source]
-            destination = params[:destination]
-            if source && destination
-              if source > destination
-                channels.
-                    .where(context_type: params[:context_type], context_id: params[:context_id])
-                    .order(order: :asc)
-                    .limit((source - destination).abs())
-                    .offset(destination)
-                    .update_all("\"order\" = \"order\" + 1")
-              elsif source < destination
-                .where(context_type: params[:context_type], context_id: params[:context_id])
-                    .order(order: :asc)
-                    .limit((source - destination).abs())
-                    .offset(source + 1)
-                    .update_all("\"order\" = \"order\" - 1")
-              end
-            end
-
-            if @channel.update(channel_params)
-                render json: @channel, status: :ok
-            else
-                render json: @channel.errors, status: :unprocessable_entity
-            end
-        end
-    end
   
     # DELETE /channels/1 or /channels/1.json
     def destroy

@@ -3,11 +3,13 @@ class Api::V1::CoursesController < ApiController
 
   # GET /courses or /courses.json
   def index
-    user = User.find(params['user_id'])
-    render json: user.courses
-      .select(('courses.*, course_memberships.id as membership_id, course_memberships.`order`'))
-      .order(order: :asc)
-      .uniq
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      courses = user.courses
+        .select(('courses.*, course_memberships.id as membership_id, course_memberships.`order`'))
+        .order(order: :asc)
+      render json: courses, include: %i[channels]
+    end
   end
 
   # GET /courses/1 or /courses/1.json

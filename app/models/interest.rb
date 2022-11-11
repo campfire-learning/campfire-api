@@ -7,7 +7,7 @@ class Interest < ApplicationRecord
   has_many :interest_memberships
   has_many :members, -> { kept }, through: :interest_memberships, source: :user
 
-  has_one :channel, as: :context
+  has_one :channel, -> { order order: :desc }, as: :context
 
   after_create do |interest|
     InterestMembership.create(
