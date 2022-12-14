@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class DeviseCreateUsers < ActiveRecord::Migration[7.0]
   def change
     create_table :users do |t|
@@ -11,24 +9,16 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :last_name
 
       ## "type" is a Rails reserved word, so using "user_type" here;
-      t.integer :user_type
+      t.string :user_type, null: false
 
       ## url pointing to user's profile
-      t.string :profile_url
+      t.text :description
 
       ## url pointing to a file in storage such as S3;
       t.string :profile_picture_url
 
       ## this is university, company, etc
-      t.references :institution, foreign_key: true
-
-      ## user's default time zone, potentially used in showing time in the UI, for
-      # example time for posts. you can see a complete list by this Rails statement:
-      #   ActiveSupport::TimeZone.all.map(&:tzinfo).map(&:name)
-      t.string :time_zone
-
-      ## Discard for soft delete
-      t.datetime :discarded_at
+      t.references :institution, null: false, foreign_key: true
 
       ## Recoverable
       t.string   :reset_password_token
@@ -56,6 +46,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.datetime :locked_at
 
       t.timestamps null: false
+      ## Discard for soft delete
+      t.datetime :discarded_at
     end
 
     add_index :users, :email,                unique: true

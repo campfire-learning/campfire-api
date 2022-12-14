@@ -6,12 +6,20 @@ if Doorkeeper::Application.count.zero?
   Doorkeeper::Application.create(name: 'Android', redirect_uri: '', scopes: '')
 end
 
+stanford = Institution.create(
+  name: "Stanford",
+  institution_type: "university",
+  url_slug: "stanford",
+  home_url: "stanford.edu"
+)
+
 tony = User.create(
   email: 'tony@campfire.com',
   password: 'to_be_determined_at_runtime',
   password_confirmation: 'to_be_determined_at_runtime',
   first_name: 'Tony',
   last_name: 'Jiang',
+  institution: stanford,
   user_type: User.user_types[:admin]
 )
 
@@ -21,6 +29,7 @@ joe = User.create(
   password_confirmation: 'to_be_determined_at_runtime',
   first_name: 'Joe',
   last_name: 'Babbo',
+  institution: stanford,
   user_type: User.user_types[:admin]
 )
 
@@ -35,22 +44,20 @@ marshmallow = User.create(
   user_type: User.user_types[:bot]
 )
 
-group = Group.first_or_create(
-  name: 'Campfire General Group',
+interest = Interest.first_or_create(
+  title: 'Campfire General Interest',
   creator_id: marshmallow.id,
-  owner_id: marshmallow.id,
-  description: 'The group that includes all users',
   public: 1
 )
 
-GroupMembership.create(
-  group_id: group.id,
+InterestMembership.create(
+  interest_id: interest.id,
   user_id: tony.id,
-  role: GroupMembership.roles[:admin]
+  role: InterestMembership.roles[:member]
 )
 
-GroupMembership.create(
-  group_id: group.id,
+InterestMembership.create(
+  interest_id: interest.id,
   user_id: joe.id,
-  role: GroupMembership.roles[:admin]
+  role: InterestMembership.roles[:member]
 )

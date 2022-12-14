@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-# The most important class in the whole application
 class User < ApplicationRecord
   include Discard::Model
 
@@ -10,27 +7,24 @@ class User < ApplicationRecord
          :rememberable, :validatable, :trackable, :lockable
 
   validates :email, format: URI::MailTo::EMAIL_REGEXP
-  enum user_type: { admin: 'admin', bot: 'bot', instructor: 'instructor', assistant: 'assistant', student: 'student' }
+  enum user_type: { admin: 'admin', bot: 'bot', instructor: 'instructor', alumni: 'alumni', student: 'student' }
 
-  belongs_to :institution, optional: true
-  has_many :owned_courses, foreign_key: :owner_id, class_name: :Course
+  belongs_to :institution
   has_many :course_memberships
   has_many :courses, through: :course_memberships
-  has_many :owned_clubs, foreign_key: :owner_id, class_name: :Group
   has_many :club_memberships
   has_many :clubs, through: :club_memberships
-  has_many :owned_groups, foreign_key: :owner_id, class_name: :Group
-  has_many :group_memberships
-  has_many :groups, through: :group_memberships
+  has_many :interest_memberships
+  has_many :interests, through: :interest_memberships
 
   after_discard do
-    groups.discard_all
+    interests.discard_all
     clubs.discard_all
     courses.discard_all
   end
 
   after_undiscard do
-    groups.undiscard_all
+    interests.undiscard_all
     clubs.undiscard_all
     courses.undiscard_all
   end

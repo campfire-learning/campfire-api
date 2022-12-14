@@ -3,8 +3,13 @@ class Api::V1::CoursesController < ApiController
 
   # GET /courses or /courses.json
   def index
-    user = User.find(params['user_id'])
-    render json: user.courses.select(('courses.*, course_memberships.id as membership_id, course_memberships.`order`')).order(order: :asc).uniq
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      courses = user.courses
+        .select(('courses.*, course_memberships.id as membership_id, course_memberships.`order`'))
+        .order(order: :asc)
+      render json: courses, include: %i[channels]
+    end
   end
 
   # GET /courses/1 or /courses/1.json
@@ -16,7 +21,7 @@ class Api::V1::CoursesController < ApiController
   # POST /courses or /courses.json
   def create
     @course = Course.new(
-      course_params.merge(creator_id: params[:user_id], owner_id: params[:user_id])
+      course_params.merge(creator_id: params[:user_id])
     )
 
     if @course.save
@@ -51,15 +56,16 @@ class Api::V1::CoursesController < ApiController
   # Only allow a list of trusted parameters through.
   def course_params
     params.require(:course).permit(
-      :creator_id,
-      :owner_id,
+      :institution,
       :title,
-      :description,
+      :icon,
+      :code,
+      :department,
+      :creator_id,
+      :public,
+      :password,
       :year,
       :term,
-      :location,
-      :start_date,
-      :syllabus,
     )
   end
 end

@@ -4,7 +4,11 @@ class Api::V1::ClubMembershipsController < ApiController
   # GET /api/v1/club_memberships or /api/v1/club_memberships.json
   def index
     user = User.find(params[:user_id])
-    render json: user.club_memberships.select(('*')).order(order: :asc).uniq
+    render json: user
+      .club_memberships
+      .select(('*'))
+      .order(order: :asc)
+      .uniq
   end
 
   # POST /api/v1/club_memberships or /api/v1/club_memberships.json
@@ -26,10 +30,20 @@ class Api::V1::ClubMembershipsController < ApiController
       if source && destination
         if source > destination
           user = User.find(params[:user_id])
-          user.club_memberships.order(order: :asc).limit((source - destination).abs()).offset(destination).update_all("\"order\" = \"order\" + 1")
+          user
+            .club_memberships
+            .order(order: :asc)
+            .limit((source - destination).abs())
+            .offset(destination)
+            .update_all("\"order\" = \"order\" + 1")
         elsif source < destination
           user = User.find(params[:user_id])
-          user.club_memberships.order(order: :asc).limit((source - destination).abs()).offset(source + 1).update_all("\"order\" = \"order\" - 1")
+          user
+            .club_memberships
+            .order(order: :asc)
+            .limit((source - destination).abs())
+            .offset(source + 1)
+            .update_all("\"order\" = \"order\" - 1")
         end
       end
 
@@ -56,13 +70,13 @@ class Api::V1::ClubMembershipsController < ApiController
     # Only allow a list of trusted parameters through.
     def club_membership_params
       params.fetch(:club_membership).permit(
-        :club,
-        :user,
+        :club_id,
+        :user_id,
         :order,
         :source,
         :destination,
         :role,
-        :user_id
+        :banned,
       )
     end
 end

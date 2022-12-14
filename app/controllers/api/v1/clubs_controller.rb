@@ -3,8 +3,13 @@ class Api::V1::ClubsController < ApiController
 
   # GET /clubs or /clubs.json
   def index
-    user = User.find(params['user_id'])
-    render json: user.clubs.select(('clubs.*, club_memberships.id as membership_id, club_memberships.`order`')).order(order: :asc).uniq
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      clubs = user.clubs
+        .select(('clubs.*, club_memberships.id as membership_id, club_memberships.`order`'))
+        .order(order: :asc)
+      render json: clubs, include: %i[channels]
+    end
   end
 
   # GET /clubs/1 or /clubs/1.json
@@ -14,7 +19,7 @@ class Api::V1::ClubsController < ApiController
 
   # POST /clubs or /clubs.json
   def create
-    @club = Club.new(club_params.merge(creator_id: params[:user_id], owner_id: params[:user_id]))
+    @club = Club.new(club_params.merge(creator_id: params[:user_id]))
 
     if @club.save
       render json: @club, status: :created
@@ -47,6 +52,13 @@ class Api::V1::ClubsController < ApiController
 
   # Only allow a list of trusted parameters through.
   def club_params
-    params.require(:club).permit(:name, :creator_id, :owner_id, :description, :public)
+    params.require(:club).permit(
+      :institution_id,
+      :title,
+      :icon,
+      :creator_id,
+      :public,
+      :password,
+    )
   end
 end

@@ -13,16 +13,14 @@ class Api::V1::RegistrationsControllerTest < ActionDispatch::IntegrationTest
       user_type: User.user_types[:bot]
     )
 
-    g1 = Group.first_or_create(
-      name: 'Campfire General Group',
+    g1 = Interest.first_or_create(
+      name: 'Campfire General Interest',
       creator_id: u1.id,
-      owner_id: u1.id,
-      description: 'The group that includes all users',
       public: 1
     )
-    puts "Group name is #{g1.name}"
+    puts "Interest name is #{g1.name}"
 
-    get '/api/v1/groups', params: { user_id: 1 }
+    get '/api/v1/interests', params: { user_id: 1 }
     assert_response :unauthorized
 
     post '/api/v1/users',
@@ -30,7 +28,7 @@ class Api::V1::RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     access_token = response.parsed_body['access_token']
-    get '/api/v1/groups', params: { user_id: u1.id }, headers: { Authorization: "Bearer #{access_token}" }
+    get '/api/v1/interests', params: { user_id: u1.id }, headers: { Authorization: "Bearer #{access_token}" }
     assert_response :success
   end
 end

@@ -29,15 +29,15 @@ curl "http://127.0.0.1:3000/api/v1/courses?user_id=1"
 
 curl "http://127.0.0.1:3000/api/v1/courses/2"
 
-curl -X POST -H "Content-Type: application/json" -d '{"user_id": 1, "title": "Rationality 101", "year": 2022, "start_date": "2022-10-10", "description": "How to be profitable"}' http://127.0.0.1:3000/api/v1/courses
+curl -X POST -H "Content-Type: application/json" -d '{"user_id": 1, "title": "Rationality 101", "year": 2022, "start_date": "2022-10-10"}' http://127.0.0.1:3000/api/v1/courses
 
-curl -X PATCH -H "Content-Type: application/json" -d '{"description": "How to be reasonable, lovable, and profitable - yay"}' http://127.0.0.1:3000/api/v1/courses/3
+curl -X PATCH -H "Content-Type: application/json" -d '{"title": "Rationality 102"}' http://127.0.0.1:3000/api/v1/courses/3
 
 curl -X DELETE http://127.0.0.1:3000/api/v1/courses/3
 
-curl -X POST -H "Content-Type: application/json" -d '{"name": "The Cabal", "creator_id": 1, "user_id": 1, "description": "People \"who\" sit around campfire", "public": 1}' http://127.0.0.1:3000/api/v1/groups
+curl -X POST -H "Content-Type: application/json" -d '{"name": "The Cabal", "creator_id": 1, "user_id": 1, "public": 1}' http://127.0.0.1:3000/api/v1/interests
 
-curl -X POST -H "Content-Type: application/json" -d '{"post": {"user_id": 1, "post_text": "wat", "context_type": "Group", "context_id": 1}}' http://127.0.0.1:3000/api/v1/posts
+curl -X POST -H "Content-Type: application/json" -d '{"post": {"user_id": 1, "post_text": "wat", "context_type": "Interest", "context_id": 1}}' http://127.0.0.1:3000/api/v1/posts
 ```
 
 ### User management via Doorkeeper
@@ -68,7 +68,7 @@ curl -H "Authorization: Bearer f2TRTQl5zU2faveSLImA2Z_CDZsO3e65FGBZ4aNKl34" http
 
 curl -H "Authorization: Bearer QW7p8HqQeMXgbMpZwxRjv58SI0bQf0QEmmgykYCTvLg" http://127.0.0.1:3000/api/v1/posts?context_type=Course&context_id=2
 
-curl -H "Authorization: Bearer Z8rOAoRwNqtiNoga2M0R1WiAUDvSzl7p9W1JE5bcHeo" http://localhost:3000/api/v1/posts?context_type=Group&context_id=1
+curl -H "Authorization: Bearer Z8rOAoRwNqtiNoga2M0R1WiAUDvSzl7p9W1JE5bcHeo" http://localhost:3000/api/v1/posts?context_type=Interest&context_id=1
 
 
 curl -H "Authorization: Bearer QW7p8HqQeMXgbMpZwxRjv58SI0bQf0QEmmgykYCTvLg" http://127.0.0.1:3000/api/v1/courses?user_id=1

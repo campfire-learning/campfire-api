@@ -31,16 +31,27 @@ def scrape_link(link, department)
   stanford_id = Institution.where(name: 'Stanford University').first.id
   dom_doc = get_dom_doc(STARTING_URL + link)
   dom_doc.css('.courseInfo').each do |course|
-    Course.create({
+    course = Course.create({
       creator_id: User.marshmallow.id,
       institution_id: stanford_id,
       title: course.css('.courseTitle').first.content.strip,
       code: course.css('.courseNumber').first.content.strip.chomp(':'),
-      description: course.css('.courseDescription').first.content.strip,
       department:,
       year: 2023,
       term: Course.terms[:winter]
     })
+
+    description_tab = RichTextTab.create(
+      content: course.css('.courseDescription').first.content.strip,
+    )
+
+    Tabs.create(
+      context: course,
+      name: "Description",
+      tab_entity_type: "RichTextTab",
+      tab_entity_id: description_tab.id,
+    )
+    
     create_instructors(course)
   end
 end
@@ -53,7 +64,7 @@ def create_instructors(course)
 
     attributes.css('.instructorLink').each do |instructor|
       url = instructor.attribute('href').value
-      next unless User.where(profile_url: url).empty?
+      next unless User.where(description: url).empty?
 
       full_name = get_full_name(url)
       User.create({
@@ -62,8 +73,7 @@ def create_instructors(course)
         password_confirmation: 'password',
         first_name: full_name.split.first || 'Unknown',
         last_name: full_name.split.last || 'Unknown',
-        time_zone: "America/Los_Angeles",
-        profile_url: url,
+        description: url,
         user_type: User.user_types[:instructor]
       })
     end

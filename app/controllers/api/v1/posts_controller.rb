@@ -1,18 +1,17 @@
 class Api::V1::PostsController < ApiController
   before_action :set_post, only: %i[show edit update destroy]
-  before_action :validate_context_type, except: %i[destroy update]
 
   # GET /posts or /posts.json
   def index
     posts = Post
-            .includes(:user, comments: [:user], likes: [:user])
-            .where(context_type: params[:context_type], context_id: params[:context_id])
+            .includes(:user, comments: [:user], reactions: [:user])
+            .where(channel_id: params[:channel_id])
             .order(created_at: :desc)
 
     results = []
     posts.map do |post|
       post_hash = post.serializable_hash(
-        include: [:user, { comments: { include: :user } }, { likes: { include: :user } }]
+        include: [:user, { comments: { include: :user } }, { reactions: { include: :user } }]
       )
       if post.images.attached?
         post_hash['image_urls'] = post.images.map { |img| Rails.application.routes.url_helpers.url_for(img) }
@@ -80,16 +79,14 @@ class Api::V1::PostsController < ApiController
     @post = Post.find(params[:id])
   end
 
-  def validate_context_type
-    puts "Validating original params: #{params}"
-    return if %w[Group Course Club Post].include? params[:context_type]
-
-    render json: { message: "Wrong context type for post: #{params[:context_type]}" },
-           status: :unprocessable_entity
-  end
-
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:user_id, :post_text, :context_type, :context_id, images: [])
+    params.require(:post).permit(
+      :user_id,
+      :channel_id,
+      :post_text,
+      :reply_to_id,
+      images: [],
+    )
   end
 end

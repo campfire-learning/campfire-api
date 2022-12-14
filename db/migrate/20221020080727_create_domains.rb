@@ -1,10 +1,10 @@
 class CreateDomains < ActiveRecord::Migration[7.0]
   def change
     create_table :domains do |t|
+      t.references :institution, null: false, foreign_key: true
       t.string :domain, null: false
-      t.references :institution, null: false
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
