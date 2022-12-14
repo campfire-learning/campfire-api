@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campfire-web
+  labels:
+    deployment: campfire-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: campfire-web
+  template:
+    metadata:
+      labels:
+        pod: campfire-web
+    spec:
+      containers:
+        - image: campfire-web
+          name: campfire-web
+          ports:
+            - containerPort: 8080
+          env:
+            - name: API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: campfire-config-map
+                  key: api-url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: campfire-web
+  labels:
+    service: campfire-web
+spec:
+  selector:
+    matchLabels:
+      deployment: campfire-web
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30000
