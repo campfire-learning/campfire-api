@@ -8,7 +8,7 @@ class Api::V1::CoursesController < ApiController
       courses = user.courses
         .select(('courses.*, course_memberships.id as membership_id, course_memberships.`order`'))
         .order(order: :asc)
-      render json: courses, include: %i[channels]
+      render json: courses
     end
   end
 

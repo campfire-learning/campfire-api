@@ -6,9 +6,9 @@ class Api::V1::ClubsController < ApiController
     if params[:user_id]
       user = User.find(params[:user_id])
       clubs = user.clubs
-        .select(('clubs.*, club_memberships.id as membership_id, club_memberships.`order`'))
-        .order(order: :asc)
-      render json: clubs, include: %i[channels]
+                  .select(('clubs.*, club_memberships.id as membership_id, club_memberships.`order`'))
+                  .order(order: :asc)
+      render json: clubs
     end
   end
 
@@ -58,7 +58,7 @@ class Api::V1::ClubsController < ApiController
       :icon,
       :creator_id,
       :public,
-      :password,
+      :password
     )
   end
 end
