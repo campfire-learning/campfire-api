@@ -3,13 +3,15 @@ class Api::V1::CoursesController < ApiController
 
   # GET /courses or /courses.json
   def index
-    if params[:user_id]
-      user = User.find(params[:user_id])
-      courses = user.courses
-        .select(('courses.*, course_memberships.id as membership_id, course_memberships.`order`'))
-        .order(order: :asc)
-      render json: courses
+    unless params[:user_id]
+      render json: { message: "Must specify user to query courses!" }, status: :unprocessable_entity
     end
+
+    user = User.find(params[:user_id])
+    courses = user.courses
+                  .select(('courses.*, course_memberships.id as membership_id, course_memberships.`order`'))
+                  .order(order: :asc)
+    render json: courses
   end
 
   # GET /courses/1 or /courses/1.json

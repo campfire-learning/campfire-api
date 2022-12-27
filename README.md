@@ -25,6 +25,7 @@ In side the root folder, run following commands:
 ## Testing endpoints
 You can use the following `curl` commands to quickly test some endpoints:
 ```
+curl "http://127.0.0.1:3000/api/v1/channels/?context_id=3&context_type=Course"
 curl "http://127.0.0.1:3000/api/v1/courses?user_id=1"
 curl "http://127.0.0.1:3000/api/v1/courses/2"
 curl -X POST -H "Content-Type: application/json" -d '{"user_id": 1, "title": "Rationality 101", "year": 2022, "start_date": "2022-10-10"}' http://127.0.0.1:3000/api/v1/courses
