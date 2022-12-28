@@ -10,7 +10,6 @@ class Club < ApplicationRecord
   has_many :channels, -> { order order: :desc }, as: :context
   has_many :tabs, as: :context
 
-  
   after_create do |club|
     ClubMembership.create(
       club_id: club.id,

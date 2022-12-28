@@ -73,6 +73,32 @@ CourseMembership.create(
   role: CourseMembership.roles[:student]
 )
 
+club1 = Club.create(
+  creator_id: u1.id,
+  institution_id: 1,
+  title: 'Weekend Hiking',
+  public: true
+)
+
+ClubMembership.create(
+  user_id: 1,
+  club_id: club1.id,
+  role: ClubMembership.roles[:moderator]
+)
+
+club2 = Club.create(
+  creator_id: u1.id,
+  institution_id: 1,
+  title: 'Evening Hockey',
+  public: true
+)
+
+ClubMembership.create(
+  user_id: 1,
+  club_id: club2.id,
+  role: ClubMembership.roles[:moderator]
+)
+
 g1 = Interest.create(
   title: 'The Cabal',
   institution_id: 1,

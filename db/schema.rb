@@ -73,7 +73,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_907000) do
     t.boolean "banned", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "\"context_type\", \"context_id\", \"name\"", name: "index_club_memberships_on_context_type_and_context_id_and_name", unique: true
     t.index ["club_id"], name: "index_club_memberships_on_club_id"
     t.index ["user_id", "club_id"], name: "index_club_memberships_on_user_id_and_club_id", unique: true
     t.index ["user_id"], name: "index_club_memberships_on_user_id"

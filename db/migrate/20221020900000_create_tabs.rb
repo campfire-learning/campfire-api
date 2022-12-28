@@ -12,7 +12,5 @@ class CreateTabs < ActiveRecord::Migration[7.0]
       t.timestamps null: false
       t.datetime :discarded_at
     end
-
-    add_index :club_memberships, [:context_type, :context_id, :name], unique: true
   end
 end
