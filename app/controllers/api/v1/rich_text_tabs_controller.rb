@@ -1,5 +1,5 @@
 class Api::V1::RichTextTabsController < ApiController
-  before_action :set_rich_text_tab, only: %i[ show edit update destroy ]new
+  before_action :set_rich_text_tab, only: %i[ show edit update destroy ]
 
   # GET /rich_text_tabs or /rich_text_tabs.json
   def index
@@ -42,21 +42,21 @@ class Api::V1::RichTextTabsController < ApiController
   # DELETE /rich_text_tabs/1 or /rich_text_tabs/1.json
   def destroy
     @rich_text_tab.discard
-        head :no_content
-      end
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tab
-      @rich_text_tab = Tab.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def rich_text_tab_params
-      params.fetch(:rich_text_tab).permit(
-        :rich_text_tab_id,
-        :content,
-      )
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tab
+    @rich_text_tab = Tab.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def rich_text_tab_params
+    params.fetch(:rich_text_tab).permit(
+      :rich_text_tab_id,
+      :content,
+    )
+  end
 end

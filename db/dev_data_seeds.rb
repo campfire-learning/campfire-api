@@ -99,14 +99,24 @@ ClubMembership.create(
   role: ClubMembership.roles[:moderator]
 )
 
-g1 = Interest.create(
+Channel.create(
+  context: club2,
+  title: 'What the puck'
+)
+
+Channel.create(
+  context: club2,
+  title: 'Stick handling'
+)
+
+int1 = Interest.create(
   title: 'The Cabal',
   institution_id: 1,
   creator_id: u1.id,
   public: 1
 )
 
-g2 = Interest.create(
+int2 = Interest.create(
   title: 'The Murder',
   institution_id: 1,
   creator_id: u2.id,
@@ -114,21 +124,33 @@ g2 = Interest.create(
 )
 
 InterestMembership.create(
-  interest_id: g2.id,
+  interest_id: int2.id,
   user_id: u1.id,
   role: InterestMembership.roles[:member]
 )
 
 InterestMembership.create(
-  interest_id: g1.id,
+  interest_id: int1.id,
   user_id: u3.id,
   role: InterestMembership.roles[:member]
 )
 
+InterestMembership.create(
+  interest_id: int1.id,
+  user_id: 1,
+  role: InterestMembership.roles[:member]
+)
+
+InterestMembership.create(
+  interest_id: int2.id,
+  user_id: 1,
+  role: InterestMembership.roles[:member]
+)
+
 # p1 = Post.create(
-#   user_id: u1.id,s
+#   user_id: u1.id,
 #   post_text: 'Success is intentional',
-#   context: g1
+#   context: int1
 # )
 
 # p2 = Post.create(
@@ -140,7 +162,7 @@ InterestMembership.create(
 # p3 = Post.create(
 #   user_id: u2.id,
 #   post_text: 'Success is intentional and it is highly actional',
-#   context: g1
+#   context: int1
 # )
 
 # p4 = Post.create(

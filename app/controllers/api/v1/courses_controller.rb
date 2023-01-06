@@ -16,7 +16,7 @@ class Api::V1::CoursesController < ApiController
 
   # GET /courses/1 or /courses/1.json
   def show
-    @course = Course.find(params[:id])
+    @course = Course.includes(:syllabus).find(params[:id])
     render json: @course
   end
 

@@ -51,7 +51,7 @@ def scrape_link(link, department)
       tab_entity_type: "RichTextTab",
       tab_entity_id: description_tab.id,
     )
-    
+
     create_instructors(course)
   end
 end

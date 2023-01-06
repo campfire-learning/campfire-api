@@ -43,36 +43,36 @@ class Api::V1::TabsController < ApiController
   # DELETE /tabs/1 or /tabs/1.json
   def destroy
     @tab.discard
-        head :no_content
-      end
+    head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tab
-      @tab = Tab.find(params[:id])
-    end
 
-    def validate_context_type
-      puts "Validating original params: #{params}"
-      return if %w[Course Club].include? params[:context_type]
-  
-      render json: { message: "Wrong context type for channel: #{params[:context_type]}" },
-             status: :unprocessable_entity
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tab
+    @tab = Tab.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def tab_params
-      params.fetch(:tab).permit(
-        :tab_id,
-        :context_type,
-        :context_id,
-        :name,
-        :order,
-        :tab_entity_type,
-        :tab_entity_id,
-        :source,
-        :destination,
-      )
-    end
+  def validate_context_type
+    puts "Validating original params: #{params}"
+    return if %w[Course Club].include? params[:context_type]
+
+    render json: { message: "Wrong context type for channel: #{params[:context_type]}" },
+           status: :unprocessable_entity
+  end
+
+  # Only allow a list of trusted parameters through.
+  def tab_params
+    params.fetch(:tab).permit(
+      :tab_id,
+      :context_type,
+      :context_id,
+      :name,
+      :order,
+      :tab_entity_type,
+      :tab_entity_id,
+      :source,
+      :destination,
+    )
+  end
 end
