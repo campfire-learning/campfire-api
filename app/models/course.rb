@@ -7,6 +7,7 @@ class Course < ApplicationRecord
   has_many :course_memberships
   has_many :members, -> { kept }, through: :course_memberships, source: :user
 
+  has_one :syllabus
   has_many :channels, -> { order order: :desc }, as: :context
   has_many :tabs, as: :context
 

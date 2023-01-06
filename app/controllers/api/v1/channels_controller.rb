@@ -4,17 +4,14 @@ class Api::V1::ChannelsController < ApiController
 
   # GET /channels or /channels.json
   def index
-    context_object =
-      case params[:context_type]
-      when "Course"
-        Course.find(params[:context_id])
-      when "Club"
-        Club.find(params[:context_id])
-      else
-        Interest.find(params[:context_id])
-      end
-
-    render json: context_object.channels
+    case params[:context_type]
+    when "Course"
+      render json: Course.find(params[:context_id]).channels
+    when "Club"
+      render json: Club.find(params[:context_id]).channels
+    else
+      render json: [Interest.find(params[:context_id]).channel]
+    end
   end
 
   # GET /channels/1 or /channels/1.json

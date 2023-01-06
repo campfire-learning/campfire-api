@@ -1,4 +1,3 @@
 class RichTextTab < ApplicationRecord  
-    has_one :tab
-  end
-  
+  has_one :tab
+end

@@ -14,7 +14,9 @@ class Api::V1::PostsController < ApiController
         include: [:user, { comments: { include: :user } }, { reactions: { include: :user } }]
       )
       if post.images.attached?
-        post_hash['image_urls'] = post.images.map { |img| Rails.application.routes.url_helpers.url_for(img) }
+        post_hash['image_urls'] = post.images.map do |img|
+          Rails.application.routes.url_helpers.url_for(img)
+        end
       end
       results.push(post_hash)
     end

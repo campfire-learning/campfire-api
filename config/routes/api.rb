@@ -20,6 +20,7 @@ namespace :api do
     resources :tabs
     resources :rich_text_tabs
     resources :pdf_tabs
+    resources :syllabuses
 
     # this should be placed before "resources :users"
     scope :users, module: :users do
