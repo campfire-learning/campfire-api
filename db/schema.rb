@@ -256,7 +256,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_31_043937) do
     t.integer "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_syllabuses_on_course_id"
+    t.index ["course_id"], name: "index_syllabuses_on_course_id", unique: true
   end
 
   create_table "tabs", force: :cascade do |t|
