@@ -3,7 +3,7 @@ class CreateCourseMemberships < ActiveRecord::Migration[7.0]
     create_table :course_memberships do |t|
       t.references :course, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
-      
+
       t.integer :order, null: false
       t.string :role, null: false
       t.boolean :banned, null: false, default: false
