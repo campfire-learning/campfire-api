@@ -8,6 +8,8 @@ class Api::V1::SyllabusesController < ApiController
 
   # GET /syllabuses/1
   def show
+    @syllabus = Syllabus.includes(:uploads).find(params[:id])
+    render json: @syllabus, include: :uploads
   end
 
   # GET /syllabuses/new
@@ -34,6 +36,9 @@ class Api::V1::SyllabusesController < ApiController
   # PATCH/PUT /syllabuses/1
   def update
     if @syllabus.update(syllabus_params)
+      if params[:uploads]
+        @syllabus.uploads.attach(params[:uploads])
+      end
       render json: @syllabus, status: :ok
     else
       render json: @syllabus.errors, status: :unprocessable_entity
