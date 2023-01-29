@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_31_043937) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_31_043937) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "assignments", force: :cascade do |t|
+    t.string "title"
+    t.text "rich_text"
+    t.string "assignment_type"
+    t.integer "grade_percent"
+    t.integer "course_id", null: false
+    t.string "submission_type"
+    t.datetime "due_time", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_assignments_on_course_id"
   end
 
   create_table "channel_memberships", force: :cascade do |t|
@@ -225,9 +238,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_31_043937) do
     t.integer "channel_id", null: false
     t.text "post_text", null: false
     t.integer "reply_to_id_id"
+    t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discarded_at"
+    t.index "\"channel\"", name: "index_posts_on_channel"
+    t.index "\"user\"", name: "index_posts_on_user"
     t.index ["channel_id"], name: "index_posts_on_channel_id"
     t.index ["discarded_at"], name: "index_posts_on_discarded_at"
     t.index ["reply_to_id_id"], name: "index_posts_on_reply_to_id_id"
@@ -309,6 +324,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_31_043937) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assignments", "courses"
   add_foreign_key "channel_memberships", "channels"
   add_foreign_key "channel_memberships", "users"
   add_foreign_key "club_memberships", "clubs"
