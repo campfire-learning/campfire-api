@@ -8,6 +8,7 @@ class Course < ApplicationRecord
   has_many :members, -> { kept }, through: :course_memberships, source: :user
 
   has_one :syllabus
+  has_many :assignments
   has_many :channels, -> { order order: :desc }, as: :context
   has_many :tabs, as: :context
 
@@ -15,21 +16,21 @@ class Course < ApplicationRecord
 
   after_create do |course|
     user = User.select(:user_type).where(id: course.creator_id).first
-    if user.user_type == "instructor"
-      role = CourseMembership.roles[:instructor]
-    else
-      role = CourseMembership.roles[:moderator]
-    end
+    role = if user.user_type == "instructor"
+             CourseMembership.roles[:instructor]
+           else
+             CourseMembership.roles[:moderator]
+           end
 
     CourseMembership.create(
       course_id: course.id,
       user_id: course.creator_id,
-      role: role
+      role:
     )
 
     Channel.create(
       context: course,
-      title: 'general',
+      title: 'general'
     )
   end
 

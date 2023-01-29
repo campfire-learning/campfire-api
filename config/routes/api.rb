@@ -5,8 +5,11 @@ namespace :api do
     resources :posts do
       resources :reactions
     end
-    resources :courses
+    resources :courses do
+      resources :assignments
+    end
     resources :course_memberships
+    resources :syllabuses
 
     resources :interests
     resources :interest_memberships
@@ -20,7 +23,6 @@ namespace :api do
     resources :tabs
     resources :rich_text_tabs
     resources :pdf_tabs
-    resources :syllabuses
 
     # this should be placed before "resources :users"
     scope :users, module: :users do
