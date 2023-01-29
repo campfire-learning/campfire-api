@@ -9,7 +9,15 @@ class Api::V1::AssignmentsController < ApiController
 
   # GET /assignments/1 or /assignments/1.json
   def show
-    render json: @assignment
+    @assignment = Assignment.includes(:uploads_attachments).find(params[:id])
+
+    if @assignment&.uploads&.attached?
+      assignment_hash = @assignment.serializable_hash
+      assignment_hash["uploads_data"] = @assignment.uploads_data
+      render json: assignment_hash
+    else
+      render json: @assignment
+    end
   end
 
   # GET /assignments/new
@@ -34,14 +42,11 @@ class Api::V1::AssignmentsController < ApiController
 
   # PATCH/PUT /assignments/1 or /assignments/1.json
   def update
-    respond_to do |format|
-      if @assignment.update(assignment_params)
-        format.html { redirect_to assignment_url(@assignment), notice: "Assignment was successfully updated." }
-        format.json { render :show, status: :ok, location: @assignment }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @assignment.errors, status: :unprocessable_entity }
-      end
+    if @assignment.update(assignment_params)
+      params[:uploads] && @assignment.uploads.attach(params[:uploads])
+      render json: @assignment, status: :ok
+    else
+      render json: @assignment.errors, status: :unprocessable_entity
     end
   end
 
@@ -64,6 +69,6 @@ class Api::V1::AssignmentsController < ApiController
 
   # Only allow a list of trusted parameters through.
   def assignment_params
-    params.require(:assignment).permit(:title, :course_id, :rich_text, :due_time)
+    params.require(:assignment).permit(:id, :title, :course_id, :rich_text, :assignment_type, :due_time)
   end
 end

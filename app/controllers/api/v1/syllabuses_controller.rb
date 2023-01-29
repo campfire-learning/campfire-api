@@ -36,9 +36,7 @@ class Api::V1::SyllabusesController < ApiController
   # PATCH/PUT /syllabuses/1
   def update
     if @syllabus.update(syllabus_params)
-      if params[:uploads]
-        @syllabus.uploads.attach(params[:uploads])
-      end
+      params[:uploads] && @syllabus.uploads.attach(params[:uploads])
       render json: @syllabus, status: :ok
     else
       render json: @syllabus.errors, status: :unprocessable_entity
@@ -60,7 +58,9 @@ class Api::V1::SyllabusesController < ApiController
   # Only allow a list of trusted parameters through.
   def syllabus_params
     params.fetch(:syllabus).permit(
+      :id,
       :rich_text,
+      :uploads,
       :course_id
     )
   end
