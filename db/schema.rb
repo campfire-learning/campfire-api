@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_014007) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.integer "grade_percent"
     t.integer "course_id", null: false
     t.string "submission_type"
+    t.string "grade_type", null: false
     t.datetime "due_time", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -147,6 +148,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.index ["institution_id"], name: "index_domains_on_institution_id"
   end
 
+  create_table "grades", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "assignment_id", null: false
+    t.integer "score"
+    t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_grades_on_assignment_id"
+    t.index ["user_id", "assignment_id"], name: "index_grades_on_user_id_and_assignment_id", unique: true
+    t.index ["user_id"], name: "index_grades_on_user_id"
+  end
+
   create_table "institutions", force: :cascade do |t|
     t.string "name"
     t.string "institution_type"
@@ -226,11 +239,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
-  end
-
-  create_table "pdf_tabs", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "posts", force: :cascade do |t|
@@ -336,6 +344,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
   add_foreign_key "courses", "institutions"
   add_foreign_key "courses", "users", column: "creator_id"
   add_foreign_key "domains", "institutions"
+  add_foreign_key "grades", "assignments"
+  add_foreign_key "grades", "users"
   add_foreign_key "interest_memberships", "interests"
   add_foreign_key "interest_memberships", "users"
   add_foreign_key "interests", "institutions"

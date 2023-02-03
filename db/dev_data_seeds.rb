@@ -4,7 +4,7 @@ i1 = Institution.create(
   name: 'Mars University',
   url_slug: 'mars_university',
   home_url: 'university.mars.planet',
-  institution_type: Institution.institution_types[:university],
+  institution_type: Institution.institution_types[:university]
 )
 
 u1 = User.create(
@@ -42,7 +42,7 @@ c1 = Course.create(
   institution_id: 1,
   title: 'Rationality 101',
   term: Course.terms[:summer],
-  year: 2022,
+  year: 2022
 )
 
 c2 = Course.create(
@@ -50,7 +50,7 @@ c2 = Course.create(
   institution_id: 1,
   title: 'Rationality 202',
   term: Course.terms[:winter],
-  year: 2022,
+  year: 2022
 )
 
 c3 = Course.create(
@@ -58,7 +58,19 @@ c3 = Course.create(
   institution_id: 1,
   title: 'Rationality 303',
   term: Course.terms[:fall],
-  year: 2022,
+  year: 2022
+)
+
+CourseMembership.create(
+  course_id: c1.id,
+  user_id: u1.id,
+  role: CourseMembership.roles[:student]
+)
+
+CourseMembership.create(
+  course_id: c1.id,
+  user_id: u2.id,
+  role: CourseMembership.roles[:student]
 )
 
 CourseMembership.create(
@@ -71,6 +83,78 @@ CourseMembership.create(
   course_id: c2.id,
   user_id: u3.id,
   role: CourseMembership.roles[:student]
+)
+
+ass1 = Assignment.create(
+  course_id: c1.id,
+  title: 'Rationality 101 - Assignment 1',
+  assignment_type: Assignment.assignment_types[:homework],
+  submission_type: Assignment.submission_types[:offline],
+  due_time: DateTime.now + 1.week,
+  grade_type: Assignment.grade_types[:numeric],
+  grade_percent: 10
+)
+
+ass2 = Assignment.create(
+  course_id: c1.id,
+  title: 'Rationality 101 - Assignment 2',
+  assignment_type: Assignment.assignment_types[:homework],
+  submission_type: Assignment.submission_types[:offline],
+  due_time: DateTime.now + 1.week,
+  grade_type: Assignment.grade_types[:numeric],
+  grade_percent: 40
+)
+
+ass3 = Assignment.create(
+  course_id: c1.id,
+  title: 'Rationality 101 - Assignment 3',
+  assignment_type: Assignment.assignment_types[:exam],
+  submission_type: Assignment.submission_types[:offline],
+  due_time: DateTime.now + 1.week,
+  grade_type: Assignment.grade_types[:numeric],
+  grade_percent: 50
+)
+
+Grade.create(
+  user_id: u1.id,
+  assignment_id: ass1.id,
+  status: 'completed',
+  score: 80
+)
+
+Grade.create(
+  user_id: u1.id,
+  assignment_id: ass2.id,
+  status: 'completed',
+  score: 88
+)
+
+Grade.create(
+  user_id: u1.id,
+  assignment_id: ass3.id,
+  status: 'late',
+  score: 90
+)
+
+Grade.create(
+  user_id: u2.id,
+  assignment_id: ass1.id,
+  status: 'completed',
+  score: 80
+)
+
+Grade.create(
+  user_id: u2.id,
+  assignment_id: ass2.id,
+  status: 'completed',
+  score: 88
+)
+
+Grade.create(
+  user_id: u2.id,
+  assignment_id: ass3.id,
+  status: 'completed',
+  score: 90
 )
 
 club1 = Club.create(
