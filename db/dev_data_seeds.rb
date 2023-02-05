@@ -92,7 +92,7 @@ ass1 = Assignment.create(
   submission_type: Assignment.submission_types[:offline],
   due_time: DateTime.now + 1.week,
   grade_type: Assignment.grade_types[:numeric],
-  grade_percent: 10
+  course_percent: 10
 )
 
 ass2 = Assignment.create(
@@ -102,7 +102,7 @@ ass2 = Assignment.create(
   submission_type: Assignment.submission_types[:offline],
   due_time: DateTime.now + 1.week,
   grade_type: Assignment.grade_types[:numeric],
-  grade_percent: 40
+  course_percent: 40
 )
 
 ass3 = Assignment.create(
@@ -112,47 +112,47 @@ ass3 = Assignment.create(
   submission_type: Assignment.submission_types[:offline],
   due_time: DateTime.now + 1.week,
   grade_type: Assignment.grade_types[:numeric],
-  grade_percent: 50
+  course_percent: 50
 )
 
 Grade.create(
   user_id: u1.id,
-  assignment_id: ass1.id,
+  gradable: ass1.id,
   status: 'completed',
   score: 80
 )
 
 Grade.create(
   user_id: u1.id,
-  assignment_id: ass2.id,
+  gradable: ass2.id,
   status: 'completed',
   score: 88
 )
 
 Grade.create(
   user_id: u1.id,
-  assignment_id: ass3.id,
+  gradable: ass3.id,
   status: 'late',
   score: 90
 )
 
 Grade.create(
   user_id: u2.id,
-  assignment_id: ass1.id,
+  gradable: ass1.id,
   status: 'completed',
   score: 80
 )
 
 Grade.create(
   user_id: u2.id,
-  assignment_id: ass2.id,
+  gradable: ass2.id,
   status: 'completed',
   score: 88
 )
 
 Grade.create(
   user_id: u2.id,
-  assignment_id: ass3.id,
+  gradable: ass2.id,
   status: 'completed',
   score: 90
 )

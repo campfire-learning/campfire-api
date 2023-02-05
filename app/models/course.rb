@@ -3,6 +3,7 @@ class Course < ApplicationRecord
 
   belongs_to :institution
   belongs_to :creator, class_name: :User, optional: true
+  belongs_to :grading_scheme
 
   has_many :course_memberships
   has_many :members, -> { kept }, through: :course_memberships, source: :user
