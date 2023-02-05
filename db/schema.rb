@@ -168,7 +168,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_05_040953) do
   create_table "grading_levels", force: :cascade do |t|
     t.integer "grading_scheme_id"
     t.string "level_letter"
-    t.integer "percent"
+    t.string "definition"
+    t.float "max_percent"
+    t.float "min_percent"
     t.float "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -177,9 +179,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_05_040953) do
   end
 
   create_table "grading_schemes", force: :cascade do |t|
+    t.integer "creator_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_grading_schemes_on_creator_id"
     t.index ["name"], name: "index_grading_schemes_on_name"
   end
 
@@ -355,6 +359,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_05_040953) do
   add_foreign_key "courses", "users", column: "creator_id"
   add_foreign_key "domains", "institutions"
   add_foreign_key "grades", "users"
+  add_foreign_key "grading_schemes", "users", column: "creator_id"
   add_foreign_key "interest_memberships", "interests"
   add_foreign_key "interest_memberships", "users"
   add_foreign_key "interests", "institutions"

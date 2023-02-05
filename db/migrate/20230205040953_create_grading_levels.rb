@@ -4,7 +4,9 @@ class CreateGradingLevels < ActiveRecord::Migration[7.0]
     create_table :grading_levels do |t|
       t.references :grading_scheme
       t.string :level_letter
-      t.integer :percent
+      t.string :definition
+      t.float :max_percent
+      t.float :min_percent
       t.float :points
 
       t.timestamps
