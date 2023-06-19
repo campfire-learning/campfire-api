@@ -4,8 +4,8 @@ class Api::V1::GradesController < ApiController
   # GET /grades
   # GET /grades.json
   def index
-    @grades = Grade.includes(:scope, :user).all
-    render json: @grades, include: [:assignment, :user]
+    @grades = Grade.includes(:gradable, :user).all
+    render json: @grades, include: [:gradable, :user]
   end
 
   # GET /grades/1
