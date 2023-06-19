@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-i1 = Institution.create(
+i1 = Institution.create!(
   name: 'Mars University',
   url_slug: 'mars_university',
   home_url: 'university.mars.planet',
-  institution_type: Institution.institution_types[:university],
+  institution_type: Institution.institution_types[:university]
 )
 
-u1 = User.create(
+u1 = User.create!(
   email: 'foo@foobar.edu',
   password: 'password',
   password_confirmation: 'password',
@@ -17,7 +17,7 @@ u1 = User.create(
   institution: i1
 )
 
-u2 = User.create(
+u2 = User.create!(
   email: 'bar2@foobar.edu',
   password: 'password',
   password_confirmation: 'password',
@@ -27,7 +27,7 @@ u2 = User.create(
   institution: i1
 )
 
-u3 = User.create(
+u3 = User.create!(
   email: 'bar3@foobar.edu',
   password: 'password',
   password_confirmation: 'password',
@@ -37,153 +37,246 @@ u3 = User.create(
   institution: i1
 )
 
-c1 = Course.create(
+c1 = Course.create!(
   creator_id: 1,
   institution_id: 1,
   title: 'Rationality 101',
+  grading_scheme_id: 1,
   term: Course.terms[:summer],
-  year: 2022,
+  year: 2022
 )
 
-c2 = Course.create(
+c2 = Course.create!(
   creator_id: 2,
   institution_id: 1,
   title: 'Rationality 202',
+  grading_scheme_id: 1,
   term: Course.terms[:winter],
-  year: 2022,
+  year: 2022
 )
 
-c3 = Course.create(
+c3 = Course.create!(
   creator_id: u1.id,
   institution_id: 1,
   title: 'Rationality 303',
+  grading_scheme_id: 1,
   term: Course.terms[:fall],
-  year: 2022,
+  year: 2022
 )
 
-CourseMembership.create(
+CourseMembership.create!(
+  course_id: c1.id,
+  user_id: u1.id,
+  role: CourseMembership.roles[:student]
+)
+
+CourseMembership.create!(
+  course_id: c1.id,
+  user_id: u2.id,
+  role: CourseMembership.roles[:student]
+)
+
+CourseMembership.create!(
   course_id: c1.id,
   user_id: u3.id,
   role: CourseMembership.roles[:student]
 )
 
-CourseMembership.create(
+CourseMembership.create!(
   course_id: c2.id,
   user_id: u3.id,
   role: CourseMembership.roles[:student]
 )
 
-club1 = Club.create(
+# CourseMembership.create!(
+#   course_id: c3.id,
+#   user_id: 1, # the system user Tony
+#   role: CourseMembership.roles[:admin]
+# )
+
+ass1 = Assignment.create!(
+  course_id: c1.id,
+  title: 'Rationality 101 - Assignment 1',
+  assignment_type: Assignment.assignment_types[:homework],
+  submission_type: Assignment.submission_types[:offline],
+  due_time: DateTime.now + 1.week,
+  grade_type: Assignment.grade_types[:numeric],
+  course_percent: 10
+)
+
+ass2 = Assignment.create!(
+  course_id: c1.id,
+  title: 'Rationality 101 - Assignment 2',
+  assignment_type: Assignment.assignment_types[:homework],
+  submission_type: Assignment.submission_types[:offline],
+  due_time: DateTime.now + 1.week,
+  grade_type: Assignment.grade_types[:numeric],
+  course_percent: 40
+)
+
+ass3 = Assignment.create!(
+  course_id: c1.id,
+  title: 'Rationality 101 - Assignment 3',
+  assignment_type: Assignment.assignment_types[:exam],
+  submission_type: Assignment.submission_types[:offline],
+  due_time: DateTime.now + 1.week,
+  grade_type: Assignment.grade_types[:numeric],
+  course_percent: 50
+)
+
+Grade.create!(
+  user_id: u1.id,
+  gradable: ass1,
+  status: 'completed',
+  score: 80
+)
+
+Grade.create!(
+  user_id: u1.id,
+  gradable: ass2,
+  status: 'completed',
+  score: 88
+)
+
+Grade.create!(
+  user_id: u1.id,
+  gradable: ass3,
+  status: 'late',
+  score: 90
+)
+
+Grade.create!(
+  user_id: u2.id,
+  gradable: ass1,
+  status: 'completed',
+  score: 80
+)
+
+Grade.create!(
+  user_id: u2.id,
+  gradable: ass2,
+  status: 'completed',
+  score: 88
+)
+
+Grade.create!(
+  user_id: u2.id,
+  gradable: ass3,
+  status: 'completed',
+  score: 90
+)
+
+club1 = Club.create!(
   creator_id: u1.id,
   institution_id: 1,
   title: 'Weekend Hiking',
   public: true
 )
 
-ClubMembership.create(
+ClubMembership.create!(
   user_id: 1,
   club_id: club1.id,
   role: ClubMembership.roles[:moderator]
 )
 
-club2 = Club.create(
+club2 = Club.create!(
   creator_id: u1.id,
   institution_id: 1,
   title: 'Evening Hockey',
   public: true
 )
 
-ClubMembership.create(
+ClubMembership.create!(
   user_id: 1,
   club_id: club2.id,
   role: ClubMembership.roles[:moderator]
 )
 
-Channel.create(
+Channel.create!(
   context: club2,
   title: 'What the puck'
 )
 
-Channel.create(
+Channel.create!(
   context: club2,
   title: 'Stick handling'
 )
 
-int1 = Interest.create(
+int1 = Interest.create!(
   title: 'The Cabal',
   institution_id: 1,
   creator_id: u1.id,
   public: 1
 )
 
-int2 = Interest.create(
+int2 = Interest.create!(
   title: 'The Murder',
   institution_id: 1,
   creator_id: u2.id,
   public: 1
 )
 
-InterestMembership.create(
+InterestMembership.create!(
   interest_id: int2.id,
   user_id: u1.id,
   role: InterestMembership.roles[:member]
 )
 
-InterestMembership.create(
+InterestMembership.create!(
   interest_id: int1.id,
   user_id: u3.id,
   role: InterestMembership.roles[:member]
 )
 
-InterestMembership.create(
+InterestMembership.create!(
   interest_id: int1.id,
   user_id: 1,
   role: InterestMembership.roles[:member]
 )
 
-InterestMembership.create(
+InterestMembership.create!(
   interest_id: int2.id,
   user_id: 1,
   role: InterestMembership.roles[:member]
 )
 
-# p1 = Post.create(
+# p1 = Post.create!(
 #   user_id: u1.id,
 #   post_text: 'Success is intentional',
 #   context: int1
 # )
 
-# p2 = Post.create(
+# p2 = Post.create!(
 #   user_id: u1.id,
 #   post_text: 'Failure is simply the result of lack of intention',
 #   context: c2
 # )
 
-# p3 = Post.create(
+# p3 = Post.create!(
 #   user_id: u2.id,
 #   post_text: 'Success is intentional and it is highly actional',
 #   context: int1
 # )
 
-# p4 = Post.create(
+# p4 = Post.create!(
 #   user: u1,
 #   post_text: 'Failure is simply the result of lack of intention',
 #   context: c2
 # )
 
-# cm1 = Post.create(
+# cm1 = Post.create!(
 #   user_id: u1.id,
 #   post_text: 'Of course intention does not always lead to success',
 #   context: p1
 # )
 
-# cm2 = Post.create(
+# cm2 = Post.create!(
 #   user_id: u2.id,
 #   post_text: 'But you have to have it to begin with',
 #   context: p1
 # )
 
-# cm3 = Post.create(
+# cm3 = Post.create!(
 #   user_id: u1.id,
 #   post_text: 'Indeed intention is the first',
 #   context: p2

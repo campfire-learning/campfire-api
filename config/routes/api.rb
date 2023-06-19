@@ -7,6 +7,7 @@ namespace :api do
     end
     resources :courses do
       resources :assignments
+      resources :grades
       resources :syllabuses
     end
     resources :course_memberships

@@ -2,8 +2,9 @@ class Assignment < ApplicationRecord
   belongs_to :course
   has_many_attached :uploads
 
-  enum assignment_type: { assignment: 'assignment', quiz: 'quiz', exam: 'exam' }
+  enum assignment_type: { homework: 'homework', quiz: 'quiz', exam: 'exam' }
   enum submission_type: { online: 'online', offline: 'offline' }
+  enum grade_type: { numeric: 'numeric', passing: 'passing', letter: 'letter' }
 
   def uploads_data
     uploads.map do |upload|

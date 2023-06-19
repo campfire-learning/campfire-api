@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_05_040953) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -43,9 +43,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.string "title"
     t.text "rich_text"
     t.string "assignment_type"
-    t.integer "grade_percent"
     t.integer "course_id", null: false
     t.string "submission_type"
+    t.string "grade_type", null: false
+    t.float "course_percent"
     t.datetime "due_time", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -126,6 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.string "code"
     t.string "department"
     t.integer "creator_id"
+    t.integer "grading_scheme_id"
     t.boolean "public", default: true, null: false
     t.string "encrypted_password"
     t.integer "year"
@@ -134,6 +136,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.datetime "updated_at", null: false
     t.datetime "discarded_at"
     t.index ["creator_id"], name: "index_courses_on_creator_id"
+    t.index ["grading_scheme_id"], name: "index_courses_on_grading_scheme_id"
     t.index ["institution_id", "code", "year", "term"], name: "index_courses_on_institution_id_and_code_and_year_and_term", unique: true
     t.index ["institution_id", "title", "year", "term"], name: "index_courses_on_institution_id_and_title_and_year_and_term", unique: true
     t.index ["institution_id"], name: "index_courses_on_institution_id"
@@ -145,6 +148,43 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["institution_id"], name: "index_domains_on_institution_id"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "gradable_type", null: false
+    t.integer "gradable_id", null: false
+    t.float "score"
+    t.integer "grading_level_id"
+    t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gradable_type", "gradable_id"], name: "index_grades_on_gradable"
+    t.index ["grading_level_id"], name: "index_grades_on_grading_level_id"
+    t.index ["user_id", "gradable_type", "gradable_id"], name: "index_grades_on_user_id_and_gradable_type_and_gradable_id", unique: true
+    t.index ["user_id"], name: "index_grades_on_user_id"
+  end
+
+  create_table "grading_levels", force: :cascade do |t|
+    t.integer "grading_scheme_id"
+    t.string "level_letter"
+    t.string "definition"
+    t.float "max_percent"
+    t.float "min_percent"
+    t.float "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grading_scheme_id", "level_letter"], name: "index_grading_levels_on_grading_scheme_id_and_level_letter", unique: true
+    t.index ["grading_scheme_id"], name: "index_grading_levels_on_grading_scheme_id"
+  end
+
+  create_table "grading_schemes", force: :cascade do |t|
+    t.integer "creator_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_grading_schemes_on_creator_id"
+    t.index ["name"], name: "index_grading_schemes_on_name"
   end
 
   create_table "institutions", force: :cascade do |t|
@@ -228,11 +268,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
-  create_table "pdf_tabs", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "channel_id", null: false
@@ -272,19 +307,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_syllabuses_on_course_id", unique: true
-  end
-
-  create_table "tabs", force: :cascade do |t|
-    t.string "context_type", null: false
-    t.integer "context_id", null: false
-    t.string "name", null: false
-    t.integer "order", null: false
-    t.string "tab_entity_type", null: false
-    t.integer "tab_entity_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "discarded_at"
-    t.index ["context_type", "context_id"], name: "index_tabs_on_context"
   end
 
   create_table "users", force: :cascade do |t|
@@ -336,6 +358,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_054933) do
   add_foreign_key "courses", "institutions"
   add_foreign_key "courses", "users", column: "creator_id"
   add_foreign_key "domains", "institutions"
+  add_foreign_key "grades", "users"
+  add_foreign_key "grading_schemes", "users", column: "creator_id"
   add_foreign_key "interest_memberships", "interests"
   add_foreign_key "interest_memberships", "users"
   add_foreign_key "interests", "institutions"
